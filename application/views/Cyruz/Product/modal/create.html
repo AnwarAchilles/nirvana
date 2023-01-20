@@ -1,0 +1,33 @@
+<div Product-Modal="Create" class="modal fade" aria-labelledby="modal-size-center-scroll" aria-hidden="true">
+  <div Product="Create" class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable">
+    <form class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create New</h5>
+        <button type="button" class="btn text-danger" data-bs-dismiss="modal" aria-label="Close">
+          <i class="fa-solid fa-times fa-xl"></i>
+        </button>
+      </div>
+      <div Product-Form="product" class="modal-body scrollbar">
+        
+        <div class="mb-4 input-group align-items-center">
+          <label for="create-category" class="form-label m-0 w-25" required>Category</label>
+          <select id="create-category" name="category" class="select2">
+            <option value="0">- not use</option>
+          </select>
+        </div>
+        <div class="mb-4 input-group align-items-center">
+          <label for="create-name" class="form-label m-0 w-25" required>Name</label>
+          <input id="create-name" name="name" type="text" class="form-control" autocomplete="off">
+        </div>
+        <div class="mb-4">
+          <textarea id="create-content" name="content" class="form-control"></textarea>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+    </form>
+  </div>
+</div>

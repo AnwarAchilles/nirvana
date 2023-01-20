@@ -1,0 +1,180 @@
+<!-- NAVBAR -->
+<div class="sticky-top w-100 bg-light border overflow-auto scrollbar">
+  <div class="navigation-content">
+    <a href="#header" class="border-end">#</a>
+    <a href="#installation" class="border-end">Installation</a>
+    <a href="#existing_object" class="border-end">Existing Object</a>
+    <a href="#complete_example" class="border-end">Complete Example</a>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div id="header" class="mb-5 pt-5">
+  <h3>Core Frontend Javascript</h3>
+  <div>
+    A native javascript based frontend is available, with concepts and integrations that are compatible with Cyruz admin template tools and very familiar javascript libraries such as Jquery, Chartjs, Select2, Ckeditor, etc.
+  </div>
+  <br>
+  <div>
+    this frontend have a lot of functionality i will documented in another place.
+  </div>
+</div>
+
+<!-- INSTALLATION -->
+<div id="installation" class="mb-5 pt-5">
+  <h5>Installation</h5>
+  <div>load javascript from <code>/storage/js/nirvana.js</code>, or if use layouting engine should be like this</div>
+  <div class="code-box : bg-dark">
+    <?php highlight_string('<?php
+"javascript"=> [
+  "source"=> [
+    base_url("/storage/js/nirvana.js")
+  ]
+];
+    '); ?>
+    </div>
+</div>
+
+<!-- EXISTING OBJECT -->
+<div id="existing_object" class="mb-5 pt-5">
+  <h5>Existing Object</h5>
+  <div></div>
+  <table class="table table-bordered">
+    <tr>
+      <th>Method</th>
+      <th>Parameter</th>
+      <th>Todo</th>
+    </tr>
+    <tr>
+      <td>input</td>
+      <td>selector | null</td>
+      <td>return element with pair selector class only, if null return all input</td>
+    </tr>
+    <tr>
+      <td>select</td>
+      <td>selector</td>
+      <td>return element with pair selector</td>
+    </tr>
+    <tr>
+      <td>output</td>
+      <td>selector</td>
+      <td>return element with pair selector class only</td>
+    </tr>
+    <tr>
+      <td>xhttp</td>
+      <td>object</td>
+      <td>based on XML Http Request, for ajax</td>
+    </tr>
+    <tr>
+      <td>modal</td>
+      <td>-</td>
+      <td>Bootstrap 5 modal initialize</td>
+    </tr>
+    <tr>
+      <td>toast</td>
+      <td>-</td>
+      <td>Bootstrap 5 toast initialize</td>
+    </tr>
+    <tr>
+      <td>select2</td>
+      <td>urlData, select, input, callback</td>
+      <td>Select2 plugin</td>
+    </tr>
+    <tr>
+      <td>datatable</td>
+      <td>columns, ajax, dataCallback</td>
+      <td>Datatables plugin</td>
+    </tr>
+    <tr>
+      <td>ckeditor</td>
+      <td>selectorId</td>
+      <td>ckeditor 5 plugin</td>
+    </tr>
+    <tr>
+      <td>chartjs</td>
+      <td>-</td>
+      <td>Chartjs plugin</td>
+    </tr>
+
+  </table>
+</div>
+
+<!-- COMPLETE EXAMPLE -->
+<div id="complete_example" class="mb-5 pt-5">
+  <h5>Complete Example</h5>
+  <div>
+    example update it should be same as view, create, etc. <br> first asume you already have your views & layout with
+    with 3 files exists .css, .html, .js and create app based on class extended CoreController, and loader with CoreLoader
+  </div>
+  <br>
+  <div class="mb-3">
+    <div>on file layout (.js) create framework and setup like this</div>
+    <div class="code-box : bg-dark">
+      <?php highlight_string('<?php // javascript
+const NIRVANA = new Framework({
+  AppName: {
+    url: base_url
+  },
+});
+    '); ?>
+    </div>
+  </div>
+  <div class="mb-3">
+    <div>on file javascript (.js) create app and register to loader like this</div>
+    <div class="code-box : bg-dark">
+      <?php highlight_string('<?php // javascript
+NIRVANA.build( "AppName", ( Manifest ) => {
+  /* CREATE Frontend */
+  class Create extends Frontend {
+    init() {
+      this.load("form");
+    }
+    start() {}
+    submit() {
+      this.form.build("MyForm", {
+        input: this.form.patch("MyForm", "input").val(),
+      });
+      let data = this.form.value("MyForm");
+      this.api("POST", "table", data, resp=> {
+        // do something here
+      });
+    }
+  }
+  /* LOADER Frontend */
+  return {
+    Apps: {
+      Create: new Create,
+    },
+    Clones: {}
+  }
+});
+    '); ?>
+    </div>
+  </div>
+  <div class="mb-3">
+    <div>on file hypertext (.html) call the app like this</div>
+    <div class="code-box : bg-dark">
+      <?php highlight_string('<?php // hypertext
+// button for call app
+<button onclick="NIRVANA.start(\'AppName\', \'Create\', 3)">Update</button>
+// twig based load template
+{% include "update.html" %}
+    '); ?>
+    </div>
+  </div>
+  <div class="mb-3">
+    <div>on file hypertext (update.html) create modal like this</div>
+    <div class="code-box : bg-dark">
+      <?php highlight_string('<?php // hypertext
+<div AppName="Create">
+  <form action="#">
+    <div AppName-Form="MyForm">
+      <input type="text" name="input">
+    </div>
+    <button type="submit">Save Changes</button>
+  </form>
+</div>
+    '); ?>
+    </div>
+  </div>
+</div>

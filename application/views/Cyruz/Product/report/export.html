@@ -1,0 +1,18 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Name</th>
+      <th>Content</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for x in data %}
+    <tr>
+      <td>{{ x.category }}</td>  
+      <td>{{ x.name }}</td>  
+      <td>{{ x.content }}</td>  
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

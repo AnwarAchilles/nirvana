@@ -1,0 +1,71 @@
+<!-- NAVBAR -->
+<div class="sticky-top w-100 bg-light border overflow-auto scrollbar">
+  <div class="navigation-content">
+    <a href="#header" class="border-end">#</a>
+    <a href="#table_pairing" class="border-end">Table Pairing</a>
+    <a href="#existing_object" class="border-end">Existing Object</a>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div id="header" class="mb-5 pt-5">
+  <h3>Database Object Relationship Model</h3>
+  <div>
+    Models that are integrated with the API are already available, just by associating the model with CoreModel and giving the table name it is automatically integrated with CoreApi to plunder the Database.
+  </div>
+</div>
+
+<!-- TABLE PAIRING -->
+<div id="table_pairing" class="mb-5 pt-5">
+  <h5>Table Pairing</h5>
+  <div>Pair the Model with the Table in the database according to the table name like this, and will get its own api endpoint.</div>
+  <div class="code-box : bg-dark">
+  <?php highlight_string('<?php
+// extending to CoreModel
+class M_Tablename extends BaseModel {
+  // set table name here
+  public $table = "tablename";
+  ...
+}
+  '); ?>
+  </div>
+</div>
+
+<!-- EXISTING OBJECT -->
+<div id="existing_object" class="mb-5 pt-5">
+  <h5>Existing Object</h5>
+  <div>List of objects from CoreModel to use.</div>
+  <table class="table table-bordered">
+    <tr>
+      <th width="40%">Method</th>
+      <th>Parameter</th>
+      <th>Todo</th>
+    </tr>
+    <tr>
+      <td>view | get</td>
+      <td>array</td>
+      <td>resulting from database</td>
+    </tr>
+    <tr>
+      <td>create | insert | set</td>
+      <td>array</td>
+      <td>inserting to database</td>
+    </tr>
+    <tr>
+      <td>update | put</td>
+      <td>array</td>
+      <td>updating from database</td>
+    </tr>
+    <tr>
+      <td>delete | del</td>
+      <td>array</td>
+      <td>deleting on database</td>
+    </tr>
+    <tr>
+      <td>fields</td>
+      <td>-</td>
+      <td>returning all fields name</td>
+    </tr>
+
+  </table>
+</div>

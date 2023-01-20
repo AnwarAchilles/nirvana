@@ -1,0 +1,232 @@
+<!-- NAVBAR -->
+<div class="sticky-top w-100 bg-light border overflow-auto scrollbar">
+  <div class="navigation-content">
+    <a href="#header" class="border-end">#</a>
+    <a href="#concept" class="border-end">Concept</a>
+    <a href="#configuration" class="border-end">Configuration</a>
+    <a href="#directory" class="border-end">Directory</a>
+    <a href="#router" class="border-end">Router</a>
+    <a href="#model_database" class="border-end">Model & Database</a>
+    <a href="#controller" class="border-end">Controller</a>
+    <a href="#view_frontend" class="border-end">View & Frontend</a>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div id="header" class="mb-5 pt-5">
+  <h3>Structure Goal</h3>
+  <div>
+    An introduction to the structure that will be built with this tool along with tutorials / examples of doing CRUD, will be a little similar to some of the frameworks that are often used, although it will not be too similar and hopefully it will not be confusing or even take longer to work with the tool this.
+  </div>
+</div>
+
+<!-- CONCEPT -->
+<div id="concept" class="mb-5 pt-5">
+  <h5>Concept</h5>
+  <div>
+    Schemes of the structure goal from nirvana project
+  </div>
+  <div class="text-center">
+    <img class="w-75 border shadow" src="<?= base_url('storage/images/Concept-Goal-Nirvana.jpg') ?>" alt="concept.jpg">
+  </div>
+</div>
+
+<!-- CONFIGURATION -->
+<div id="configuration" class="mb-5 pt-5">
+  <h5>Configuration</h5>
+  <div class="mb-3">
+    <div>
+      set api mode and prefix, if you use index primary key like table_id, and not id set prefix to TRUE, and development mode is more recommended in the website building stage.
+    </div>
+    <div class="code-box : bg-dark">
+    <?php highlight_string('<?php
+$api["mode"] = "development";
+$api["prefix"] = FALSE;
+    '); ?>
+    </div>
+  </div>
+  <div class="mb-3">
+    <div>
+      install some libraries to use the Controller and set it here, don't do it in /application/config/config.php because it will affect the API.
+    </div>
+    <div class="code-box : bg-dark">
+    <?php highlight_string('<?php
+$config["loader"] = [
+  "libraries"=> [ "twig", "curl", "session", ... ];
+];
+    '); ?>
+    </div>
+  </div>
+  <div class="mb-3">
+    <div>
+      open the file in this folder /application/config/core.php, and create an additional layout if there are 2 different websites such as the Admin and the Landing Page.
+    </div>
+    <div class="code-box : bg-dark">
+    <?php highlight_string('<?php
+$controller["layout"]["default"] = [...];
+// or
+$controller["layout"]["admin"] = [...];
+$controller["layout"]["landing"] = [...];
+    '); ?>
+    </div>
+  </div>
+</div>
+
+<!-- DIRECTORY -->
+<div id="directory" class="mb-5 pt-5">
+  <h5>Directory</h5>
+  <div>
+    <i class="fa fa-warning : text-warning"></i>
+    Skip this section if you are only creating 1 webapp, with the default layout
+  </div>
+  <br>
+  <div class="mb-3">
+    <div>
+      There are Apis.php and @Api/ by default and it is not recommended to delete them, add your folders and files like this.
+    </div>
+    <div class="code-box : bg-dark">
+      <?php highlight_string('<?php
+  Controller
+  ↳ @Api/
+" ↳ Admin/                "
+"   ↳ Dashboard.php       "
+" ↳ Landing/              "
+"   ↳ Home.php            "
+  ↳  Apis.php
+      '); ?>
+      </div>
+  </div>
+</div>
+
+<!-- ROUTER -->
+<div id="router" class="mb-5 pt-5">
+  <h5>Router</h5>
+  <div>
+    <i class="fa fa-warning : text-warning"></i>
+    Skip this section if you are only creating 1 webapp, with the default layout
+  </div>
+  <br>
+  <div class="mb-3">
+    <div>
+      The router is like CodeIgniter 3 in general, with the addition of a router for api for Nesting folders like Admin and Landing previously made like this.
+    </div>
+    <div class="code-box : bg-dark">
+      <?php highlight_string('<?php
+$route["admin"] = "admin/dashboard";
+
+$route["landing"] = "landing/home";
+
+// for router get id
+$route["landing/home/(:any)"] = "landing/home/$1";
+      '); ?>
+      </div>
+  </div>
+</div>
+
+<!-- MODEL & DATABASE -->
+<div id="model_database" class="mb-5 pt-5">
+  <h5>Model & Database</h5>
+  <div>
+    We assume you have created a database with the name table1, so you have to create a model for this table1 with the name M_Table1 like this.
+  </div>
+  <div class="code-box : bg-dark">
+  <?php highlight_string('<?php
+// extending to BaseModel
+class M_Table1 extends BaseModel {
+  // set table name here
+  public $table = "table1";
+}
+  '); ?>
+  </div>
+  <div>
+    after creating a model like this you will be able to access it by using the builder api such as list, show, create, update, delete, with the endpoint /apis/table1
+  </div>
+</div>
+
+<!-- CONTROLLER -->
+<div id="controller" class="mb-5 pt-5">
+  <h5>Controller</h5>
+  <div>
+    Create a controller for the website page and grab the view with the help of Layout from CoreController as follows.
+  </div>
+  <div class="code-box : bg-dark">
+  <?php highlight_string('<?php
+// class should be extended with CoreController
+class AppName extends BaseController {
+  // index default
+  public function index() {
+    // if use nesting directory or multiple apps
+    $data["layout"] = [
+      "module"=> "admin",
+      "source"=> [ "Admin", "AppName", "index" ],
+    ];
+    // if 1 apps only
+    $data["layout"] = [
+      "source"=> [ "AppName", "index" ],
+    ];
+    // output webapp
+    $this->layout( $data );
+  }
+}
+  '); ?>
+  </div>
+  <div>
+    you will get the controller asking for 3 files in views with the names index.css, index.html, index.js this is the native frontend with the help of core.js later.
+  </div>
+</div>
+
+<!-- VIEW & FRONTEND -->
+<div id="view_frontend" class="mb-5 pt-5">
+  <h5>View & Frontend</h5>
+  <div class="mb-3">
+    <div>
+      Create a frontend based in the index.js file
+    </div>
+    <div class="code-box : bg-dark">
+    <?php highlight_string('<?php
+NIRVANA.build( "AppName", ( Manifest ) => {
+  /* CREATE Frontend */
+  class Create extends Frontend {
+    init() {
+      this.load("form");
+    }
+    start() {}
+    submit() {
+      this.form.build("MyForm", {
+        input: this.form.patch("MyForm", "input").val(),
+      });
+      let data = this.form.value("MyForm");
+      this.api("POST", "table", data, resp=> {
+        // do something here
+      });
+    }
+  }
+  /* LOADER Frontend */
+  return {
+    Apps: {
+      Create: new Create,
+    },
+    Clones: {}
+  }
+});
+    '); ?>
+    </div>
+  </div>
+  <div class="mb-3">
+    <div>
+      Pair the initialize loader with the onload event in the index.html file
+    </div>
+    <div class="code-box : bg-dark">
+    <?php highlight_string('<?php
+<div AppName="Create">
+  <form action="#">
+    <div AppName-Form="MyForm">
+      <input type="text" name="input">
+    </div>
+    <button type="submit">Save Changes</button>
+  </form>
+</div>
+    '); ?>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,87 @@
+
+
+
+<!-- table -->
+<div class="col-sm-12">
+  <div class="card mb-5">
+    <div class="card-clip-box w-100">
+      <div class="card-clip icon left : bg-{{ str_replace('text-', '', sidebars.administrator.child.menu.color) }} shadow">
+        <i class="fa fa-{{ sidebars.administrator.child.menu.icon }} fa-swap-opacity fa-2x"></i>
+      </div>
+      <div class="card-text ms-4 w-100 d-block d-sm-flex justify-content-between">
+        <div class="mb-4">
+          <h3 class="m-0">{{ table.header }}</h3>
+          <p class="m-0 text-muted">{{ table.description }}</p>
+        </div>
+        <div class="d-flex align-items-center">
+          {% if sidebars.administrator.child.menu.options.create %}
+          <button type="button" class="btn btn-primary : ms-2" onclick="NIRVANA.start('Menu', 'Create')">
+            <i class="fa fa-add : me-1"></i> Create New
+          </button>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="card-body table-responsive p-3 scrollbar">
+      <table class="datatables : table table-hover">
+        <thead>
+          <tr>
+            <th></th>
+            <th>#</th>
+            <th>Icon</th>
+            <th>Name</th>
+            <th>Parent</th>
+            <th>Url / Base</th>
+            <th>Note</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot></tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+<!-- table button -->
+<div class="datatables_button" hidden>
+  <button class="btn px-3 btn-primary shadow dropdown-toggle-split" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <i class="fa fa-ellipsis-vertical"></i>
+  </button>
+  <ul class="dropdown-menu shadow">
+    {% if sidebars.administrator.child.menu.options.view %}
+    <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'View', {id_menu})"><i class="fa fa-fw fa-eye : me-1 text-secondary"></i> View</button></li>
+    {% endif %}
+
+    {% if sidebars.administrator.child.menu.options.update %}
+    <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'Update', {id_menu})"><i class="fa fa-fw fa-edit : me-1 text-secondary"></i> Update</button></li>
+    {% endif %}
+
+    {% if sidebars.administrator.child.menu.options.delete %}
+    <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'Delete', {id_menu})"><i class="fa fa-fw fa-trash : me-1 text-secondary"></i> Delete</button></li>
+    {% endif %}
+  </ul>
+</div>
+
+
+
+
+<!-- LOAD MODALS -->
+{% set path = layout.source[0] ~ '/' ~ layout.source[1] %}
+{% include path ~ '/modal/view.html' %}
+{% include path ~ '/modal/create.html' %}
+{% include path ~ '/modal/update.html' %}
+{% include path ~ '/modal/delete.html' %}
+
+
+
+<!-- BASE DEFAULT -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 99999">
+  <div Menu-Toast="Default" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-body py-2 px-3 d-flex align-items-center">
+      <div Toast-Patch="icon"></div>
+      <div Toast-Patch="text" class="w-100"></div>
+      <button class="btn text-danger" data-bs-dismiss="toast" aria-label="Close">
+        <i class="fa-solid fa-times fa-xl"></i>
+      </button>
+    </div>
+  </div>
+</div>

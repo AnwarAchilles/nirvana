@@ -1,0 +1,312 @@
+<!-- NAVBAR -->
+<div class="sticky-top w-100 bg-light border overflow-auto scrollbar">
+  <div class="navigation-content">
+    <a href="#header" class="border-end">#</a>
+    <a href="#concept" class="border-end">Concept</a>
+    <a href="#existing_endpoint" class="border-end">Existing Endpoint</a>
+    <a href="#exta_endpoint" class="border-end">Extra/Misc Endpoint</a>
+    <a href="#existing_object" class="border-end">Existing Object</a>
+    <a href="#costumize" class="border-end">Costumize</a>
+    <a href="#query_http" class="border-end">Query HTTP</a>
+    <a href="#complete_example" class="border-end">Complete Example</a>
+  </div>
+</div>
+
+
+<!-- HEADER -->
+<div id="header" class="mb-5 pt-5">
+  <h3>Rest HTTP/API</h3>
+  <div>
+    Doing a resting http/ api with nirvana, there is an auto builder api for each table indexed with Model and has endpoints by default such as list, show, create, update, delete and can create endpoints for special needs it is also possible to do with nirvana.
+  </div>
+  <br>
+  <div>
+    About the plugin : <a href="https://github.com/chriskacerguis/codeigniter-restserver">https://github.com/chriskacerguis/codeigniter-restserver</a>
+  </div>
+</div>
+
+<!-- CONCEPT -->
+<div id="concept" class="mb-5 pt-5">
+  <h5>Concept</h5>
+  <div>
+    Endpoint : <code>/api/{table}/{id}</code> relative if you not have controller but 
+    have an model exists endpoint is exists.
+  </div>
+  <br>
+  <div>
+    There have a BaseApi on directory <code>/applications/controllers/Api/BaseApi.php</code> and all api controller extends Base
+  </div>
+</div>
+
+<!-- EXISTING ENDPOINT -->
+<div id="existing_endpoint" class="mb-5 pt-5">
+  <h5>Existing Endpoint</h5>
+  <table class="table table-bordered">
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>For</th>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/api/{table}</td>
+      <td>Listing all data</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/api/{table}/{id}</td>
+      <td>Showing existing data</td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td>/api/{table}</td>
+      <td>Inserting existing data</td>
+    </tr>
+    <tr>
+      <td>PUT</td>
+      <td>/api/{table}/{id}</td>
+      <td>Updating existing data</td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td>/api/{table}/{id}</td>
+      <td>Deleting existing data</td>
+    </tr>
+  </table>
+</div>
+
+<!-- EXTRA/MISC ENDPOINT -->
+<div id="exta_endpoint" class="mb-5 pt-5">
+  <h5>Extra/Misc Endpoint</h5>
+  <div>This is from file <code>BaseApi.php</code></div>
+  <br>
+  <table class="table table-bordered">
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>For</th>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/api/{table}/fields</td>
+      <td>Listing all field only</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/api/{table}/datatable</td>
+      <td>Plugin Datatables</td>
+    </tr>
+  </table>
+</div>
+
+<!-- EXISTING OBJECT -->
+<div id="existing_object" class="mb-5 pt-5">
+  <h5>Existing Object</h5>
+  <table class="table table-bordered">
+    <tr>
+      <th>Object</th>
+      <th>Alias</th>
+      <th>Return</th>
+      <th>Todo</th>
+    </tr>
+    <tr>
+      <td>models</td>
+      <td>mod</td>
+      <td>object</td>
+      <td>Working with database</td>
+    </tr>
+    <tr>
+      <td>index</td>
+      <td>id</td>
+      <td>string | numeric</td>
+      <td>get id from http</td>
+    </tr>
+    <tr>
+      <td>query</td>
+      <td>que</td>
+      <td>array</td>
+      <td>get query from http</td>
+    </tr>
+    <tr>
+      <td>method</td>
+      <td>http</td>
+      <td>array</td>
+      <td>get http method request</td>
+    </tr>
+    <tr>
+      <td>files</td>
+      <td>file</td>
+      <td>array</td>
+      <td>get http method files only request</td>
+    </tr>
+    <tr>
+      <td>output</td>
+      <td>out</td>
+      <td>array</td>
+      <td>clearing and remap response from api</td>
+    </tr>
+    <tr>
+      <td>development</td>
+      <td>dev</td>
+      <td>array</td>
+      <td>add dev state from api response</td>
+    </tr>
+    <tr>
+      <td>data</td>
+      <td>-</td>
+      <td>array</td>
+      <td>add data stat from api response</td>
+    </tr>
+    <tr>
+      <td>return</td>
+      <td>-</td>
+      <td>array</td>
+      <td>Working with database</td>
+    </tr>
+  </table>
+</div>
+
+<!-- COSTUMIZE -->
+<div id="costumize" class="mb-5 pt-5">
+  <h5>Costumize</h5>
+  <div class="mb-3">
+    <div>example costum endpoint on <code>BaseApi.php</code> inflicted to all table</div>
+    <div class="code-box : bg-dark">
+    <?php highlight_string('<?php
+// class for automaticly and inherited
+class Apis extends BaseApi {
+  // here add costum endpoint
+  public function example_GET() {}
+  ...
+}
+    ') ?>
+    </div>
+  </div>
+  <div class="mb-3">
+    <div>example costum endpoint on <code>/api</code> only 1 table inflicted</div>
+    <div class="code-box : bg-dark">
+    <?php highlight_string('<?php
+// class for automaticly and inherited
+class Apis extends BaseApi {
+  // here add costum endpoint
+  public function example_GET() {}
+  ...
+}
+    ') ?>
+    </div>
+  </div>
+  <div class="mb-3">
+    <div>example costumize rest from existing endpoint</div>
+    <div class="code-box : bg-dark">
+    <?php highlight_string('<?php
+...
+// costumize list endpoint
+public function list_REST() {}
+// costumize show endpoint
+public function show_REST() {}
+// costumize create endpoint
+public function create_REST() {}
+// costumize update endpoint
+public function update_REST() {}
+// costumize delete endpoint
+public function delete_REST() {}
+...
+    ') ?>
+    </div>
+  </div>
+</div>
+
+<!-- QUERY HTTP -->
+<div id="query_http" class="mb-5 pt-5">
+  <h5>Query HTTP</h5>
+  <div>example costum endpoint on /apis inflicted to all table</div>
+  <div class="code-box : bg-dark">
+  <?php highlight_string('<?php
+// select sperified field
+$query["Q[select]"] = "filed1, field2";
+// where equal
+$query["Q[where][id]"] = "1";
+// where not equal
+$query["Q[where][name]"] = "!= name";
+// like
+$query["Q[like][name]"] = "name";
+// order
+$query["Q[order][id]"] = "asc | desc";
+// join to anouther table
+$query["Q[join][table2]"] = "table1.name = table2.name";
+// send to api
+$this->http("GET", "/apis/table", $query);
+  ') ?>
+  </div>
+</div>
+
+<!-- COMPLETE EXAMPLE -->
+<div id="complete_example" class="mb-5 pt-5">
+  <h5>Complete Example</h5>
+  <div class="mb-3">
+    <div>this is example for manual endpoint should be in <code>/controller/api/Table.php</code></div>
+    <div class="code-box : bg-dark">
+    <?php highlight_string('<?php
+// class should be extended with CoreApi
+class Table extends BaseApi {
+  // load core api
+  public function __construct() {
+    parent::__construct();
+    // do something to all object here
+  }
+  // here add costum endpoint
+  public function index_GET() {
+    // get data from method
+    $payload = $this->query;
+    $payload["data"] = $this->method;
+    // get database and set output to data
+    $db = $this->models->get( $payload )->result();
+    // check if name same
+    if ($this->method["name"] == $db["name"]) {
+      $this->data = $db;
+    }else {
+      $this->data = [];
+    }
+    // set response status code and message
+    $this->return(200, "OK");
+  }
+}
+    ') ?>
+    </div>
+  </div>
+  <div class="mb-3">
+    <div>access the api on controller in <code>/controller/Page.php</code></div>
+    <div class="code-box : bg-dark">
+    <?php highlight_string('<?php
+// class should be extended with CoreController
+class Page extends BaseController {
+  // index default
+  public function index() {
+    // create your query
+    $query = [];
+    // get data
+    $data = $this->http("GET", "api/table", $query);
+    // output the data response
+    debug($data);
+  }
+}
+    ') ?>
+    </div>
+  </div>
+  <div class="mb-3">
+    <div>Access web in <code>http://localhost/page</code> should be like this</div>
+    <div class="code-box : bg-dark">
+    <?php highlight_string('<?php
+{
+  "development": "",
+  "status": 200,
+  "message": "OK",
+  "data": [
+    { "field1": "jhon", "field2":"doe" },
+    { "field1": "jhenny", "field2":"doe" }
+  ]
+}
+    ') ?>
+    </div>
+  </div>
+</div>

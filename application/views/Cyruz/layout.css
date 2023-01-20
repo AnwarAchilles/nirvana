@@ -1,0 +1,68 @@
+
+
+#cz__sidebar {
+  color: var(--bs-light);
+  background-color: var(--bs-dark);
+}
+#cz__sidebar_body > .nav a.btn > span { color: var(--bs-light); }
+
+/* SELECT 2 RE THEMES */
+.modal {
+  top: inherit;
+  bottom: 0;
+}
+
+
+/* SELECT 2 RE THEMES */
+.select2-container--bootstrap-5 .select2-dropdown .select2-results__options .select2-results__option.select2-results__option--highlighted {
+  color: white;
+  background-color: var(--bs-primary);
+}
+
+
+
+/* FORM */
+.form-label[required]::after {
+  content: "*";
+  color: red;
+}
+
+
+
+/* LOADER */
+@keyframes loader {
+  0% { height: 10px }
+  50% { height: 70px }
+  100% { height: 10px }
+}
+#cz__loader [class*="line-"] {
+  height: 10px;
+  margin-right: 5px;
+  display: block;
+  border-radius: 100px;
+}
+#cz__loader .line-1 {
+  border-left: 10px solid var(--bs-info);
+  animation: loader 0.8s ease-in-out 0.1s infinite;
+}
+#cz__loader .line-2 {
+  border-left: 10px solid var(--bs-primary);
+  animation: loader 0.8s ease-in-out 0.2s infinite;
+}
+#cz__loader .line-3 {
+  border-left: 10px solid var(--bs-danger);
+  animation: loader 0.8s ease-in-out 0.3s infinite;
+}
+
+
+/* TABLE RE THEME */
+div.table-responsive>div.dataTables_wrapper>div.row:nth-child(1) [class*="col-"] {
+  margin-bottom: 10px;
+  padding: 0;
+}
+div.table-responsive>div.dataTables_wrapper>div.row:nth-child(1) [class*="col-"] input {
+  width: 200px;
+}
+div.table-responsive>div.dataTables_wrapper>div.row:nth-child(1) [class*="col-"] select {
+  width: 150px;
+}

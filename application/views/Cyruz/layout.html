@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <!-- META CHARSET -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+  <!-- VIEWPORT -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <!-- APPLE MOBLE CAPABLE -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <!-- APPLE TOUCH -->
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-startup-image" href="{{ base_url('assets/images/thermo-logo.png') }}">
+
+  <!-- INTERNET EXPLORER SUPPORT -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- HANDLE OPTIMIZING FRIENDLY -->
+  <meta name="HandheldFriendly" content="true">
+  <!-- MOBILE OPTIMIZING -->
+  <meta name="MobileOptimized" content="width">
+
+  <!-- WARNA THEMES -->
+  <!-- Chrome, Firefox OS and Opera -->
+  <meta name="theme-color" content="{{ layout.tab_color }}">
+  <!-- Windows Phone -->
+  <meta name="msapplication-navbutton-color" content="{{ layout.tab_color }}">
+  <!-- iOS Safari -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="{{ layout.tab_color }}">
+
+  <!-- DESCRIPTIONS -->
+  <meta name="description" content="{{ layout.description }}">
+
+  <!-- Google / Search Engine Tags -->
+  <meta itemprop="name" content="{{ layout.name }}">
+  <meta itemprop="description" content="{{ layout.description }}">
+  <meta itemprop="image" content="{{ base_url('assets/images/main-banner-1.jpeg') }}">
+
+  <!-- Facebook Meta Tags -->
+  <meta property="og:url" content="{{ base_url }}">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ layout.name }}">
+  <meta property="og:description" content="{{ layout.description }}">
+  <meta property="og:image" content="{{ base_url('assets/images/main-banner-1.jpeg') }}">
+
+  <!-- Twitter Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ layout.name }}">
+  <meta name="twitter:description" content="{{ layout.description }}">
+  <meta name="twitter:image" content="{{ base_url('assets/images/main-banner-1.jpeg') }}">
+
+  <!-- home screen icon defaults - 48x48 -->
+  <link rel="apple-touch-icon" href="{{ base_url('assets/images/thermo-logo-black.png') }}"/> 
+  <link rel="icon" sizes="192x192" href="{{ base_url('assets/images/thermo-logo-black.png') }}" />
+
+  <!-- ANDROID MANIFEST -->
+  <link rel="manifest" href="{{ base_url('manifest.json') }}">
+
+  <!-- SHORTCUT ICONS -->
+  <link rel="shortcut icon" type="image/x-icon" href="{{ base_url('assets/images/thermo-logo-black.png') }}">
+
+  <!-- TITLE -->
+  <title>{{ layout.title }}</title>
+  
+  <!-- CSS CONTENT -->
+  {% for style in layout.stylesheet.source %}
+  <link href="{{ style }}" rel="stylesheet">
+  {% endfor %}
+  
+  {% if report.viewer == true %}
+  <style>
+    body {
+      /* font-family: 'Courier New', Courier, monospace; untuk struk bagus */
+      display: block;
+      position: static;
+      background-color: white !important;
+    }
+  </style>
+  {% endif %}
+  
+</head>
+<body>
+
+  <!-- LOADER -->
+  <div id="cz__loader" class="fixed-top w-100 h-100 bg-light bg-gradient" style="z-index:9999">
+    <div class="w-100 h-100 d-flex flex-row align-items-center justify-content-center">
+      <div class="line-1"></div>
+      <div class="line-2"></div>
+      <div class="line-3"></div>
+    </div>
+  </div>
+  <!-- /LOADER -->
+
+  <!-- CONTENT TEMPLATE -->
+  {% if (layout.draw != false) %}
+    {% include layout.use~'-draw.html' %}
+  {% else %}
+    {% include layout.view~'.html' %}
+  {% endif %}
+   <!-- /CONTENT TEMPLATE -->
+
+  <!-- JAVASCRIPT PASS VARIABLE -->
+  <script>
+    {% for variable, value in __javascript %}
+      var {{ ' '~variable | raw }} = JSON.parse('{{ value | json_encode | raw }}');
+    {% endfor %}
+  </script>
+
+  
+  <!-- JAVASCRIPT AFTER LOADED -->
+  {% for script in layout.javascript.source %}
+  <script src="{{ script }}"></script>
+  {% endfor %}
+  
+
+
+</body>
+</html>

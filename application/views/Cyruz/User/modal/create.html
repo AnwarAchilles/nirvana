@@ -1,0 +1,47 @@
+<div User-Modal="Create" class="modal fade" aria-labelledby="modal-size-center-scroll" aria-hidden="true">
+  <div User="Create" class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable">
+    <form class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create New</h5>
+        <button type="button" class="btn text-danger" data-bs-dismiss="modal" aria-label="Close">
+          <i class="fa-solid fa-times fa-xl"></i>
+        </button>
+      </div>
+      <div User-Form="user" class="modal-body scrollbar">
+
+        <div class="mb-4 input-group align-items-center">
+          <label for="create-name" class="form-label m-0 w-25" required>Name</label>
+          <input id="create-name" name="name" type="text" class="form-control" autocomplete="off">
+        </div>
+        <div class="mb-4 input-group align-items-center">
+          <label for="create-email" class="form-label m-0 w-25" required>Email</label>
+          <input id="create-email" name="email" type="email" class="form-control" autocomplete="off">
+        </div>
+        <div class="mb-4 input-group align-items-center">
+          <label for="create-password" class="form-label m-0 w-25" required>Password</label>
+          <input id="create-password" name="password" type="password" class="form-control" autocomplete="off">
+        </div>
+        <div class="mb-4 input-group align-items-center">
+          <label for="create-password2" class="form-label m-0 w-25" required>Password Verify</label>
+          <input id="create-password2" name="password2" type="password" class="form-control" autocomplete="off">
+        </div>
+        <hr>
+        <div class="mb-4 input-group align-items-center">
+          <label for="create-role" class="form-label m-0 w-25">Role</label>
+          <select id="create-role" name="id_role" class="select2">
+            <option value="0">- not use</option>
+          </select>
+        </div>
+        <div class="mb-4 input-group align-items-center">
+          <label for="create-pin" class="form-label m-0 w-25">Pin</label>
+          <input id="create-pin" name="pin" type="number" max-length="6" class="form-control" autocomplete="off">
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+    </form>
+  </div>
+</div>

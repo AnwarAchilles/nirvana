@@ -1,0 +1,292 @@
+<!-- NAVIGATIONS BAR -->
+<div class="shadow-lg" id="cz__sidebar">
+  <div id="cz__sidebar_background"></div>
+  <!-- NAVIGATIONS HEAD -->
+  <div id="cz__sidebar_head" class="text-center">
+    <h2 class="m-0 font-700"><b>Cyruz.</b></h2>
+    <small class="text-muted d-block font-500" style="font-size:70%; margin-top:-3px;">Template Admin</small>
+  </div>
+  <!-- END NAVIGATIONS BAR -->
+  <!-- NAVIGATIONS BODY -->
+  <div id="cz__sidebar_body" class="scrollbar">
+    <ul class="nav flex-column">
+      {% for data in sidebars %}
+      
+      {% if data.child != '' %}
+      <li>
+        <a href="#{{ data.url }}" class="btn" data-bs-toggle="collapse">
+          <i class="fa-duotone fa-xl fa-fw fa-{{ data.icon }} : icon {{ ' '~data.color }}"></i>
+          <span>{{ data.name }}</span>
+        </a>
+        <div class="collapse" id="{{ data.url }}">
+          <ul class="nav flex-column">
+            {% for data in data.child %}
+            <li>
+              <a href="{{ base_url(data.url) }}" class="btn">
+                <i class="fa-duotone fa-fw fa-xl fa-{{ data.icon }} : icon {{ ' '~data.color }}"></i>
+                <span>{{ data.name }}</span>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </li>
+      {% else %}
+      <li>
+        <a href="{{ base_url(data.url) }}" class="btn">
+          <i class="fa-duotone fa-stack fa-lg fa-{{ data.icon }} : icon {{ ' '~data.color }}"></i>
+          <span>{{ data.name }}</span>
+        </a>
+      </li>
+      {% endif %}
+
+      {% endfor %}
+    </ul>
+    <br><br><br><br><br><br>
+  </div>
+  <!-- /NAVIGATIONS BODY -->
+</div>
+<!-- /NAVIGATIONS BAR -->
+
+<!-- CONTENT -->
+<div class="bg-light" id="cz__content">
+
+  <!-- BAR BUTTONS -->
+  <div class="cz__content_head : d-flex justify-content-between align-items-center">
+    <div class="d-flex flex-grow-1">
+      <button class="__open_sidebar : btn btn-lg">
+        <i class="fa-duotone fa-xl fa-bars"></i>
+      </button>
+    </div>
+    <div class="d-flex align-items-center">
+      <!-- fullscreen -->
+      <button class="cz__fullscreen : btn">
+        <i class="fa-duotone fa-expand-wide fa-xl"></i>
+      </button>
+      <!-- language -->
+      <!-- <div class="cz__language : dropdown">
+        <button class="btn link-info" type="button" id="drop-language" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fa-duotone fa-xl fa-language"></i>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="drop-language">
+          <li><a class="dropdown-item" href="#">English</a></li>
+          <li><a class="dropdown-item" href="#">Indonesian</a></li>
+        </ul>
+      </div> -->
+      <!-- notifications -->
+      <!-- <div class="cz__notifications : dropdown">
+        <button class="btn link-warning" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fa-duotone fa-xl fa-bell-on"></i>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li>
+            <div class="dropdown-header d-flex justify-content-between align-items-center flex-wrap sticky-top">
+              <h5 class="m-0">You Have 4 notifications</h5>
+              <div>
+                <a href="#" class="btn btn-sm btn-primary">View All</a>
+                <button class="btn btn-sm btn-danger">Clear All</button>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="dropdown-header">New</div>
+          </li>
+          <li>
+            <a class="dropdown-item" href="#">
+              <img class="img : rounded-circle me-2" src="{{ base_url('storage/images/avatar-1.jpg') }}" width="40px">
+              <div class="textbox">
+                <h6>New update from user</h6>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit amet consectetur adipisicing elit amet consectetur adipisicing elit</p>
+              </div>
+              <small class="time : align-self-start text-muted">
+                <i class="fa-solid fa-clock"></i> 5 min ago
+              </small>
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="#">
+              <i class="fa-duotone fa-2x fa-cloud-sun fa-fw : icon : text-primary"></i>
+              <div class="textbox">
+                <h6>New update from user</h6>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit amet consectetur adipisicing elit amet consectetur adipisicing elit</p>
+              </div>
+              <small class="time align-self-start text-muted">
+                <i class="fa-solid fa-clock"></i> 5 min ago
+              </small>
+            </a>
+          </li>
+          <li>
+            <div class="dropdown-header">Earlier</div>
+          </li>
+          <li>
+            <a class="dropdown-item" href="#">
+              <i class="fa-duotone fa-2x fa-temperature-arrow-up fa-fw : icon text-danger"></i>
+              <div class="textbox">
+                <h6>New update from user</h6>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit amet consectetur adipisicing elit amet consectetur adipisicing elit</p>
+              </div>
+              <small class="time align-self-start text-muted">
+                <i class="fa-solid fa-clock"></i> 15 min ago
+              </small>
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="#">
+              <i class="fa-duotone fa-2x fa-circle-exclamation fa-fw : icon text-info"></i>
+              <div class="textbox">
+                <h6>New update from user</h6>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit amet consectetur adipisicing elit amet consectetur adipisicing elit</p>
+              </div>
+              <small class="time align-self-start text-muted">
+                <i class="fa-solid fa-clock"></i> 30 min ago
+              </small>
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="#">
+              <i class="fa-duotone fa-2x fa-triangle-exclamation fa-fw : icon text-warning"></i>
+              <div class="textbox">
+                <h6>New update from user</h6>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit amet consectetur adipisicing elit amet consectetur adipisicing elit</p>
+              </div>
+              <small class="time align-self-start text-muted">
+                <i class="fa-solid fa-clock"></i> 2 hour ago
+              </small>
+            </a>
+          </li>
+          <li>...</li>
+        </ul>
+      </div> -->
+      <!-- profil -->
+      <div class="cz__profil : dropdown">
+        <button class="btn link-danger border rounded-pill px-2" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fa-duotone fa-xl fa-user-circle"></i>
+          <!-- <img class="img : rounded-circle" src="{{ base_url('storage/images/avatar-2.jpg') }}" width="25px"> -->
+          <span class="name : font-500">{{ users.email }}</span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li><a class="dropdown-item" href="#"><i class="fa fa-user : me-2"></i> Profile</a></li>
+          <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-gear : me-2"></i> Settings</a></li> -->
+          <!-- <li><hr class="dropdown-divider"></li> -->
+          <li><a class="dropdown-item" href="{{ base_url('/cyruz/auth/logout') }}"><i class="fa fa-power-off : me-2"></i> Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- /BAR BUTTONS -->
+
+  <!-- CONTENT BODY -->
+  <div id="cz__content_body" class="scrollbar">
+    <div class="container-fluid">
+      <!-- CONTENT HEADING -->
+      <div class="content-heading">
+        <!-- <h2 class="m-0">{{ layout.title }}</h2> -->
+        <!-- <small class="text-muted">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="#">Library</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Data</li>
+            </ol>
+          </nav>
+        </small> -->
+      </div>
+      <!-- /CONTENT HEADING -->
+
+      <!-- CONTENT PANEL -->
+      <div class="cz__content_panel : row">
+        
+        <!-- SIDEBAR & CONTENT MANIPULATION -->
+        {% include layout.view~'.html' %}
+        
+        <!-- BASE DEFAULT -->
+        <div Base="Toasted">
+          <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 99999">
+            <div Base-Toast="Toasted" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+              <div class="toast-header">
+                <div Toast-Patch="icon"><i class="fa-duotone fa-xl fa-user-circle : me-2"></i></div>
+                <strong Toast-Patch="header" class="me-auto">admin@nirvana.com</strong>
+                <small>2 sec ago</small>
+                <button class="btn text-danger" data-bs-dismiss="toast" aria-label="Close">
+                  <i class="fa-solid fa-times fa-xl"></i>
+                </button>
+              </div>
+              <div Toast-Patch="message" class="toast-body">
+                Created Product with serial PRO/2025/AC/200
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TOAST CONTAINER -->
+        <div Container-Toast="Default" class="fixed-top" style="margin-top:120px; z-index: 99999">
+          <div aria-live="polite" aria-atomic="true" class="position-relative">
+            <div class="toast-container position-absolute bottom-0 end-0 p-3"></div>
+          </div>
+        </div>
+        <div Container-Toast="Toasted" class="fixed-bottom" style="margin-top:120px; z-index: 99999">
+          <div aria-live="polite" aria-atomic="true" class="position-relative">
+            <div class="toast-container position-absolute bottom-0 start-0 p-3"></div>
+          </div>
+        </div>
+        <!-- /TOAST CONTAINER -->
+
+      </div>
+      <!-- /CONTENT PANEL -->
+      
+
+      <!-- CONTENT FOOTER -->
+      <div class="cz__content_footer">
+        <p>Copyright &copy; 2022,create with <i class="fa-solid fa-heart : text-danger"></i> Anwar Achilles All right reserved</p>
+      </div>
+      <!-- /CONTENT FOOTER -->
+
+      <!-- SETTING -->
+      <button class="cz__setting : btn btn-sm btn-primary p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#settings" aria-controls="settingsLabel">
+        <i class="fa-duotone fa-gear fa-spin fa-2x"></i>
+      </button>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="settings" aria-labelledby="settingsLabel">
+        <div class="offcanvas-header">
+          <h3 class="font-700">Settings</h3>
+          <button class="btn text-danger" data-bs-dismiss="offcanvas" aria-label="Close">
+            <i class="fa-solid fa-times fa-xl"></i>
+          </button>
+        </div>
+        <div class="offcanvas-body scrollbar">
+          <div class="_set_sidebar : py-5">
+            <h5 class="font-700">Background</h5>
+            <div class="_set_image : mb-5">
+              <img type="button" sidebar-index="1">
+              <img type="button" sidebar-index="2">
+              <img type="button" sidebar-index="3">
+            </div>
+            <hr><h5 class="font-700">Filter</h5>
+            <div class="_set_filter : mb-5">
+              <div>
+                <label for="grayscale">Grayscale</label>
+                <input id="grayscale" name="grayscale" value="56" min="0" max="100" type="range" class="form-range">
+              </div>
+              <div>
+                <label for="opacity">Opacity</label>
+                <input id="opacity" name="opacity" value="5" min="0" max="9" type="range" class="form-range">
+              </div>
+            </div>
+            <hr><h5 class="font-700">Color</h5>
+            <div class="_set_color : mb-5">
+              <button value="white" class="btn border-dark shadow bg-white">White</button>
+              <button value="light" class="btn border-dark shadow bg-light">Light</button>
+              <button value="black" class="btn border-dark shadow bg-black text-white">Black</button>
+              <button value="dark" class="btn border-dark shadow bg-dark text-white">Dark</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- /SETTING -->
+
+    </div>
+  </div>
+  <!-- /CONTENT BODY -->
+
+</div>
+<!-- /CONTENT -->

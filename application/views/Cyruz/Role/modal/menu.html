@@ -1,0 +1,101 @@
+<div Role-Modal="Menu" class="modal fade" aria-labelledby="modal-size-center-scroll" aria-hidden="true">
+  <div Role="Menu" class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <form class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Menu</h5>
+        <button type="button" class="btn text-danger" data-bs-dismiss="modal" aria-label="Close">
+          <i class="fa-solid fa-times fa-xl"></i>
+        </button>
+      </div>
+      <div class="modal-body scrollbar p-3 bg-light">
+
+        <table class="table border m-0 bg-white">
+          <thead>
+            <tr>
+              <th width="5%">Icon</th>
+              <th width="100%">Name</th>
+              <th width="3%"><i class="fa fa-md fa-eye fa-fw : text-secondary me-1"></i></th>
+              <th width="3%"><i class="fa fa-md fa-add fa-fw : text-secondary me-1"></i></th>
+              <th width="3%"><i class="fa fa-md fa-edit fa-fw : text-secondary me-1"></i></th>
+              <th width="3%"><i class="fa fa-md fa-trash fa-fw : text-secondary me-1"></i></th>
+              <th width="3%"><i class="fa fa-md fa-print fa-fw : text-secondary me-1"></i></th>
+              <th width="3%"><i class="fa fa-md fa-upload fa-fw : text-secondary me-1"></i></th>
+              <th width="3%"><i class="fa fa-md fa-download fa-fw : text-secondary me-1"></i></th>
+              <th width="3%"><i class="fa fa-md fa-table fa-fw : text-secondary me-1"></i></th>
+              <th width="5%"></th>
+            </tr>
+          </thead>
+          <tbody class="boxMenu"></tbody>
+        </table>
+
+      </div>
+      
+      <div Role-form="role_menu" class="modal-footer">
+        <div class="d-flex flex-wrap w-100">
+          <div class="form-check me-2">
+            <input class="form-check-input" type="checkbox" id="menu-view" name="option_view">
+            <label class="form-check-label" for="menu-view">View</label>
+          </div>
+          <div class="form-check me-2">
+            <input class="form-check-input" type="checkbox" id="menu-create" name="option_create">
+            <label class="form-check-label" for="menu-create">Create</label>
+          </div>
+          <div class="form-check me-2">
+            <input class="form-check-input" type="checkbox" id="menu-update" name="option_update">
+            <label class="form-check-label" for="menu-update">Update</label>
+          </div>
+          <div class="form-check me-2">
+            <input class="form-check-input" type="checkbox" id="menu-delete" name="option_delete">
+            <label class="form-check-label" for="menu-delete">Delete</label>
+          </div>
+          <div class="form-check me-2">
+            <input class="form-check-input" type="checkbox" id="menu-print" name="option_print">
+            <label class="form-check-label" for="menu-print">Print</label>
+          </div>
+          <div class="form-check me-2">
+            <input class="form-check-input" type="checkbox" id="menu-Import" name="option_import">
+            <label class="form-check-label" for="menu-Import">Import</label>
+          </div>
+          <div class="form-check me-2">
+            <input class="form-check-input" type="checkbox" id="menu-export" name="option_export">
+            <label class="form-check-label" for="menu-export">Export</label>
+          </div>
+          <div class="form-check me-2">
+            <input class="form-check-input" type="checkbox" id="menu-format" name="option_format">
+            <label class="form-check-label" for="menu-format">Format</label>
+          </div>
+        </div>
+        <div class="input-group align-items-center">
+          <span class="preview-icon : input-group-text"><i class="fa-duotone fa-circle fa-xl : text-secondary"></i></span>
+          <select id="menu-menu" name="id_menu" class="select2"></select>
+          <button type="submit" class="btn btn-primary"><i class="fa fa-add"></i></button>
+        </div>
+      </div>
+    </form>
+
+
+    <div Role-Container="menu" class="d-none">
+      <table>
+        <tbody>
+          <tr>
+            <td Role-Patch="icon"></td>
+            <td Role-Patch="name"></td>
+            <td Role-Patch="optionView" class="text-center"></td>
+            <td Role-Patch="optionCreate" class="text-center"></td>
+            <td Role-Patch="optionUpdate" class="text-center"></td>
+            <td Role-Patch="optionDelete" class="text-center"></td>
+            <td Role-Patch="optionPrint" class="text-center"></td>
+            <td Role-Patch="optionImport" class="text-center"></td>
+            <td Role-Patch="optionExport" class="text-center"></td>
+            <td Role-Patch="optionFormat" class="text-center"></td>
+            <td Role-Patch="idRoleMenu" class="p-1">
+              <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+  </div>
+</div>

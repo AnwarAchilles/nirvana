@@ -1,0 +1,127 @@
+<!-- COUNT USER -->
+<div class="col-md-3">
+  <div class="cz__dashboard_card user : card py-2 card-clip-box">
+    <div class="card-clip icon left : bg-danger shadow">
+      <i class="fa-duotone fa-{{ sidebars.administrator.child.user.icon }} fa-2x"></i>
+    </div>
+    <div class="card-body px-5 text-center">
+      <small class="text-muted font-700">weekly data</small>
+      <h2 class="m-0 font-700">{{ count.user }}</h2>
+      <h5 class="mb-1">User's</h5>
+    </div>
+    <canvas class="position-absolute h-75" style="bottom:0;" width="650px" height="300%"></canvas>
+  </div>
+</div>
+
+<!-- COUNT MENU -->
+<div class="col-md-3">
+  <div class="cz__dashboard_card menu : card py-2 card-clip-box">
+    <div class="card-clip icon left : bg-info shadow">
+      <i class="fa-duotone fa-{{ sidebars.administrator.child.menu.icon }} fa-2x"></i>
+    </div>
+    <div class="card-body px-5 text-center">
+      <small class="text-muted font-700">weekly data</small>
+      <h2 class="m-0 font-700">{{ count.menu }}</h2>
+      <h5 class="mb-1">Menu's</h5>
+    </div>
+    <canvas class="position-absolute h-75" style="bottom:0;" width="650px" height="300%"></canvas>
+  </div>
+</div>
+
+<!-- COUNT ROLE -->
+<div class="col-md-3">
+  <div class="cz__dashboard_card role : card py-2 card-clip-box">
+    <div class="card-clip icon left : bg-warning shadow">
+      <i class="fa-duotone fa-{{ sidebars.administrator.child.role.icon }} fa-2x"></i>
+    </div>
+    <div class="card-body px-5 text-center">
+      <small class="text-muted font-700">weekly data</small>
+      <h2 class="m-0 font-700">{{ count.role }}</h2>
+      <h5 class="mb-1">Role's</h5>
+    </div>
+    <canvas class="position-absolute h-75" style="bottom:0;" width="650px" height="300%"></canvas>
+  </div>
+</div>
+
+<!-- COUNT PRODUCT -->
+<div class="col-md-3">
+  <div class="cz__dashboard_card product : card py-2 card-clip-box">
+    <div class="card-clip icon left : bg-success shadow">
+      <i class="fa-duotone fa-{{ sidebars.product.icon }} fa-2x"></i>
+    </div>
+    <div class="card-body px-5 text-center">
+      <small class="text-muted font-700">weekly data</small>
+      <h2 class="m-0 font-700">{{ count.product }}</h2>
+      <h5 class="mb-1">Product's</h5>
+    </div>
+    <canvas class="position-absolute h-75" style="bottom:0;" width="650px" height="300%"></canvas>
+  </div>
+</div>
+
+
+
+<!-- COUNT PRODUCT -->
+<div class="col-md-6">
+  <div class="card mb-5">
+    <div class="card-header border-0">
+      <div class="card-clip icon center left : bg-primary shadow">
+        <i class="fa-duotone fa-bell-on fa-swap-opacity fa-2x"></i>
+      </div>
+      <div class="card-text d-flex flex-column flex-sm-row justify-content-between">
+        <div class="px-3">
+          <h3 class="m-0">All Interactions Notify</h3>
+          <p class="m-0 text-muted">2348 Unit, products linstening</p>
+        </div>
+        <div>
+          <a href="{{ base_url('Cyruz/Dashboard/resetToasted') }}" class="btn btn-danger">
+            <i class="fa-duotone fa-trash : me-2"></i> Reset
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="card-body table-responsive scrollbar">
+      <table class="table table-hover table-cross">
+        <thead>
+          <tr>
+            <th scope="col">Icon</th>
+            <th scope="col">Header</th>
+            <th scope="col">Message</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for toast in toasted %}
+          <tr>
+            <td><i class="fa-duotone fa-{{ toast.icon }} fa-lg : text-secondary"></i></td>
+            <td>{{ toast.header }}</td>
+            <td>{{ toast.message }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- COUNT PRODUCT -->
+<div class="col-md-6">
+  <div class="cz__dashboard_asset pie : card card-clip-box bg-dark bg-gradient text-light shadow mb-5">
+    <div class="card-clip icon left : bg-secondary shadow">
+      <i class="fa-duotone fa-2x fa-chart-pie"></i>
+    </div>
+    <div class="card-body d-block d-sm-flex">
+      <div class="col-sm-6 pe-0">
+        <div class="xcard-text container pe-0">
+          <h5 class="m-0">Total Asset's</h5>
+          <h1 class="m-0 font-700">{{ totalCount }}</h3>
+          <br>
+          <p class="text-muted">{{ totalCountDescription }}</p>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <canvas class="mx-3" width="950px" height="300%"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+
