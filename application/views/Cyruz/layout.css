@@ -66,3 +66,20 @@ div.table-responsive>div.dataTables_wrapper>div.row:nth-child(1) [class*="col-"]
 div.table-responsive>div.dataTables_wrapper>div.row:nth-child(1) [class*="col-"] select {
   width: 150px;
 }
+div.table-responsive>div.dataTables_wrapper>div.row:nth-child(1) {
+  position: absolute;
+  left: 1;
+  width: 96%;
+  margin-top: -60px;
+}
+/* #DataTables_Table_0_wrapper {
+  position: relative;
+} */
+div.table-responsive>div.dataTables_wrapper>div.row:nth-child(2) {
+  margin-top: 60px;
+}
+div.table-responsive .btn {
+  position: absolute;
+  margin-top: -0.7%;
+  margin-left: -0.7%;
+}
