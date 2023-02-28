@@ -62,10 +62,12 @@ class PackageTable {
     params.type = options.http[0];
     params.url = options.http[1]+"/datatable";
     params.dataSrc = options.patch.bind( this );
+    params.order = options.order;
     // render table
     this.__table[nest] = $(".datatables").DataTable({
       serverSide: true,
       columns: params.columns,
+      order: params.order,
       ajax: {
         url: this.__frontend.base.url+"/"+params.url,
         type: params.type,
