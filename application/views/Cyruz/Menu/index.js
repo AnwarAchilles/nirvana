@@ -8,6 +8,7 @@ NIRVANA.build( "Menu", ( Manifest ) => {
       this.load("table");
       this.table.build("menu", {
         cols: [
+          {data:"id_menu", visible:false},
           {data:"button", width:"5%"},
           {data:"no"},
           {data:"icon", width:"5%"},
@@ -15,9 +16,11 @@ NIRVANA.build( "Menu", ( Manifest ) => {
           {data:"id_parent"},
           {data:"url"},
           {data:"note"},
+          {data:"order"},
         ],
         http: ["GET", "api/menu"],
         patch: ( data )=> {
+          // set url
           data.url = '<i class="text-muted">'+this.base.url+'</i>'+data.url;
           // parent status
           if (data.id_parent!=="0") {
@@ -25,6 +28,7 @@ NIRVANA.build( "Menu", ( Manifest ) => {
           }else {
             data.id_parent = '';
           }
+          // set icon
           data.icon = '<i class="fa-duotone fa-fw fa-lg fa-'+data.icon+' : '+data.color+' me-1"></i>';
         }
       });
