@@ -11,8 +11,8 @@
 
         <div class="mb-4 input-group align-items-center">
           <label for="create-menu" class="form-label m-0 w-25" required>Menu</label>
-          <select id="create-menu" name="id_parent" class="select2">
-            <option value="0">- not use</option>
+          <select id="create-menu" name="id_parent" class="select2" data-placeholder="Select Menu Parent">
+            <option></option>
           </select>
         </div>
         <div class="mb-4 input-group align-items-center">
@@ -27,7 +27,9 @@
           <label for="create-icon" class="form-label m-0 w-25" required>Icon</label>
           <span class="preview-icon : input-group-text"><i class="fa-duotone fa-home fa-xl"></i></span>
           <input id="create-icon" name="icon" type="text" class="form-control w-25" autocomplete="off">
-          <select id="create-color" name="color" class="select2"></select>
+          <select id="create-color" name="color" class="select2" data-placeholder="Colors">
+            <option></option>
+          </select>
         </div>
         <div class="mb-4 input-group align-items-center">
           <label for="create-note" class="form-label m-0 w-25">Note's</label>

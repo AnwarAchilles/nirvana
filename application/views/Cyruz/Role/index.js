@@ -166,7 +166,7 @@ NIRVANA.build( "Role", ( Manifest ) => {
         true: '<i class="fa fa-lg fa-check fa-fw : text-success me-1"></i>',
         false: '<i class="fa fa-lg fa-times fa-fw : text-danger me-1"></i>',
       };
-      this.api("GET", "role_menu", { "Q[where][id_role]":id, "Q[join][menu]":"role_menu.id_menu = menu.id_menu"}, (resp)=> {
+      this.api("GET", "role_menu", { "Q[where][id_role]":id, "Q[join][menu]":"role_menu.id_menu = menu.id_menu", "Q[order_by][order]":"asc"}, (resp)=> {
         $(this.base.target+" .boxMenu").html("");
         resp.data.forEach((menu)=> {
           let options = JSON.parse(menu.options);

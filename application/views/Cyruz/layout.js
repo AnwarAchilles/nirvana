@@ -4,6 +4,7 @@
 //  * ---- ---- ---- ---- */
 const NIRVANA = new Framework({
   
+  // Base class
   Base: {
     url: base_url
   },
@@ -29,6 +30,10 @@ const NIRVANA = new Framework({
   },
 
   Product: {
+    url: base_url
+  },
+
+  Playground: {
     url: base_url
   },
 

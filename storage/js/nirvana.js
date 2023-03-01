@@ -40,7 +40,6 @@ class PackageContainer {
     }
   }
 }
-
 /* 
  * PACKAGE TABLE Based datatables
  * ---- ---- ---- ---- */
@@ -448,8 +447,15 @@ class PackageSelect {
     }
 
     let dropdownParent = "["+this.__frontend.base.repo+"-Modal='"+this.__frontend.base.name+"']";
-    control.select2({ theme:"bootstrap-5", data:this.__select[nest], dropdownParent:$(dropdownParent) });
+    control.select2({ 
+      theme:"bootstrap-5", 
+      placeholder: options.placeholders,
+      allowClear: true,
+      data:this.__select[nest], 
+      dropdownParent:$(dropdownParent) 
+    });
   }
+  // patch data
   patch( nest, id ) {
     let output = "";
     if (typeof id!=='undefined') {
