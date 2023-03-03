@@ -57,19 +57,4 @@ class Dashboard extends CyruzController
     redirect(base_url("cyruz/dashboard"));
   }
 
-
-  public function playground() {
-    $this->data['layout'] = [
-      'module'=> 'cyruz',
-      'draw'=> true,
-      'layout'=> 'Cyruz/layout',
-      'source'=> [ 'Cyruz', 'Dashboard', 'playground' ],
-      'title'=> 'Dashboard',
-    ];
-
-    $this->layout( $this->data );
-  }
-
-
-
 }
