@@ -137,7 +137,6 @@ NIRVANA.build( "Role", ( Manifest ) => {
     }
   }
 
-
   /* ROLE:MENU Frontend */
   class Menu extends Frontend {
     init() {
@@ -222,6 +221,15 @@ NIRVANA.build( "Role", ( Manifest ) => {
       });
     }
   }
+  class MenuNew extends Frontend {
+    init() {
+      this.load("modal");
+    }
+    start() {
+      console.log(this.modal);
+      this.modal.show();
+    }
+  }
   
 
   /* LOADER Frontend */
@@ -232,7 +240,7 @@ NIRVANA.build( "Role", ( Manifest ) => {
       Create: new Create,
       Update: new Update,
       Delete: new Delete,
-      Menu: new Menu,
+      Menu: new MenuNew,
     },
     Clones: {
       Base: { 

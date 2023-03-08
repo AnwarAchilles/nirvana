@@ -1,0 +1,71 @@
+<div Role-Modal="MenuNew" class="modal fade" aria-labelledby="modal-size-center-scroll" aria-hidden="true">
+  <div Role="MenuNew" class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <form class="modal-content">
+      
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Menu</h5>
+        <button type="button" class="btn text-danger" data-bs-dismiss="modal" aria-label="Close">
+          <i class="fa-solid fa-times fa-xl"></i>
+        </button>
+      </div>
+      
+      <div class="modal-body scrollbar p-3 bg-light">
+
+        <table class="table border m-0 bg-white">
+          <thead>
+            <tr>
+              <th><input type="checkbox" class="form-check-input"></th>
+              <th width="5%">Icon</th>
+              <th width="100%">Name</th>
+              <th width="3%"><i class="fa fa-md fa-eye fa-fw : text-secondary me-1"></i></th>
+              <th width="3%"><i class="fa fa-md fa-add fa-fw : text-secondary me-1"></i></th>
+              <th width="3%"><i class="fa fa-md fa-edit fa-fw : text-secondary me-1"></i></th>
+              <th width="3%"><i class="fa fa-md fa-trash fa-fw : text-secondary me-1"></i></th>
+              <th width="3%"><i class="fa fa-md fa-print fa-fw : text-secondary me-1"></i></th>
+              <th width="3%"><i class="fa fa-md fa-upload fa-fw : text-secondary me-1"></i></th>
+              <th width="3%"><i class="fa fa-md fa-download fa-fw : text-secondary me-1"></i></th>
+              <th width="3%"><i class="fa fa-md fa-table fa-fw : text-secondary me-1"></i></th>
+              <th width="5%"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in sidebars %}
+            <tr>
+              <td><input type="checkbox" class="form-check-input"></td>
+              <td><i class="fa fa-{{ row.icon }} fa-lg : {{ ' '~row.color }}"></i></td>
+              <td>{{ row.name }}</td>
+              <td><input type="checkbox" class="form-check-input"></td>
+              <td><input type="checkbox" class="form-check-input"></td>
+              <td><input type="checkbox" class="form-check-input"></td>
+              <td><input type="checkbox" class="form-check-input"></td>
+              <td><input type="checkbox" class="form-check-input"></td>
+              <td><input type="checkbox" class="form-check-input"></td>
+              <td><input type="checkbox" class="form-check-input"></td>
+              <td><input type="checkbox" class="form-check-input"></td>
+              <td></td>
+            </tr>
+              {% for child in row.child %}
+              <tr>
+                <td><input type="checkbox" class="form-check-input"></td>
+                <td><i class="fa fa-{{ child.icon }} : ms-3 {{ ' '~child.color }}"></i></td>
+                <td>{{ child.name }}</td>
+                <td><input type="checkbox" class="form-check-input"></td>
+                <td><input type="checkbox" class="form-check-input"></td>
+                <td><input type="checkbox" class="form-check-input"></td>
+                <td><input type="checkbox" class="form-check-input"></td>
+                <td><input type="checkbox" class="form-check-input"></td>
+                <td><input type="checkbox" class="form-check-input"></td>
+                <td><input type="checkbox" class="form-check-input"></td>
+                <td><input type="checkbox" class="form-check-input"></td>
+                <td></td>
+              </tr>
+              {% endfor %}
+            {% endfor %}
+          </tbody>
+        </table>
+
+      </div>
+
+    </form>
+  </div>
+</div>
