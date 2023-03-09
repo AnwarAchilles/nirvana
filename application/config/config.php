@@ -23,8 +23,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/__Project/Nirvana';
-// $config['base_url'] = 'http://192.168.43.14/@Project/Nirvana';
+// $config['base_url'] = 'http://localhost/__Project/Nirvana';
+// $config['base_url'] = 'http://192.168.43.14/__Project/Nirvana';
+$root=(isset($_SERVER['HTTPS']) ? "https://" : "http://").$_SERVER['HTTP_HOST'];
+$root.= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
+$config['base_url'] = $root;
 
 /*
 |--------------------------------------------------------------------------

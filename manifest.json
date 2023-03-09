@@ -1,0 +1,50 @@
+{
+  "short_name": "Nirvana",
+  "name": "Nirvana",
+  "description": "Nirvana: Starter Project App",
+  "id": "/__Project/Nirvana/",
+  "start_url": "/__Project/Nirvana/",
+  "theme_color": "rgb(118, 100, 196)",
+  "background_color": "rgb(118, 100, 196)",
+  "display": "standalone",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/__Project/Nirvana/storage/images/PWA/android/android-launchericon-48-48.png",
+      "type": "image/svg+xml",
+      "sizes": "48x48"
+    },
+    {
+      "src": "/__Project/Nirvana/storage/images/PWA/android/android-launchericon-72-72.png",
+      "type": "image/svg+xml",
+      "sizes": "72x72"
+    },
+    {
+      "src": "/__Project/Nirvana/storage/images/PWA/android/android-launchericon-96-96.png",
+      "type": "image/svg+xml",
+      "sizes": "96x96"
+    },
+    {
+      "src": "/__Project/Nirvana/storage/images/PWA/android/android-launchericon-144-144.png",
+      "type": "image/svg+xml",
+      "sizes": "144x144"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Build WebApp Now?",
+      "short_name": "Nirvana",
+      "description": "Shortcuts",
+      "url": "/",
+      "icons": [{ "src": "/__Project/Nirvana/storage/images/PWA/android/android-launchericon-96-96.png", "sizes": "96x96" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/__Project/Nirvana/storage/images/Cyruz-fontawesome-pro/Cyruz-dashboard-dark.PNG",
+      "type": "image/png",
+      "sizes": "1920x1080",
+      "form_factor": "narrow"
+    }
+  ]
+}
