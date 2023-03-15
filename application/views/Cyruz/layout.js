@@ -81,7 +81,7 @@ NIRVANA.build( "Base", ( Manifest ) => {
   /* LOADER Frontend */
   return {
     Apps: {
-      Toasted: new Toasted,
+      // Toasted: new Toasted,
     },
     Clones: {},
   }

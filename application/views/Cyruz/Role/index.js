@@ -227,8 +227,25 @@ NIRVANA.build( "Role", ( Manifest ) => {
       this.load("modal");
     }
     start() {
-      console.log(this.modal);
+
       this.modal.show();
+    }
+    allParent( grandParent ) {
+      let status = $(grandParent).prop("checked");
+      this.patch('parent').prop("checked", status).trigger("change");
+    }
+    allChild( parent ) {
+      let status = $(parent).prop("checked");
+      let name = $(parent).attr("x-name");
+      let option = $(parent).attr("x-option");
+      
+      this.patch('child-'+name).prop("checked", status).trigger("change");
+      this.patch(option).prop("checked", status).trigger("change");
+    }
+    allOption( parentOrChild ) {
+      let status = $(parentOrChild).prop("checked");
+      let option = $(parentOrChild).attr("x-option");
+      this.patch(option).prop("checked", status).trigger("change");
     }
   }
   
@@ -241,7 +258,7 @@ NIRVANA.build( "Role", ( Manifest ) => {
       Create: new Create,
       Update: new Update,
       Delete: new Delete,
-      Menu: new Menu,
+      Menu: new MenuNew,
     },
     Clones: {
       Base: { 

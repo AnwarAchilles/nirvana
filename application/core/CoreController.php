@@ -47,9 +47,6 @@ class CoreController extends CI_Controller
     $layout['javascript'] = (isset($layout['javascript'])) ? $layout['javascript'] : [];
     // reset layout
     $data['layout'] = [];
-    // set local variable
-    $stylesheet = @array_merge($config['stylesheet'], $layout['stylesheet']);
-    $javascript = @array_merge($config['javascript'], $layout['javascript']);
     // layout controlling
     if (isset($layout['layout'])) {
       $output['use'] = '/'.$layout['layout'];
@@ -68,8 +65,38 @@ class CoreController extends CI_Controller
     $pathKey = key($path);
     unset($path[$pathKey]);
     $output['path'] = implode('/', $path);
+    
+    // stylesheet loader
+    $source = $this->layoutStylesheet( $layout, $config, $output );
+    $config['stylesheet']['source'] = [];
+    $output['stylesheet']['source'] = $source;
+    
+    // javascript loader
+    $source = $this->layoutJavascript( $layout, $config, $output );
+    $config['javascript']['source'] = [];
+    $output['javascript']['source'] = $source;
+
+    // set output by config and output
+    $data['layout'] = array_merge($config, $layout, $output);
+    
+    // pack data to use in javascript
+    $data['__javascript'] = $data;
+    $data['__javascript']['site_url'] = site_url();
+    $data['__javascript']['base_url'] = site_url();
+    $data['__javascript']['current_url'] = current_url();
+    $data['__javascript']['baseurl'] = base_url();
+
+    // output layout
+    if ($render==true) {
+      return $this->twig->view($data['layout']['use'], $data, true);
+    }else {
+      $this->twig->view($data['layout']['use'], $data);
+    }
+  }
+  private function layoutStylesheet( $layout, $config, $output ) {
     /*
     * todo stylesheet/css functions */
+    $stylesheet = @array_merge($config['stylesheet'], $layout['stylesheet']);
     $source=[];
     if ($layout['stylesheet'] !== false) {
       // select data from config
@@ -101,25 +128,24 @@ class CoreController extends CI_Controller
         $source = $validate;
       }
     }
-    // insert to data
-    $config['stylesheet']['source'] = [];
-    $output['stylesheet']['source'] = $source;
+    return $source;
+  }
+  private function layoutJavascript( $layout, $config, $output ) {
     /*
     * todo javascript/js functions */
+    $javascript = @array_merge($config['javascript'], $layout['javascript']);
     $source=[];
     if ($layout['javascript'] !== false) {
       // select data from config
       if (isset($javascript['select'])) {
-        // nirvana js
-        $source[] = base_url('/storage/js/nirvana.js');
         foreach ($javascript['select'] as $key=>$val) {
           $source[] = $config['javascript']['source'][$val];
         }
       }else {
         $source = $config['javascript']['source'];
-        // nirvana js
-        $source[] = base_url('/storage/js/nirvana.js');
       }
+      // nirvana js
+      $source = array_merge($source, $this->layoutJavascriptNirvana());
       // builder
       if ($javascript['builder'] == true) {
         $source[] = base_url('/application/views'.$output['use'].'.js');
@@ -140,26 +166,17 @@ class CoreController extends CI_Controller
         $source = $validate;
       }
     }
-    // insert to data
-    $config['javascript']['source'] = [];
-    $output['javascript']['source'] = $source;
-
-    // set output by config and output
-    $data['layout'] = array_merge($config, $layout, $output);
-    
-    // pack data to use in javascript
-    $data['__javascript'] = $data;
-    $data['__javascript']['site_url'] = site_url();
-    $data['__javascript']['base_url'] = site_url();
-    $data['__javascript']['current_url'] = current_url();
-    $data['__javascript']['baseurl'] = base_url();
-
-    // output layout
-    if ($render==true) {
-      return $this->twig->view($data['layout']['use'], $data, true);
-    }else {
-      $this->twig->view($data['layout']['use'], $data);
+    return $source;
+  }
+  private function layoutJavascriptNirvana() {
+    $x = [];
+    foreach (glob(APPPATH.'/../storage/js/nirvana/package/*') as $row) {
+      $x[] = base_url('storage/js/nirvana/package/'.basename($row));
     }
+    $x[] = base_url('storage/js/nirvana/loader.js');
+    $x[] = base_url('storage/js/nirvana/frontend.js');
+    $x[] = base_url('storage/js/nirvana/framework.js');
+    return $x;
   }
   
   /* ---- ---- ---- ----
@@ -224,26 +241,6 @@ class CoreController extends CI_Controller
       }
     }
   }
-  // public function report( $data=array() )
-  // {
-  //   // get config for layout
-  //   $config = $this->config->controller['report'];
-  //   // set report
-  //   $report = array_merge($config, $data['report']);
-  //   // set layout
-  //   $data['layout'] = array_merge($config['layout'], $data['layout']);
-  //   // output report
-  //   if ($report['viewer'] == TRUE) {
-  //     // if use viewer
-  //     $source = $this->layout($data, TRUE);
-  //     ddebug($data);
-  //     // set pdf
-  //     $this->pdftools->generate($source, 'print_'.$report['filename'], $report['paper'], $report['direction']);
-  //   }else {
-  //     // if not use viewer
-  //     $this->layout($data);
-  //   }
-  // }
 
   /* ---- ---- ---- ----
    * HTTP REQUEST TO API
