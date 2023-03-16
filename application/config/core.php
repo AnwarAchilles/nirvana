@@ -96,7 +96,7 @@ $controller['layout']['default'] = [
       base_url('/storage/vendor/datatables-1.12.1/js/datatables.min.js'),
       base_url('/storage/vendor/select2/dist/js/select2.full.min.js'),
       base_url('/storage/js/cyruz.js'),
-      base_url('/storage/js/cyruz-nirvana.js'),
+      base_url('/storage/vendor/upup/upup.min.js'),
     ],
     
     // todo validate all source
@@ -159,6 +159,7 @@ $controller['layout']['cyruz'] = [
       base_url('/storage/vendor/ckeditor5-build-classic/ckeditor.js'),
       base_url('/storage/vendor/chart.js/dist/chart.min.js'),
       base_url('/storage/js/cyruz.js'),
+      base_url('/storage/vendor/upup/upup.min.js'),
     ],
     
     // todo validate all source

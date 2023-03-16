@@ -19,6 +19,16 @@ class Role extends CyruzController
       'header'=> 'Role Access',
       'description'=> 'Todo management user for this website',
     ];
+    $this->data['options'] = [
+      'view'=> [],
+      'create'=> [],
+      'update'=> [],
+      'delete'=> [],
+      'print'=> [],
+      'import'=> [],
+      'export'=> [],
+      'format'=> [],
+    ];
 
     $this->layout( $this->data );
   }

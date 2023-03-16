@@ -85,6 +85,30 @@
   
 </head>
 <body>
+
+  <!-- LOADER -->
+  <!-- <div id="cz__loader" class="fixed-top w-100 h-100 bg-light bg-gradient" style="z-index:9999">
+    <div class="w-100 h-100 d-flex flex-row align-items-center justify-content-center">
+      <div class="line-1"></div>
+      <div class="line-2"></div>
+      <div class="line-3"></div>
+    </div>
+  </div> -->
+
+  <div id="cz__loader" class="fixed-top w-100 h-100 bg-light" style="z-index:9999">
+    {% set loaderColor = ['primary', 'secondary', 'danger', 'warning', 'success', 'info'] %}
+    {% set loaderColor = random(loaderColor) %}
+    <div class="w-100 h-100 d-flex flex-row align-items-center justify-content-center">
+      <div class="spinner-border text-{{ loaderColor }}" role="status" style="width: 3rem; height: 3rem;">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <div class="spinner-grow text-{{ loaderColor }} position-absolute" role="status" style="width: 3rem; height: 3rem;">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </div>
+  <!-- /LOADER -->
+
   <!-- CONTENT TEMPLATE -->
   {% if (layout.draw != false) %}
     {% include 'layout-draw.html' %}

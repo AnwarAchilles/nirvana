@@ -248,6 +248,35 @@ NIRVANA.build( "Role", ( Manifest ) => {
       this.patch(option).prop("checked", status).trigger("change");
     }
   }
+
+  class Menu3 extends Frontend {
+    init() {
+      this.load("modal");
+    }
+    start() {
+      this.modal.show();
+    }
+    allParent( grandParent ) {
+      let status = $(grandParent).prop("checked");
+      this.patch('parent').prop("checked", status).trigger("change");
+    }
+    allChild( parent ) {
+      let status = $(parent).prop("checked");
+      let name = $(parent).attr("x-name");
+      let option = $(parent).attr("x-option");
+      
+      this.patch('child-'+name).prop("checked", status).trigger("change");
+      this.patch(option).prop("checked", status).trigger("change");
+    }
+    allOption( parentOrChild ) {
+      let status = $(parentOrChild).prop("checked");
+      let option = $(parentOrChild).attr("x-option");
+      this.patch(option).prop("checked", status).trigger("change");
+    }
+    collapse( element ) {
+      
+    }
+  }
   
 
   /* LOADER Frontend */
@@ -259,6 +288,7 @@ NIRVANA.build( "Role", ( Manifest ) => {
       Update: new Update,
       Delete: new Delete,
       Menu: new MenuNew,
+      Menu3: new Menu3,
     },
     Clones: {
       Base: { 

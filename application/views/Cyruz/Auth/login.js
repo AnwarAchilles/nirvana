@@ -1,6 +1,6 @@
 /* AUTH Frontend 
  * ---- ---- ---- ---- */
-NIRVANA.build( "Auth", (Manifest)=> {
+NIRVANA.build( "Auth", ( Manifest )=> {
 
   /* MAIN Frontend */
   class Base extends Frontend {
@@ -68,6 +68,6 @@ NIRVANA.build( "Auth", (Manifest)=> {
         app:     [ "Login" ],
         method:  [ "buildToast", "passwordShow" ]
       }
-    }
+    },
   }
 });

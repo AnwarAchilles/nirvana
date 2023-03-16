@@ -29,7 +29,7 @@
             </tr>
           </thead>
           <tbody>
-            {% for row in sidebars %}
+            {% for row in sidebars %}            
             <tr>
               <td>
                 <input Role-Patch="parent" onchange="NIRVANA.run('Role', 'Menu', 'allChild', this)" x-name="{{ row.name }}" x-option="parent-{{ row.id_menu }}" type="checkbox" class="form-check-input">

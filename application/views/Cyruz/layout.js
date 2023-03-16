@@ -40,6 +40,9 @@ const NIRVANA = new Framework({
 });
 
 
+
+/* LOADER
+ * ---- ---- ---- ---- */
 $( document ).ready( event => {
   if (typeof NIRVANA=='object') {
     $("#cz__loader").animate({ opacity: 0 }, 500, ()=> {
