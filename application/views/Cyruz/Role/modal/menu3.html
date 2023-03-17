@@ -13,7 +13,7 @@
 
         {% for row in sidebars %}
         <div>
-          <div Role-form="role" class="d-flex flex-wrap align-items-center p-3 my-1">
+          <div Role-form="{{ row.name }}" class="d-flex flex-wrap align-items-center p-3 my-1">
             <input Role-Patch="parent" onchange="NIRVANA.run('Role', 'Menu3', 'allChild', this)" x-name="{{ row.name }}" x-option="parent-{{ row.id_menu }}" id="parent-{{ row.id_menu }}" type="checkbox" class="form-check-input">
             <label for="parent-{{ row.id_menu }}" class="h5 m-0 mx-2 flex-grow-1">
               <i class="fa-duotone fa-{{ row.icon }} fa-lg fa-fw : mx-2 {{ ' '~row.color }}"></i>
@@ -34,7 +34,7 @@
 
           {% for child in row.child %}
           <div class="ps-4">
-            <div Role-form="role" class="d-flex flex-wrap align-items-center p-3 border-start">
+            <div Role-form="{{ child.name }}" class="d-flex flex-wrap align-items-center p-3 border-start">
               <input Role-Patch="child-{{ row.name }}" onchange="NIRVANA.run('Role', 'Menu3', 'allOption', this)" x-name="{{ row.name }}" x-option="child-{{ child.id_menu }}" id="child-{{ child.id_menu }}" type="checkbox" class="form-check-input">
               <label for="child-{{ child.id_menu }}" class="h5 m-0 mx-2 flex-grow-1">
                 <i class="fa-duotone fa-{{ child.icon }} fa-lg fa-fw : mx-2 {{ ' '~child.color }}"></i>

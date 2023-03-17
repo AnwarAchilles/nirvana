@@ -252,6 +252,9 @@ NIRVANA.build( "Role", ( Manifest ) => {
   class Menu3 extends Frontend {
     init() {
       this.load("modal");
+      this.load("form");
+
+      this.form.initialize();
     }
     start() {
       this.modal.show();
@@ -273,8 +276,11 @@ NIRVANA.build( "Role", ( Manifest ) => {
       let option = $(parentOrChild).attr("x-option");
       this.patch(option).prop("checked", status).trigger("change");
     }
-    collapse( element ) {
-      
+    submit() {
+      let data = this.form.batch( (controls, patch) => {
+        controls[patch.name] = patch.controls.prop("checked");
+      });
+      console.log( data );
     }
   }
   

@@ -70,6 +70,24 @@ class PackageForm {
     this.datas = __data;
     this.values = __value;
   }
+  batch( callback ) {
+    let __values = {};
+    Object.entries( this.__form ).forEach( (entries)=> {
+      let [formName, controlsData] = entries;
+      
+      if ( typeof controlsData=='object' ) {
+        __values[formName] = {};
+        Object.entries( controlsData ).forEach( (entries)=> {
+          let entry = {
+            name: entries[0],
+            controls: $(entries[1])
+          };
+          callback( __values[formName], entry );
+        });
+      }
+    });
+    return __values;
+  }
   // builder
   build( nest, indexOrPatcher, patcher=null ) {
     if (typeof indexOrPatcher=='object') {
