@@ -87,10 +87,6 @@ class Framework {
         });
       });
     }
-    // setup offline
-    UpUp.start({
-      'content': $.get( this.__manifest[nest].url ).responseText,
-    });
   }
   // todo instance specified onMethod
   instance( nest ) {
