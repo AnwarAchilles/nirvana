@@ -12,7 +12,7 @@ class PdfTools {
     public function generate($html, $filename='', $paper = '', $orientation = '', $stream=TRUE)
     {   
         $options = new Options();
-        $options->set('isRemoteEnabled', TRUE);
+        // $options->set('isRemoteEnabled', TRUE);
         $options->set('isHtml5ParserEnabled', true);
         $dompdf = new Dompdf($options);
         $dompdf->load_html($html);

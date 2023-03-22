@@ -72,6 +72,15 @@ div.table-responsive>div.dataTables_wrapper>div.row:nth-child(1) {
   width: 96%;
   margin-top: -60px;
 }
+div.table-responsive>div.dataTables_wrapper>div.row:nth-child(2) {
+  margin-bottom: 50px;
+}
+div.table-responsive>div.dataTables_wrapper>div.row:nth-child(3) {
+  position: absolute;
+  left: 1;
+  width: 96%;
+  margin-top: -30px;
+}
 /* #DataTables_Table_0_wrapper {
   position: relative;
 } */
