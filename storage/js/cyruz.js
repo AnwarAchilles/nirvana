@@ -402,29 +402,28 @@ sidebar_btn_collapse.each( function(i, btn) {
     if (aria=='false'){
       $(btn).children("b").html("+");
     }
-
   });
 });
 
 // SIDEBAR open & close
 baropen.on("click", function() {
   if ( ! sidebar.hasClass("hide")) {
-    sidebar_body.animate({ "opacity":"0" }, 200, "swing");
-    sidebar.animate({ "width":"0%" }, 200, "swing", function() {
+    sidebar.animate({ "width":"0%" }, 80, "swing", function() {
+      sidebar_body.animate({ "opacity":"0" }, 80, "swing");
       sidebar.addClass("hide");
       sidebar.css("display", "none");
     });
-    content.animate({"max-width":"100%"}, 200);
-  
+    content.animate({"max-width":"100%"}, 80);
   }else {
     sidebar.css("display", "inline-block");
-    sidebar_body.animate({ "opacity":"1" }, 500, "swing");
-    sidebar.animate({ "width":"100%" }, 200, "swing", function() {
+    sidebar.animate({ "width":"100%" }, 80, "swing", function() {
+      sidebar_body.animate({ "opacity":"1" }, 80, "swing");
       sidebar.removeClass("hide");
     });
-  } 
-  
+  }
 });
+
+
 // TOAST
 var dataToggleToast = $("[data-bs-toggle='toast']");
 dataToggleToast.each( function(i, toast) {

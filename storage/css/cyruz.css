@@ -11965,6 +11965,7 @@ h6, .h6 {
   max-width: 250px;
   height: 100%;
   position: relative;
+  transition: width 0.15s ease-in-out;
 }
 #cz__sidebar hr {
   margin: 0;

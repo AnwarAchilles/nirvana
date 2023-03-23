@@ -9,29 +9,24 @@
       </div>
       <div Menu-Form="menu" class="modal-body scrollbar">
         
-        <div class="mb-4 input-group align-items-center">
-          <label for="create-menu" class="form-label m-0 w-25" required>Menu</label>
+        <div class="mb-4">
           <select id="create-menu" name="id_parent" class="select2" data-placeholder="Select Menu Parent">
             <option></option>
           </select>
         </div>
-        <div class="mb-4 input-group align-items-center">
-          <label for="create-name" class="form-label m-0 w-25" required>Name</label>
-          <input id="create-name" name="name" type="text" class="form-control" autocomplete="off">
+        <div class="mb-4">
+          <input id="create-name" name="name" placeholder="Name" type="text" class="form-control" autocomplete="off">
+        </div>
+        <div class="mb-4">
+          <input id="create-url" name="url" placeholder="Url" type="text" class="form-control" autocomplete="off">
         </div>
         <div class="mb-4 input-group align-items-center">
-          <label for="create-url" class="form-label m-0 w-25" required>Url</label>
-          <input id="create-url" name="url" type="text" class="form-control" autocomplete="off">
-        </div>
-        <div class="mb-4 input-group align-items-center">
-          <label for="create-icon" class="form-label m-0 w-25" required>Icon</label>
           <span class="preview-icon : input-group-text"><i class="fa-duotone fa-home fa-xl"></i></span>
-          <input id="create-icon" name="icon" type="text" class="form-control w-25" autocomplete="off">
+          <input id="create-icon" name="icon" placeholder="Icon" type="text" class="form-control w-25" autocomplete="off">
           <select id="create-color" name="color" class="select2"></select>
         </div>
-        <div class="mb-4 input-group align-items-center">
-          <label for="create-note" class="form-label m-0 w-25">Note's</label>
-          <textarea id="create-note" name="note" xcols="30" rows="5" class="form-control"></textarea>
+        <div class="mb-4">
+          <textarea id="create-note" name="note" placeholder="Note" rows="5" class="form-control"></textarea>
         </div>
 
       </div>
