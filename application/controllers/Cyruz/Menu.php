@@ -19,7 +19,15 @@ class Menu extends CyruzController
       'description'=> 'Todo management user for this website',
     ];
 
+    $this->data['menu'] = $this->api('GET', 'menu/composedMenu');
+
     $this->layout( $this->data );
+  }
+
+  public function list()
+  {
+    $this->data['menu'] = $this->api('GET', 'menu/composedMenu');
+    echo $this->twig->render('cyruz/menu/index-list.html', $this->data, true);
   }
 
 }

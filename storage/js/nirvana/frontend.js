@@ -79,6 +79,9 @@ class Frontend {
       return $("["+this.base.repo+"='"+this.base.name+"']").find("["+this.base.repo+"-Patch='"+name+"']");
     }
   }
+  data(name, from) {
+    return $(from).attr("data-"+name);
+  }
   isMobile() {
     if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
       // true for mobile device

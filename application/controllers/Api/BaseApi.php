@@ -51,7 +51,7 @@ class BaseApi extends CoreApi
     $QUERY = $this->query;
     $QUERY['data'] = $this->method;
 
-    $this->data = $this->models->set( $QUERY );
+    $this->data['id'] = $this->models->set( $QUERY );
 
     $this->return(200);
   }
@@ -69,7 +69,7 @@ class BaseApi extends CoreApi
     }
     $QUERY['data'] = $this->method;
 
-    $this->data = $this->models->put( $QUERY );
+    $this->data['id'] = $this->models->put( $QUERY );
 
     $this->return(200);
   }
@@ -182,7 +182,7 @@ class BaseApi extends CoreApi
   }
 
   public function count_GET() {
-    $this->data = $this->models->get( $this->query )->num_rows();
+    $this->data['count'] = $this->models->get( $this->query )->num_rows();
     $this->return(200);
   }
 
