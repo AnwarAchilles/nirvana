@@ -7,7 +7,6 @@ class User extends CyruzController
   // index page
   public function index()
   {
-    dd($this->data);
     // set layout
     $this->data['layout'] = [
       'module'=> 'cyruz',

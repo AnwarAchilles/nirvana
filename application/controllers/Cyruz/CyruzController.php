@@ -55,7 +55,7 @@ class CyruzController extends CoreController
         
         $result[ strtolower($sidebar['name']) ] = $sidebar;
         if (strtolower($sidebar['name'])==$classCalled) {
-          $this->data['access'] = $sidebar['options'];
+          $this->data['access'] = $sidebar;
         }
 
         if (isset($sidebar['childs'])) {
@@ -64,7 +64,7 @@ class CyruzController extends CoreController
             $result[ strtolower($sidebar['name']) ]['childs'][ strtolower($child['name']) ] = $child;
 
             if (strtolower($child['name'])==$classCalled) {
-              $this->data['access'] = $child['options'];
+              $this->data['access'] = $child;
             }
           }
         }

@@ -5,8 +5,8 @@
 <div class="col-sm-12">
   <div class="card mb-5">
     <div class="card-clip-box w-100">
-      <div class="card-clip icon left : bg-{{ str_replace('text-', '', sidebars.administrator.child.role.color) }} shadow">
-        <i class="fa fa-{{ sidebars.administrator.child.role.icon }} fa-swap-opacity fa-2x"></i>
+      <div class="card-clip icon left : bg-{{ str_replace('text-', '', access.color) }} shadow">
+        <i class="fa fa-{{ access.icon }} fa-swap-opacity fa-2x"></i>
       </div>
       <div class="card-text ms-4 w-100 d-block d-sm-flex justify-content-between">
         <div class="mb-4">
@@ -14,7 +14,7 @@
           <p class="m-0 text-muted">{{ table.description }}</p>
         </div>
         <div class="d-flex align-items-center">
-          {% if sidebars.administrator.child.role.options.create %}
+          {% if access.options.create %}
           <button type="button" class="btn btn-primary : ms-2" onclick="NIRVANA.start('Role', 'Create')">
             <i class="fa fa-add : me-1"></i> Create New
           </button>
@@ -45,15 +45,15 @@
     <i class="fa fa-ellipsis-vertical"></i>
   </button>
   <ul class="dropdown-menu shadow">
-    {% if sidebars.administrator.child.role.options.view %}
+    {% if access.options.view %}
     <li><button class="dropdown-item" onclick="NIRVANA.start('Role', 'View', {id_role})"><i class="fa fa-fw fa-eye : me-1 text-secondary"></i> View</button></li>
     {% endif %}
 
-    {% if sidebars.administrator.child.role.options.update %}
+    {% if access.options.update %}
     <li><button class="dropdown-item" onclick="NIRVANA.start('Role', 'Update', {id_role})"><i class="fa fa-fw fa-edit : me-1 text-secondary"></i> Update</button></li>
     {% endif %}
 
-    {% if sidebars.administrator.child.role.options.delete %}
+    {% if access.options.delete %}
     <li><button class="dropdown-item" onclick="NIRVANA.start('Role', 'Delete', {id_role})"><i class="fa fa-fw fa-trash : me-1 text-secondary"></i> Delete</button></li>
     {% endif %}
 
