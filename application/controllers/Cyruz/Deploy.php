@@ -51,24 +51,24 @@ class Deploy extends BaseController
 
     $this->menu['dashboard'] = $this->api("POST", "menu", [
       'name'=> 'Dashboard',
-      'stack'=> 0,
-      'thread'=> 1,
+      'child'=> 0,
+      'stack'=> 1,
       'url'=> 'cyruz/dashboard',
       'icon'=> 'home',
       'color'=> 'text-primary',
     ]);
     $this->menu['administrator'] = $this->api("POST", "menu", [
       'name'=> 'Administrator',
-      'stack'=> 3,
-      'thread'=> 2,
+      'child'=> 3,
+      'stack'=> 2,
       'url'=> 'Administrator',
       'icon'=> 'folder-open',
       'color'=> 'text-secondary',
     ]);
     $this->menu['user'] = $this->api("POST", "menu", [
       'id_parent'=> $this->menu['administrator']['id'],
-      'stack'=> 0,
-      'thread'=> 1,
+      'child'=> 0,
+      'stack'=> 1,
       'name'=> 'User',
       'url'=> 'cyruz/user',
       'icon'=> 'user',
@@ -76,8 +76,8 @@ class Deploy extends BaseController
     ]);
     $this->menu['menu'] = $this->api("POST", "menu", [
       'id_parent'=> $this->menu['administrator']['id'],
-      'stack'=> 0,
-      'thread'=> 2,
+      'child'=> 0,
+      'stack'=> 2,
       'name'=> 'Menu',
       'url'=> 'cyruz/menu',
       'icon'=> 'folder-tree',
@@ -85,8 +85,8 @@ class Deploy extends BaseController
     ]);
     $this->menu['role'] = $this->api("POST", "menu", [
       'id_parent'=> $this->menu['administrator']['id'],
-      'stack'=> 0,
-      'thread'=> 3,
+      'child'=> 0,
+      'stack'=> 3,
       'name'=> 'Role',
       'url'=> 'cyruz/role',
       'icon'=> 'sitemap',
@@ -94,8 +94,8 @@ class Deploy extends BaseController
     ]);
     $this->menu['product'] = $this->api("POST", "menu", [
       'name'=> 'Product',
-      'stack'=> 0,
-      'thread'=> 3,
+      'child'=> 0,
+      'stack'=> 3,
       'url'=> 'cyruz/product',
       'icon'=> 'box-open',
       'color'=> 'text-success',

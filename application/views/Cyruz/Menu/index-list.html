@@ -44,7 +44,7 @@
 
     <!-- Child 1 Loopline -->
     <ul class="list-group : rounded-0 flex-grow-1 pe-0 collapse" id="collapse-{{ parent.id_menu }}">
-      {% for child in parent.child %}
+      {% for child in parent.childs %}
       <li class="list-group-item  : pe-0 ms-1 me-0 border-end-0">
         <div class="d-flex align-items-center flex-wrap py-2 pe-3">
           <small class="badge text-muted">{{ child.thread }}</small>
@@ -88,7 +88,7 @@
 
         <!-- Child 2 loopline -->
         <ul class="list-group : rounded-0 flex-grow-1 pe-0 : collapse" id="collapse-{{ child.id_menu }}">
-          {% for child_ in child.child %}
+          {% for child_ in child.childs %}
           <li class="list-group-item : pe-0 ms-1 me-0 border-end-0">
             <div class="d-flex align-items-center flex-wrap py-2 pe-3">
               <small class="badge text-muted">{{ child_.thread }}</small>

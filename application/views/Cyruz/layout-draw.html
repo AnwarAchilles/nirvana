@@ -12,7 +12,7 @@
     <ul class="nav flex-column">
       {% for data in sidebars %}
       
-      {% if data.child != '' %}
+      {% if data.childs != '' %}
       <li>
         <a href="#{{ data.url }}" class="btn" data-bs-toggle="collapse">
           <i class="fa-duotone fa-xl fa-fw fa-{{ data.icon }} : icon {{ ' '~data.color }}"></i>
@@ -20,7 +20,7 @@
         </a>
         <div class="collapse" id="{{ data.url }}">
           <ul class="nav flex-column">
-            {% for data in data.child %}
+            {% for data in data.childs %}
             <li>
               <a href="{{ base_url(data.url) }}" class="btn">
                 <i class="fa-duotone fa-fw fa-xl fa-{{ data.icon }} : icon {{ ' '~data.color }}"></i>
