@@ -73,17 +73,8 @@ div.table-responsive>div.dataTables_wrapper>div.row:nth-child(1) {
   margin-top: -60px;
 }
 div.table-responsive>div.dataTables_wrapper>div.row:nth-child(2) {
-  margin-bottom: 50px;
+  margin-bottom: 80px;
 }
-div.table-responsive>div.dataTables_wrapper>div.row:nth-child(3) {
-  position: absolute;
-  left: 1;
-  width: 96%;
-  margin-top: -30px;
-}
-/* #DataTables_Table_0_wrapper {
-  position: relative;
-} */
 div.table-responsive>div.dataTables_wrapper>div.row:nth-child(2) {
   margin-top: 60px;
 }
@@ -91,6 +82,17 @@ div.table-responsive .btn {
   position: absolute;
   margin-top: -0.7%;
   margin-left: -0.7%;
+}
+
+div.table-responsive>div.dataTables_wrapper>div.row:nth-child(3) {
+  position: absolute;
+  left: 1;
+  width: 90%;
+  margin-top: -70px;
+}
+div.table-responsive>div.dataTables_wrapper>div.row:nth-child(3) [class*="col-"] {
+  margin-bottom: 10px;
+  padding: 0;
 }
 
 

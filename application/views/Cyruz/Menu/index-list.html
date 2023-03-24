@@ -1,8 +1,9 @@
 <!-- Parent Loopline -->
-<ul class="list-group rounded-0">
+<ul class="list-group : rounded-0">
   {% for parent in menu %}
-  <li class="list-group-item pe-0 pb-0">
+  <li class="list-group-item : pe-0">
     <div class="d-flex align-items-center flex-wrap py-2 pe-3">
+      <small class="badge text-muted">{{ parent.thread }}</small>
       <i class="fa-duotone fa-fw fa-{{ parent.icon }} fa-xl : {{ ' '~parent.color }} me-3"></i>
       <div class="flex-grow-1 col text-truncate">
         <h6 class="m-0">{{ parent.name }}</h6>
@@ -42,10 +43,11 @@
     </div>
 
     <!-- Child 1 Loopline -->
-    <ul class="list-group rounded-0 flex-grow-1 pe-0 collapse" id="collapse-{{ parent.id_menu }}">
+    <ul class="list-group : rounded-0 flex-grow-1 pe-0 collapse" id="collapse-{{ parent.id_menu }}">
       {% for child in parent.child %}
-      <li class="list-group-item pe-0 ms-2 me-0">
+      <li class="list-group-item  : pe-0 ms-1 me-0 border-end-0">
         <div class="d-flex align-items-center flex-wrap py-2 pe-3">
+          <small class="badge text-muted">{{ child.thread }}</small>
           <i class="fa-duotone fa-fw fa-{{ child.icon }} fa-xl : {{ ' '~child.color }} me-3"></i>
           <div class="flex-grow-1 col text-truncate">
             <h6 class="m-0">{{ child.name }}</h6>
@@ -85,10 +87,11 @@
         </div>
 
         <!-- Child 2 loopline -->
-        <ul class="list-group rounded-0 flex-grow-1 pe-0 : collapse" id="collapse-{{ child.id_menu }}">
+        <ul class="list-group : rounded-0 flex-grow-1 pe-0 : collapse" id="collapse-{{ child.id_menu }}">
           {% for child_ in child.child %}
-          <li class="list-group-item pe-0 ms-2 me-0">
+          <li class="list-group-item : pe-0 ms-1 me-0 border-end-0">
             <div class="d-flex align-items-center flex-wrap py-2 pe-3">
+              <small class="badge text-muted">{{ child_.thread }}</small>
               <i class="fa-duotone fa-fw fa-{{ child_.icon }} fa-xl : {{ ' '~child_.color }} me-3"></i>
               <div class="flex-grow-1 col text-truncate">
                 <h6 class="m-0">{{ child_.name }}</h6>
