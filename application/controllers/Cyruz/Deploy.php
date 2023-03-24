@@ -62,21 +62,21 @@ class Deploy extends BaseController
       'color'=> 'text-secondary',
     ]);
     $this->menu['user'] = $this->api("POST", "menu", [
-      'id_parent'=> $this->menu['administrator'][0],
+      'id_parent'=> $this->menu['administrator']['id'],
       'name'=> 'User',
       'url'=> 'cyruz/user',
       'icon'=> 'user',
       'color'=> 'text-danger',
     ]);
     $this->menu['menu'] = $this->api("POST", "menu", [
-      'id_parent'=> $this->menu['administrator'][0],
+      'id_parent'=> $this->menu['administrator']['id'],
       'name'=> 'Menu',
       'url'=> 'cyruz/menu',
       'icon'=> 'folder-tree',
       'color'=> 'text-info',
     ]);
     $this->menu['role'] = $this->api("POST", "menu", [
-      'id_parent'=> $this->menu['administrator'][0],
+      'id_parent'=> $this->menu['administrator']['id'],
       'name'=> 'Role',
       'url'=> 'cyruz/role',
       'icon'=> 'sitemap',
@@ -101,7 +101,7 @@ class Deploy extends BaseController
       'name'=> 'Admin',
       'email'=> 'admin@nirvana.com',
       'password'=> 'admin',
-      'id_role'=>  $this->role['admin'][0],
+      'id_role'=>  $this->role['admin']['id'],
     ]);
   }
 
@@ -117,16 +117,16 @@ class Deploy extends BaseController
 
     foreach ($this->menu as $menu) {
       $this->role_menu['admin'][] = $this->api("POST", "role_menu", [
-        'id_role'=> $this->role['admin'][0],
-        'id_menu'=> $menu[0],
+        'id_role'=> $this->role['admin']['id'],
+        'id_menu'=> $menu['id'],
         'options'=> json_encode([
           "view"=> true, "create"=> true, "update"=> true, "delete"=> true,
           "print"=> true, "import"=> true, "export"=> true, "format"=> true,
         ]),
       ]);
       $this->role_menu['guest'][] = $this->api("POST", "role_menu", [
-        'id_role'=> $this->role['guest'][0],
-        'id_menu'=> $menu[0],
+        'id_role'=> $this->role['guest']['id'],
+        'id_menu'=> $menu['id'],
         'options'=> json_encode([
           "view"=> true, "create"=> true, "update"=> true, "delete"=> true,
           "print"=> true, "import"=> true, "export"=> true, "format"=> true,

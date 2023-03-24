@@ -26,14 +26,4 @@ class Menu extends BaseApi
     $this->return(200, 'Success Composed Menus');
   }
 
-  # update menu countchild increnment by inserting new child
-  public function countChild_PUT() {
-    // get last count
-    $count = $this->models->get(['where'=>['id_menu'=>$this->id]])->row_array();
-    // put data count
-    $this->data = $this->models->put(['where'=> ['id_menu'=>$this->id], 'data'=>['count_child'=>$counter]]);
-    // return status & message
-    $this->return(200, 'Counting success');
-  }
-
 }

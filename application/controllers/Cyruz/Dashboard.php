@@ -14,12 +14,11 @@ class Dashboard extends CyruzController
       'source'=> [ 'Cyruz', 'Dashboard', 'index' ],
       'title'=> 'Dashboard',
     ];
-
     
-    $this->data['count']['user'] = $this->api("GET", "user/count")[0];
-    $this->data['count']['menu'] = $this->api("GET", "menu/count")[0];
-    $this->data['count']['role'] = $this->api("GET", "role/count")[0];
-    $this->data['count']['product'] = $this->api("GET", "product/count")[0];
+    $this->data['count']['user'] = $this->api("GET", "user/count")['count'];
+    $this->data['count']['menu'] = $this->api("GET", "menu/count")['count'];
+    $this->data['count']['role'] = $this->api("GET", "role/count")['count'];
+    $this->data['count']['product'] = $this->api("GET", "product/count")['count'];
     
     $totalCount = 0;
     $totalCount += $this->data['count']['user'];
@@ -36,12 +35,10 @@ class Dashboard extends CyruzController
     $totalCountDescription = $totalCountDescription.'total from product (' . $this->data['count']['product'] . ') ';
     $this->data['totalCountDescription'] = $totalCountDescription;
 
-
     $this->data['toasted'] = $this->api("GET", "toasted/list", [
       "Q[order_by][id_toasted]"=> "desc",
       "Q[limit]"=> 5,
     ]);
-
 
     $this->layout($this->data);
   }
