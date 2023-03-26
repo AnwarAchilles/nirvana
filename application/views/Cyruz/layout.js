@@ -40,6 +40,43 @@ const NIRVANA = new Framework({
 });
 
 
+/* BaseFrontend
+ * ---- ---- ---- ---- */
+class CyruzFrontend extends Frontend {
+  
+  // todo build toast
+  buildToast( opt, response ) {
+    this.toast.container("Default");
+    this.toast.use("Default");
+    
+    if (opt=='success') {
+      this.toast.patch("icon", '<i class="fa-duotone fa-2x fa-check-circle fa-beat : text-success me-3"></i>');
+      this.toast.patch("text", '<strong class="me-auto">'+this.base.name+' Sucessfully</strong>');
+    }
+    if (opt=='failed') {
+      this.toast.patch("icon", '<i class="fa-duotone fa-2x fa-times-circle fa-beat : text-danger me-3"></i>');
+      this.toast.patch("text", '<strong class="me-auto">'+this.base.name+' Failed</strong>');
+    }
+    this.toast.show();
+  }
+
+  // todo set loading on button while processing
+  buttonSubmit( type='' ) {
+    if (type=='enable') {
+      this.patch("submit").removeAttr("disabled");
+      this.patch("submit").html( this.buttonSubmitTemp );
+    }
+    if (type=='disable') {
+      this.patch("submit").attr("disabled", "disabled");
+      this.patch("submit").html('<i class="fa-duotone fa-spinner-third fa-spin : me-1"></i> Loading');
+    }
+    if (type=='') {
+      this.buttonSubmitTemp = this.patch("submit").html();
+    }
+  }
+}
+
+
 
 /* LOADER
  * ---- ---- ---- ---- */

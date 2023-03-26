@@ -3,7 +3,7 @@
 NIRVANA.build( "Menu", ( Manifest ) => {
 
   /* MENU:BASE Frontend */
-  class Base extends Frontend {
+  class Base extends CyruzFrontend {
     init() {
       this.buildList();
     }
@@ -18,6 +18,7 @@ NIRVANA.build( "Menu", ( Manifest ) => {
         id_parent: this.form.patch("menu", "id_parent").val(),
         name: this.form.patch("menu", "name").val(),
         url: this.form.patch("menu", "url").val(),
+        stack: this.form.patch("menu", "stack").val(),
         icon: this.form.patch("menu", "icon").val(),
         color: this.form.patch("menu", "color").val(),
         note: this.form.patch("menu", "note").val(),
@@ -27,6 +28,7 @@ NIRVANA.build( "Menu", ( Manifest ) => {
       this.form.patch("menu", "id_parent").val("");
       this.form.patch("menu", "name").val("");
       this.form.patch("menu", "url").val("");
+      this.form.patch("menu", "stack").val("");
       this.form.patch("menu", "icon").val("");
       this.form.patch("menu", "color").val("");
       this.form.patch("menu", "note").val("");
@@ -70,25 +72,10 @@ NIRVANA.build( "Menu", ( Manifest ) => {
         $(".preview-icon").html('<i class="fa-duotone fa-xl fa-'+icon+' : '+color+'"></i>');
       });
     }
-    // todo build toast
-    buildToast( opt, response ) {
-      this.toast.container("Default");
-      this.toast.use("Default");
-
-      if (opt=='success') {
-        this.toast.patch("icon", '<i class="fa-duotone fa-2x fa-check-circle fa-beat : text-success me-3"></i>');
-        this.toast.patch("text", '<strong class="me-auto">'+this.base.name+' Sucessfully</strong>');
-      }
-      if (opt=='failed') {
-        this.toast.patch("icon", '<i class="fa-duotone fa-2x fa-times-circle fa-beat : text-danger me-3"></i>');
-        this.toast.patch("text", '<strong class="me-auto">'+this.base.name+' Failed</strong>');
-      }
-      this.toast.show();
-    }
   }
 
   /* MENU:VIEW Frontend */
-  class View extends Frontend {
+  class View extends CyruzFrontend {
     start( id ) {
       this.load("modal");
       this.api("GET", "menu/"+id, resp=> {
@@ -104,9 +91,10 @@ NIRVANA.build( "Menu", ( Manifest ) => {
   }
 
   /* MENU:CREATE Frontend */
-  class Create extends Frontend {
+  class Create extends CyruzFrontend {
     start( id_parent ) {
       this.id_parent = id_parent;
+      
       this.load("modal");
       this.load("toast");
       this.load("select");
@@ -117,6 +105,7 @@ NIRVANA.build( "Menu", ( Manifest ) => {
       this.iconPreview();
       
       this.form.patch("menu", "id_parent").val( this.id_parent ).trigger("change");
+      
       this.modal.show();
     }
     submit() {
@@ -135,7 +124,7 @@ NIRVANA.build( "Menu", ( Manifest ) => {
   }
 
   /* MENU:UPDATE Frontend */
-  class Update extends Frontend {
+  class Update extends CyruzFrontend {
     start( id ) {
       this.id = id;
       this.load("modal");
@@ -170,7 +159,7 @@ NIRVANA.build( "Menu", ( Manifest ) => {
   }
 
   /* MENU:DELETE Frontend */
-  class Delete extends Frontend {
+  class Delete extends CyruzFrontend {
     start( id ) {
       this.id = id;
       this.load("modal");
@@ -211,7 +200,7 @@ NIRVANA.build( "Menu", ( Manifest ) => {
       Base: { 
         app:["View", "Create", "Update", "Delete"], 
         property:["table"], 
-        method:[ "buildList", "buildSelect", "buildForm", "clearForm", "iconPreview", "buildToast" ]
+        method:[ "buildList", "buildSelect", "buildForm", "clearForm", "iconPreview" ]
       },
     }
   }

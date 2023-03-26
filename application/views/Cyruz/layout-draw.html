@@ -11,22 +11,47 @@
   <div id="cz__sidebar_body" class="scrollbar">
     <ul class="nav flex-column">
       {% for data in sidebars %}
-      
+      <!-- PARENT LOOPLINE -->
       {% if data.childs != '' %}
+      {% set target = str_replace('/', '-', data.url) %}
       <li>
-        <a href="#{{ data.url }}" class="btn" data-bs-toggle="collapse">
+        <a href="#{{ target }}" class="btn" data-bs-toggle="collapse">
           <i class="fa-duotone fa-xl fa-fw fa-{{ data.icon }} : icon {{ ' '~data.color }}"></i>
           <span>{{ data.name }}</span>
         </a>
-        <div class="collapse" id="{{ data.url }}">
+        <div class="collapse" id="{{ target }}">
           <ul class="nav flex-column">
             {% for data in data.childs %}
+            <!-- CHILD LOOPLINE -->
+            {% if data.childs|length != 0 %}
+            {% set target = str_replace('/', '-', data.url) %}
+            <li>
+              <a href="#{{ target }}" class="btn" data-bs-toggle="collapse">
+                <i class="fa-duotone fa-xl fa-fw fa-{{ data.icon }} : icon {{ ' '~data.color }}"></i>
+                <span>{{ data.name }}</span>
+              </a>
+              <div class="collapse" id="{{ target }}">
+                <ul class="nav flex-column">
+                  {% for data in data.childs %}
+                  <li>
+                    <a href="{{ base_url(data.url) }}" class="btn">
+                      <i class="fa-duotone fa-fw fa-xl fa-{{ data.icon }} : icon {{ ' '~data.color }}"></i>
+                      <span>{{ data.name }}</span>
+                    </a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </li>
+            {% else %}
             <li>
               <a href="{{ base_url(data.url) }}" class="btn">
                 <i class="fa-duotone fa-fw fa-xl fa-{{ data.icon }} : icon {{ ' '~data.color }}"></i>
                 <span>{{ data.name }}</span>
               </a>
             </li>
+            {% endif %}
+
             {% endfor %}
           </ul>
         </div>

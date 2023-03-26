@@ -3,7 +3,7 @@
 NIRVANA.build( "Role", ( Manifest ) => {
 
   /* ROLE:BASE Frontend */
-  class Base extends Frontend {
+  class Base extends CyruzFrontend {
     init() {
       this.load("table");
       this.table.build("role", {
@@ -29,25 +29,10 @@ NIRVANA.build( "Role", ( Manifest ) => {
       this.form.patch("role", "name").val("");
       this.form.patch("role", "note").val("");
     }
-    // todo build toast
-    buildToast( opt, response ) {
-      this.toast.container("Default");
-      this.toast.use("Default");
-
-      if (opt=='success') {
-        this.toast.patch("icon", '<i class="fa-duotone fa-2x fa-check-circle fa-beat : text-success me-3"></i>');
-        this.toast.patch("text", '<strong class="me-auto">'+this.base.name+' Sucessfully</strong>');
-      }
-      if (opt=='failed') {
-        this.toast.patch("icon", '<i class="fa-duotone fa-2x fa-times-circle fa-beat : text-danger me-3"></i>');
-        this.toast.patch("text", '<strong class="me-auto">'+this.base.name+' Failed</strong>');
-      }
-      this.toast.show();
-    }
   }
 
   /* ROLE:VIEW Frontend */
-  class View extends Frontend {
+  class View extends CyruzFrontend {
     init() {
       this.load("modal");
     }
@@ -64,7 +49,7 @@ NIRVANA.build( "Role", ( Manifest ) => {
   }
 
   /* ROLE:CREATE Frontend */
-  class Create extends Frontend {
+  class Create extends CyruzFrontend {
     init() {
       this.load("modal");
       this.load("toast");
@@ -86,7 +71,7 @@ NIRVANA.build( "Role", ( Manifest ) => {
   }
 
   /* ROLE:UPDATE Frontend */
-  class Update extends Frontend {
+  class Update extends CyruzFrontend {
     init() {
       this.load("modal");
       this.load("toast");
@@ -113,7 +98,7 @@ NIRVANA.build( "Role", ( Manifest ) => {
   }
 
   /* ROLE:DELETE Frontend */
-  class Delete extends Frontend {
+  class Delete extends CyruzFrontend {
     init() {
       this.load("modal");
       this.load("toast");
@@ -138,153 +123,54 @@ NIRVANA.build( "Role", ( Manifest ) => {
   }
 
   /* ROLE:MENU Frontend */
-  class Menu extends Frontend {
-    init() {
-      this.load("modal");
-      this.load("form");
-      this.load("select");
-
-      this.select.build("role_menu", this.form.patch("role_menu", "id_menu"), {
-        data: this.api("GET", "menu/list"),
-        patch: ( data )=> {
-          return [data.id_menu, data.name+" ("+data.note+")"];
-        }
-      });
-      this.iconPreview();
-    }
-    start( id ) {
-      this.id = id;
-      this.modal.show();
-      $(this.base.target+" .boxMenu").html("");
-      this.modal.trigger("after", "show", ()=> {
-        this.tableMenu( this.id );
-      });
-    }
-    tableMenu( id ) {
-      const checker = {
-        true: '<i class="fa fa-lg fa-check fa-fw : text-success me-1"></i>',
-        false: '<i class="fa fa-lg fa-times fa-fw : text-danger me-1"></i>',
-      };
-      this.api("GET", "role_menu", { "Q[where][id_role]":id, "Q[join][menu]":"role_menu.id_menu = menu.id_menu", "Q[order_by][order]":"asc"}, (resp)=> {
-        $(this.base.target+" .boxMenu").html("");
-        resp.data.forEach((menu)=> {
-          let options = JSON.parse(menu.options);
-          let container = this.container("menu", "tbody");
-          this.patch("icon", container).html('<i class="fa-duotone fa-lg fa-fw fa-'+menu.icon+' : '+menu.color+' me-1"></i>');
-          this.patch("name", container).text(menu.name);
-          this.patch("optionView", container).html(checker[options.view]);
-          this.patch("optionCreate", container).html(checker[options.create]);
-          this.patch("optionUpdate", container).html(checker[options.update]);
-          this.patch("optionDelete", container).html(checker[options.delete]);
-          this.patch("optionPrint", container).html(checker[options.print]);
-          this.patch("optionImport", container).html(checker[options.import]);
-          this.patch("optionExport", container).html(checker[options.export]);
-          this.patch("optionFormat", container).html(checker[options.format]);
-          this.patch("idRoleMenu", container).find("button").attr("onclick", "NIRVANA.run('Role', 'Menu', 'deleteMenu', '"+menu.id_role_menu+"')");
-          
-          $(this.base.target+" .boxMenu").append( container.html() );
-        });
-      }, false);
-    }
-    deleteMenu( idRoleMenu ) {
-      this.api("DELETE", "role_menu/"+idRoleMenu, {}, resp=> {
-        this.tableMenu( this.id );
-      });
-    }
-    iconPreview() {
-      this.form.patch("role_menu", "id_menu").on("change", (event)=> {
-        let id_menu = this.form.patch("role_menu", "id_menu").val();
-        let menu = this.api("GET", "menu/"+id_menu).responseJSON;
-        $(".preview-icon").html('<i class="fa-duotone fa-xl fa-'+menu.data.icon+' : '+menu.data.color+'"></i>');
-      });
-    }
-    submit() {
-      let options = {
-        view: this.form.patch("role_menu", "option_view").prop("checked"),
-        create: this.form.patch("role_menu", "option_create").prop("checked"),
-        update: this.form.patch("role_menu", "option_update").prop("checked"),
-        delete: this.form.patch("role_menu", "option_delete").prop("checked"),
-        print: this.form.patch("role_menu", "option_print").prop("checked"),
-        import: this.form.patch("role_menu", "option_import").prop("checked"),
-        export: this.form.patch("role_menu", "option_export").prop("checked"),
-        format: this.form.patch("role_menu", "option_format").prop("checked"),
-      };
-
-      this.form.build("role_menu", {
-        id_role: this.id,
-        id_menu: this.form.patch("role_menu", "id_menu").val(),
-        options: JSON.stringify(options),
-      });
-
-      this.api("POST", "role_menu", this.form.value("role_menu"), resp=> {
-        this.tableMenu( this.id );
-      });
-    }
-  }
-  
-  class MenuNew extends Frontend {
-    init() {
-      this.load("modal");
-    }
-    start() {
-
-      this.modal.show();
-    }
-    allParent( grandParent ) {
-      let status = $(grandParent).prop("checked");
-      this.patch('parent').prop("checked", status).trigger("change");
-    }
-    allChild( parent ) {
-      let status = $(parent).prop("checked");
-      let name = $(parent).attr("x-name");
-      let option = $(parent).attr("x-option");
-      
-      this.patch('child-'+name).prop("checked", status).trigger("change");
-      this.patch(option).prop("checked", status).trigger("change");
-    }
-    allOption( parentOrChild ) {
-      let status = $(parentOrChild).prop("checked");
-      let option = $(parentOrChild).attr("x-option");
-      this.patch(option).prop("checked", status).trigger("change");
-    }
-  }
-
-  class Menu3 extends Frontend {
+  class Menu extends CyruzFrontend {
     init() {
       this.load("modal");
       this.load("form");
 
       this.form.initialize();
     }
-    start() {
+    start( id_role ) {
+      this.id_role = id_role;
+
+      $("[type='checkbox']").prop("checked", false);
+
+      this.api("GET", "role_menu/id_role/"+id_role, resp=> {
+        resp.data.forEach( row=> {
+          this.patch("menu-"+row.id_menu).prop("checked", true);
+          
+          Object.entries( row.options ).forEach( Entry=> {
+            const [name, value] = Entry;
+            this.patch("menu-"+row.id_menu+"-option-"+name).prop("checked", value);
+          });
+        });
+      });
       this.modal.show();
     }
-    allParent( grandParent ) {
-      let status = $(grandParent).prop("checked");
-      this.patch('parent').prop("checked", status).trigger("change");
-    }
-    allChild( parent ) {
-      let status = $(parent).prop("checked");
-      let name = $(parent).attr("x-name");
-      let option = $(parent).attr("x-option");
-      
-      this.patch('child-'+name).prop("checked", status).trigger("change");
-      this.patch(option).prop("checked", status).trigger("change");
-    }
-    allOption( parentOrChild ) {
-      let status = $(parentOrChild).prop("checked");
-      let option = $(parentOrChild).attr("x-option");
-      this.patch(option).prop("checked", status).trigger("change");
+    optionsChecks( elements ) {
+      let status = $(elements).prop('checked');
+      let target = $(elements).attr('data-to');
+      $("."+target).prop('checked', status);
     }
     submit() {
       let data = this.form.batch( (controls, patch) => {
-        controls[patch.name] = patch.controls.prop("checked");
+        controls.id_role = this.id_role;
+        if (patch.name !== 'id_menu') {
+          controls[patch.name] = patch.controls.prop("checked");
+        }else {
+          controls[patch.name] = patch.controls.val();
+        }
       });
-      console.log( data );
+
+      Object.entries( data ).forEach( Entry=> {
+        const [name, controls] = Entry;
+        this.api("POST", "role_menu/entries", controls, resp=> {
+          console.log( resp );
+        });
+      });
     }
   }
   
-
   /* LOADER Frontend */
   return {
     Apps: {
@@ -293,18 +179,13 @@ NIRVANA.build( "Role", ( Manifest ) => {
       Create: new Create,
       Update: new Update,
       Delete: new Delete,
-      Menu: new MenuNew,
-      Menu3: new Menu3,
+      Menu: new Menu,
     },
     Clones: {
       Base: { 
         app:[ "View", "Create", "Update", "Delete" ], 
         property:[ "table" ], 
-        method:[ "buildForm", "clearForm", "buildToast" ]
-      },
-      Menu: {
-        app: [ "View" ],
-        method: [ "tableMenu" ],
+        method:[ "buildForm", "clearForm" ]
       }
     }
   };

@@ -3,18 +3,18 @@
   {% for parent in menu %}
   <li class="list-group-item : pe-0">
     <div class="d-flex align-items-center flex-wrap py-2 pe-3">
-      <small class="badge text-muted">{{ parent.thread }}</small>
+      <small class="badge text-muted">{{ parent.stack }}</small>
       <i class="fa-duotone fa-fw fa-{{ parent.icon }} fa-xl : {{ ' '~parent.color }} me-3"></i>
       <div class="flex-grow-1 col text-truncate">
         <h6 class="m-0">{{ parent.name }}</h6>
-        {% if parent.child %}
+        {% if parent.childs %}
         <small class="text-muted" style="font-size:0.6rem">{{ '#' ~ parent.url }}</small>
         {% else %}
         <small class="text-muted" style="font-size:0.6rem">{{ base_url() ~ parent.url }}</small>
         {% endif %}
       </div>
       <div>
-        {% if parent.child %}
+        {% if parent.childs %}
         <button class="btn btn-sm btn-secondary" data-bs-target="#collapse-{{ parent.id_menu }}" data-bs-toggle="collapse">
           <i class="fa fa-fw fa-chevron-down"></i>
         </button>
@@ -24,19 +24,19 @@
         </button>
         <ul class="dropdown-menu shadow">
           {% if access.options.create %}
-          <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'Create', '{{parent.id_menu}}')"><i class="fa fa-fw fa-plus : me-1 text-secondary"></i> Create</button></li>
+          <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'Create', '{{ parent.id_menu }}')"><i class="fa fa-fw fa-plus : me-1 text-secondary"></i> Create</button></li>
           {% endif %}
           
           {% if access.options.view %}
-          <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'View', '{{parent.id_menu}}')"><i class="fa fa-fw fa-eye : me-1 text-secondary"></i> View</button></li>
+          <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'View', '{{ parent.id_menu }}')"><i class="fa fa-fw fa-eye : me-1 text-secondary"></i> View</button></li>
           {% endif %}
       
           {% if access.options.update %}
-          <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'Update', '{{parent.id_menu}}')"><i class="fa fa-fw fa-edit : me-1 text-secondary"></i> Update</button></li>
+          <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'Update', '{{ parent.id_menu }}')"><i class="fa fa-fw fa-edit : me-1 text-secondary"></i> Update</button></li>
           {% endif %}
       
           {% if access.options.delete %}
-          <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'Delete', '{{parent.id_menu}}')"><i class="fa fa-fw fa-trash : me-1 text-secondary"></i> Delete</button></li>
+          <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'Delete', '{{ parent.id_menu }}')"><i class="fa fa-fw fa-trash : me-1 text-secondary"></i> Delete</button></li>
           {% endif %}
         </ul>
       </div>
@@ -47,18 +47,18 @@
       {% for child in parent.childs %}
       <li class="list-group-item  : pe-0 ms-1 me-0 border-end-0">
         <div class="d-flex align-items-center flex-wrap py-2 pe-3">
-          <small class="badge text-muted">{{ child.thread }}</small>
+          <small class="badge text-muted">{{ child.stack }}</small>
           <i class="fa-duotone fa-fw fa-{{ child.icon }} fa-xl : {{ ' '~child.color }} me-3"></i>
           <div class="flex-grow-1 col text-truncate">
             <h6 class="m-0">{{ child.name }}</h6>
-            {% if child.child %}
+            {% if child.childs %}
             <small class="text-muted" style="font-size:0.6rem">{{ '#' ~ child.url }}</small>
             {% else %}
             <small class="text-muted" style="font-size:0.6rem">{{ base_url() ~ child.url }}</small>
             {% endif %}
           </div>
           <div>
-            {% if child.child %}
+            {% if child.childs %}
             <button class="btn btn-sm btn-secondary" data-bs-target="#collapse-{{ child.id_menu }}" data-bs-toggle="collapse">
               <i class="fa fa-fw fa-chevron-down"></i>
             </button>
@@ -68,19 +68,19 @@
             </button>
             <ul class="dropdown-menu shadow">
               {% if access.options.create %}
-              <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'Create', '{{child.id_menu}}')"><i class="fa fa-fw fa-plus : me-1 text-secondary"></i> Create</button></li>
+              <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'Create', '{{ child.id_menu }}')"><i class="fa fa-fw fa-plus : me-1 text-secondary"></i> Create</button></li>
               {% endif %}
               
               {% if access.options.view %}
-              <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'View', '{{child.id_menu}}')"><i class="fa fa-fw fa-eye : me-1 text-secondary"></i> View</button></li>
+              <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'View', '{{ child.id_menu }}')"><i class="fa fa-fw fa-eye : me-1 text-secondary"></i> View</button></li>
               {% endif %}
           
               {% if access.options.update %}
-              <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'Update', '{{child.id_menu}}')"><i class="fa fa-fw fa-edit : me-1 text-secondary"></i> Update</button></li>
+              <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'Update', '{{ child.id_menu }}')"><i class="fa fa-fw fa-edit : me-1 text-secondary"></i> Update</button></li>
               {% endif %}
           
               {% if access.options.delete %}
-              <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'Delete', '{{child.id_menu}}')"><i class="fa fa-fw fa-trash : me-1 text-secondary"></i> Delete</button></li>
+              <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'Delete', '{{ child.id_menu }}')"><i class="fa fa-fw fa-trash : me-1 text-secondary"></i> Delete</button></li>
               {% endif %}
             </ul>
           </div>
@@ -91,7 +91,7 @@
           {% for child_ in child.childs %}
           <li class="list-group-item : pe-0 ms-1 me-0 border-end-0">
             <div class="d-flex align-items-center flex-wrap py-2 pe-3">
-              <small class="badge text-muted">{{ child_.thread }}</small>
+              <small class="badge text-muted">{{ child_.stack }}</small>
               <i class="fa-duotone fa-fw fa-{{ child_.icon }} fa-xl : {{ ' '~child_.color }} me-3"></i>
               <div class="flex-grow-1 col text-truncate">
                 <h6 class="m-0">{{ child_.name }}</h6>
@@ -112,19 +112,19 @@
                 </button>
                 <ul class="dropdown-menu shadow">
                   {% if access.options.create %}
-                  <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'Create', '{{child_.id_menu}}')"><i class="fa fa-fw fa-plus : me-1 text-secondary"></i> Create</button></li>
+                  <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'Create', '{{ child_.id_menu }}')"><i class="fa fa-fw fa-plus : me-1 text-secondary"></i> Create</button></li>
                   {% endif %}
                   
                   {% if access.options.view %}
-                  <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'View', '{{child_.id_menu}}')"><i class="fa fa-fw fa-eye : me-1 text-secondary"></i> View</button></li>
+                  <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'View', '{{ child_.id_menu }}')"><i class="fa fa-fw fa-eye : me-1 text-secondary"></i> View</button></li>
                   {% endif %}
               
                   {% if access.options.update %}
-                  <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'Update', '{{child_.id_menu}}')"><i class="fa fa-fw fa-edit : me-1 text-secondary"></i> Update</button></li>
+                  <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'Update', '{{ child_.id_menu }}')"><i class="fa fa-fw fa-edit : me-1 text-secondary"></i> Update</button></li>
                   {% endif %}
               
                   {% if access.options.delete %}
-                  <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'Delete', '{{child_.id_menu}}')"><i class="fa fa-fw fa-trash : me-1 text-secondary"></i> Delete</button></li>
+                  <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'Delete', '{{ child_.id_menu }}')"><i class="fa fa-fw fa-trash : me-1 text-secondary"></i> Delete</button></li>
                   {% endif %}
                 </ul>
               </div>

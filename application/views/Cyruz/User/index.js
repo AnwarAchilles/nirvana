@@ -46,25 +46,10 @@ NIRVANA.build( "User", ( Manifest ) => {
         }
       });
     }
-    // todo build toast
-    buildToast( opt, response ) {
-      this.toast.container("Default");
-      this.toast.use("Default");
-      
-      if (opt=='success') {
-        this.toast.patch("icon", '<i class="fa-duotone fa-2x fa-check-circle fa-beat : text-success me-3"></i>');
-        this.toast.patch("text", '<strong class="me-auto">'+this.base.name+' Sucessfully</strong>');
-      }
-      if (opt=='failed') {
-        this.toast.patch("icon", '<i class="fa-duotone fa-2x fa-times-circle fa-beat : text-danger me-3"></i>');
-        this.toast.patch("text", '<strong class="me-auto">'+this.base.name+' Failed</strong>');
-      }
-      this.toast.show();
-    }
   }
 
   /* USER:VIEW Frontend */
-  class View extends Frontend {
+  class View extends CyruzFrontend {
     init() {
       this.load("modal");
     }
@@ -81,7 +66,7 @@ NIRVANA.build( "User", ( Manifest ) => {
   }
 
   /* USER:CREATE Frontend */
-  class Create extends Frontend {
+  class Create extends CyruzFrontend {
     init() {
       this.load("modal");
       this.load("toast");
@@ -89,12 +74,15 @@ NIRVANA.build( "User", ( Manifest ) => {
       this.load("select");
     }
     start() {
+      this.buttonSubmit();
       this.buildSelect();
       this.modal.show();
     }
     submit() {
+      this.buttonSubmit('disable');
       this.buildForm();
       this.api("POST", "user", this.form.value("user"), resp=> {
+        this.buttonSubmit('enable');
         this.table.reload("user");
         this.clearForm();
         this.modal.hide();
@@ -105,7 +93,7 @@ NIRVANA.build( "User", ( Manifest ) => {
   }
 
   /* PRODUCT:UPDATE Frontend */
-  class Update extends Frontend {
+  class Update extends CyruzFrontend {
     init() {
       this.load("modal");
       this.load("toast");
@@ -136,13 +124,14 @@ NIRVANA.build( "User", ( Manifest ) => {
   }
 
   /* PRODUCT:DELETE Frontend */
-  class Delete extends Frontend {
+  class Delete extends CyruzFrontend {
     init() {
       this.load("modal");
       this.load("toast");
       this.load("form");
     }
     start( id ) {
+      this.buttonSubmit();
       this.id = id;
       this.api("GET", "user/"+id, resp=> {
         this.modal.patch("name", resp.data.name);
@@ -151,7 +140,9 @@ NIRVANA.build( "User", ( Manifest ) => {
       this.modal.show();
     }
     submit() {
+      this.buttonSubmit('disable');
       this.api("DELETE", "user/"+this.id, {}, resp=> {
+        this.buttonSubmit('enable');
         this.table.reload("user");
         this.modal.hide();
         this.buildToast("success");
@@ -173,7 +164,7 @@ NIRVANA.build( "User", ( Manifest ) => {
       Base: { 
         app:["View", "Create", "Update", "Delete"], 
         property:["table"], 
-        method:[ "buildSelect", "buildForm", "clearForm", "buildToast" ]
+        method:[ "buildSelect", "buildForm", "clearForm" ]
       },
     }
   };

@@ -52,19 +52,35 @@ class CyruzController extends CoreController
       $sidebars = $this->api("GET", "role_menu/composed_menu/".$user['id_role']);
       // output data
       foreach( $sidebars as $sidebar ) {
-        
         $result[ strtolower($sidebar['name']) ] = $sidebar;
+        
         if (strtolower($sidebar['name'])==$classCalled) {
           $this->data['access'] = $sidebar;
         }
 
         if (isset($sidebar['childs'])) {
           $result[ strtolower($sidebar['name']) ]['childs'] = [];
+          
           foreach ( $sidebar['childs'] as $child ) {
-            $result[ strtolower($sidebar['name']) ]['childs'][ strtolower($child['name']) ] = $child;
+            $result[ strtolower($sidebar['name']) ]
+              ['childs'][ strtolower($child['name']) ] = $child;
 
             if (strtolower($child['name'])==$classCalled) {
               $this->data['access'] = $child;
+            }
+
+            if (isset($child['childs'])) {
+              $result[ strtolower($sidebar['name']) ]['childs'][ strtolower($child['name']) ]['childs'] = [];
+
+              foreach ( $child['childs'] as $child2 ) {
+                $result[ strtolower($sidebar['name']) ]
+                  ['childs'][ strtolower($child['name']) ]
+                  ['childs'][ strtolower($child2['name']) ] = $child2;
+
+                if (strtolower($child2['name'])==$classCalled) {
+                  $this->data['access'] = $child2;
+                }
+              }
             }
           }
         }
