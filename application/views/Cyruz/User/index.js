@@ -79,15 +79,16 @@ NIRVANA.build( "User", ( Manifest ) => {
       this.modal.show();
     }
     submit() {
-      this.buttonSubmit('disable');
-      this.buildForm();
-      this.api("POST", "user", this.form.value("user"), resp=> {
-        this.buttonSubmit('enable');
-        this.table.reload("user");
-        this.clearForm();
-        this.modal.hide();
-        this.buildToast("success");
-        this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
+      this.buttonSubmit("disable", process=> {
+        this.buildForm();
+        this.api("POST", "user", this.form.value("user"), resp=> {
+          this.table.reload("user");
+          this.clearForm();
+          this.modal.hide();
+          this.buttonSubmit("enable");
+          this.buildToast("success");
+          this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
+        });
       });
     }
   }
@@ -102,6 +103,7 @@ NIRVANA.build( "User", ( Manifest ) => {
     }
     start( id ) {
       this.id = id;
+      this.buttonSubmit();
       this.buildSelect();
       this.api("GET", "user/"+this.id, resp=> {
         this.form.patch("user", "name").val(resp.data.name);
@@ -112,13 +114,16 @@ NIRVANA.build( "User", ( Manifest ) => {
       this.modal.show();
     }
     submit() {
-      this.buildForm();
-      this.api("PUT", "user/"+this.id, this.form.value("user"), resp=> {
-        this.table.reload("user");
-        this.clearForm();
-        this.modal.hide();
-        this.buildToast("success");
-        this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
+      this.buttonSubmit("disable", process=> {
+        this.buildForm();
+        this.api("PUT", "user/"+this.id, this.form.value("user"), resp=> {
+          this.table.reload("user");
+          this.clearForm();
+          this.modal.hide();
+          this.buttonSubmit("enable");
+          this.buildToast("success");
+          this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
+        });
       });
     }
   }
@@ -140,13 +145,14 @@ NIRVANA.build( "User", ( Manifest ) => {
       this.modal.show();
     }
     submit() {
-      this.buttonSubmit('disable');
-      this.api("DELETE", "user/"+this.id, {}, resp=> {
-        this.buttonSubmit('enable');
-        this.table.reload("user");
-        this.modal.hide();
-        this.buildToast("success");
-        this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
+      this.buttonSubmit("disable", process=> {
+        this.api("DELETE", "user/"+this.id, {}, resp=> {
+          this.table.reload("user");
+          this.modal.hide();
+          this.buttonSubmit("enable");
+          this.buildToast("success");
+          this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
+        });
       });
     }
   }

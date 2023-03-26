@@ -61,17 +61,21 @@ class CyruzFrontend extends Frontend {
   }
 
   // todo set loading on button while processing
-  buttonSubmit( type='' ) {
+  buttonSubmit( type='', nextProcess ) {
     if (type=='enable') {
       this.patch("submit").removeAttr("disabled");
       this.patch("submit").html( this.buttonSubmitTemp );
     }
     if (type=='disable') {
       this.patch("submit").attr("disabled", "disabled");
-      this.patch("submit").html('<i class="fa-duotone fa-spinner-third fa-spin : me-1"></i> Loading');
+      this.patch("submit").html('<i class="fa-duotone fa-fw fa-clock-rotate-left : me-1"></i> Loading');
     }
     if (type=='') {
       this.buttonSubmitTemp = this.patch("submit").html();
+    }
+
+    if (typeof nextProcess!=='undefined') {
+      setTimeout(nextProcess, 500);
     }
   }
 }

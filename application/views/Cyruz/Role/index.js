@@ -56,16 +56,19 @@ NIRVANA.build( "Role", ( Manifest ) => {
       this.load("form");
     }
     start() {
+      this.buttonSubmit();
       this.modal.show();
     }
     submit() {
-      this.buildForm();
-      this.api("POST", "role", this.form.value("role"), resp=> {
-        this.table.reload("role");
-        this.clearForm();
-        this.modal.hide();
-        this.buildToast("success");
-        this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
+      this.buttonSubmit("disable", process=> {
+        this.buildForm();
+        this.api("POST", "role", this.form.value("role"), resp=> {
+          this.table.reload("role");
+          this.clearForm();
+          this.modal.hide();
+          this.buildToast("success");
+          this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
+        });
       });
     }
   }
@@ -79,6 +82,7 @@ NIRVANA.build( "Role", ( Manifest ) => {
     }
     start( id ) {
       this.id = id;
+      this.buttonSubmit();
       this.api("GET", "role/"+this.id, resp=> {
         this.form.patch("role", "name").val(resp.data.name);
         this.form.patch("role", "note").val(resp.data.note);
@@ -86,13 +90,16 @@ NIRVANA.build( "Role", ( Manifest ) => {
       this.modal.show();
     }
     submit() {
-      this.buildForm();
-      this.api("PUT", "role/"+this.id, this.form.value("role"), resp=> {
-        this.table.reload("role");
-        this.clearForm();
-        this.modal.hide();
-        this.buildToast("success");
-        this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
+      this.buttonSubmit("disable", process=> {
+        this.buildForm();
+        this.api("PUT", "role/"+this.id, this.form.value("role"), resp=> {
+          this.table.reload("role");
+          this.clearForm();
+          this.modal.hide();
+          this.buttonSubmit("enable");
+          this.buildToast("success");
+          this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
+        });
       });
     }
   }
@@ -106,6 +113,7 @@ NIRVANA.build( "Role", ( Manifest ) => {
     }
     start( id ) {
       this.id = id;
+      this.buttonSubmit();
       this.api("GET", "role/"+id, resp=> {
         this.modal.patch("name", resp.data.name);
         this.modal.patch("note", resp.data.note);
@@ -113,11 +121,14 @@ NIRVANA.build( "Role", ( Manifest ) => {
       this.modal.show();
     }
     submit() {
-      this.api("DELETE", "role/"+this.id, {}, resp=> {
-        this.table.reload("role");
-        this.modal.hide();
-        this.buildToast("success");
-        this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
+      this.buttonSubmit("disable", process=> {
+        this.api("DELETE", "role/"+this.id, {}, resp=> {
+          this.table.reload("role");
+          this.modal.hide();
+          this.buttonSubmit("enable");
+          this.buildToast("success");
+          this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
+        });
       });
     }
   }
@@ -127,14 +138,11 @@ NIRVANA.build( "Role", ( Manifest ) => {
     init() {
       this.load("modal");
       this.load("form");
-
-      this.form.initialize();
     }
     start( id_role ) {
       this.id_role = id_role;
-
+      this.buttonSubmit();
       $("[type='checkbox']").prop("checked", false);
-
       this.api("GET", "role_menu/id_role/"+id_role, resp=> {
         resp.data.forEach( row=> {
           this.patch("menu-"+row.id_menu).prop("checked", true);
@@ -153,19 +161,25 @@ NIRVANA.build( "Role", ( Manifest ) => {
       $("."+target).prop('checked', status);
     }
     submit() {
-      let data = this.form.batch( (controls, patch) => {
-        controls.id_role = this.id_role;
-        if (patch.name !== 'id_menu') {
-          controls[patch.name] = patch.controls.prop("checked");
-        }else {
-          controls[patch.name] = patch.controls.val();
-        }
-      });
-
-      Object.entries( data ).forEach( Entry=> {
-        const [name, controls] = Entry;
-        this.api("POST", "role_menu/entries", controls, resp=> {
-          console.log( resp );
+      this.buttonSubmit("disable", process=> {
+        let data = this.form.batch( (controls, patch) => {
+          controls.id_role = this.id_role;
+          if (patch.name !== 'id_menu') {
+            controls[patch.name] = patch.controls.prop("checked");
+          }else {
+            controls[patch.name] = patch.controls.val();
+          }
+        });
+        let count = 0;
+        Object.entries( data ).forEach( Entry=> {
+          const [name, controls] = Entry;
+          this.api("POST", "role_menu/entries", controls, resp=> {
+            count++;
+            if (count == Object.keys(data).length) {
+              this.modal.hide();
+              this.buttonSubmit("enable");
+            }
+          });
         });
       });
     }

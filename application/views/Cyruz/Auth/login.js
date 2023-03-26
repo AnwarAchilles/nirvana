@@ -3,7 +3,7 @@
 NIRVANA.build( "Auth", ( Manifest )=> {
 
   /* MAIN Frontend */
-  class Base extends Frontend {
+  class Base extends CyruzFrontend {
     // todo show password
     passwordShow() {
       let type = this.form.patch("user", "password").attr("type");
@@ -32,27 +32,30 @@ NIRVANA.build( "Auth", ( Manifest )=> {
   }
 
   /* LOGIN Frontend */
-  class Login extends Frontend {
+  class Login extends CyruzFrontend {
     init() {
       this.load("form");
       this.load("toast");
+      this.buttonSubmit();
     }
     submit() {
-      this.form.build("user", {
-        email: this.form.patch("user", "email").val(),
-        password: this.form.patch("user", "password").val(),
-      });
-
-      this.api("POST", "auth/login", this.form.value("user"), resp=> {
-        if (resp.message=="user-verified") {
-          window.location.assign( base_url+"/cyruz" );
-        }
-        if (resp.message=="user-not-found") {
-          this.buildToast("failed", "Credentials Not Avaliable");
-        }
-        if (resp.message=="password-wrong") {
-          this.buildToast("failed", "Wrong Password");
-        }
+      this.buttonSubmit("disable", process=> {
+        this.form.build("user", {
+          email: this.form.patch("user", "email").val(),
+          password: this.form.patch("user", "password").val(),
+        });
+  
+        this.api("POST", "auth/login", this.form.value("user"), resp=> {
+          if (resp.message=="user-verified") {
+            window.location.assign( base_url+"/cyruz" );
+          }
+          if (resp.message=="user-not-found") {
+            this.buildToast("failed", "Credentials Not Avaliable");
+          }
+          if (resp.message=="password-wrong") {
+            this.buildToast("failed", "Wrong Password");
+          }
+        });
       });
     }
   }

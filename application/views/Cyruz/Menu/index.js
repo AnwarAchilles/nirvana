@@ -100,6 +100,7 @@ NIRVANA.build( "Menu", ( Manifest ) => {
       this.load("select");
       this.load("form");
 
+      this.buttonSubmit();
       this.clearForm();
       this.buildSelect();
       this.iconPreview();
@@ -109,16 +110,19 @@ NIRVANA.build( "Menu", ( Manifest ) => {
       this.modal.show();
     }
     submit() {
-      this.buildForm();
-      this.api("POST", "menu", this.form.value("menu"), resp=> {
-        this.api("GET", "menu/count", {"Q[where][id_parent]": this.id_parent}, resp=> {
-          this.api("PUT", "menu/"+this.id_parent, { count_child:resp.data.count });
+      this.buttonSubmit("disable", process=> {
+        this.buildForm();
+        this.api("POST", "menu", this.form.value("menu"), resp=> {
+          this.api("GET", "menu/count", {"Q[where][id_parent]": this.id_parent}, resp=> {
+            this.api("PUT", "menu/"+this.id_parent, { child:resp.data.count });
+          }, false);
+          this.buildList();
+          this.clearForm();
+          this.buttonSubmit("enable");
+          this.modal.hide();
+          this.buildToast("success");
+          this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
         });
-        this.buildList();
-        this.clearForm();
-        this.modal.hide();
-        this.buildToast("success");
-        this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
       });
     }
   }
@@ -131,6 +135,7 @@ NIRVANA.build( "Menu", ( Manifest ) => {
       this.load("toast");
       this.load("form");
 
+      this.buttonSubmit();
       this.clearForm();
       this.buildSelect();
       this.iconPreview();
@@ -147,24 +152,30 @@ NIRVANA.build( "Menu", ( Manifest ) => {
       this.modal.show();
     }
     submit() {
-      this.buildForm();
-      this.api("PUT", "menu/"+this.id, this.form.value("menu"), resp=> {
-        this.buildList();
-        this.clearForm();
-        this.modal.hide();
-        this.buildToast("success");
-        this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
+      this.buttonSubmit("disable", process=> {
+        this.buildForm();
+        this.api("PUT", "menu/"+this.id, this.form.value("menu"), resp=> {
+          this.buildList();
+          this.clearForm();
+          this.buttonSubmit("enable");
+          this.modal.hide();
+          this.buildToast("success");
+          this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
+        });
       });
     }
   }
 
   /* MENU:DELETE Frontend */
   class Delete extends CyruzFrontend {
-    start( id ) {
-      this.id = id;
+    init() {
       this.load("modal");
       this.load("toast");
       this.load("form");
+    }
+    start( id ) {
+      this.id = id;
+      this.buttonSubmit();
       this.api("GET", "menu/"+id, resp=> {
         this.id_parent = resp.data.id_parent;
         this.modal.patch("name", resp.data.name);
@@ -175,14 +186,17 @@ NIRVANA.build( "Menu", ( Manifest ) => {
       this.modal.show();
     }
     submit() {
-      this.api("DELETE", "menu/"+this.id, {}, resp=> {
-        this.api("GET", "menu/count", {"Q[where][id_parent]": this.id_parent}, resp=> {
-          this.api("PUT", "menu/"+this.id_parent, { count_child:resp.data.count });
+      this.buttonSubmit("disable", process=> {
+        this.api("DELETE", "menu/"+this.id, {}, resp=> {
+          this.api("GET", "menu/count", {"Q[where][id_parent]": this.id_parent}, resp=> {
+            this.api("PUT", "menu/"+this.id_parent, { child:resp.data.count });
+          });
+          this.buildList();
+          this.modal.hide();
+          this.buttonSubmit("enable");
+          this.buildToast("success");
+          this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
         });
-        this.buildList();
-        this.modal.hide();
-        this.buildToast("success");
-        this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
       });
     }
   }
