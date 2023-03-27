@@ -1,5 +1,10 @@
 
 
+[d] * {
+  border: 1px solid red;
+  padding: 5px;
+}
+
 #cz__sidebar {
   color: var(--bs-light);
   background-color: var(--bs-dark);

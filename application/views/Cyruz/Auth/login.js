@@ -55,6 +55,7 @@ NIRVANA.build( "Auth", ( Manifest )=> {
           if (resp.message=="password-wrong") {
             this.buildToast("failed", "Wrong Password");
           }
+          this.buttonSubmit("enable");
         });
       });
     }
