@@ -92,6 +92,15 @@ class Deploy extends BaseController
       'icon'=> 'sitemap',
       'color'=> 'text-warning',
     ]);
+    $this->menu['role'] = $this->api("POST", "menu", [
+      'id_parent'=> $this->menu['administrator']['id'],
+      'child'=> 0,
+      'stack'=> 4,
+      'name'=> 'Storage',
+      'url'=> 'cyruz/role',
+      'icon'=> 'shelves',
+      'color'=> 'text-primary',
+    ]);
     $this->menu['product'] = $this->api("POST", "menu", [
       'name'=> 'Product',
       'child'=> 0,
@@ -125,19 +134,10 @@ class Deploy extends BaseController
     $this->db->query("TRUNCATE role_menu");
 
     $this->role_menu['admin'] = [];
-    $this->role_menu['guest'] = [];
 
     foreach ($this->menu as $menu) {
       $this->role_menu['admin'][] = $this->api("POST", "role_menu", [
         'id_role'=> $this->role['admin']['id'],
-        'id_menu'=> $menu['id'],
-        'options'=> json_encode([
-          "view"=> true, "create"=> true, "update"=> true, "delete"=> true,
-          "print"=> true, "import"=> true, "export"=> true, "format"=> true,
-        ]),
-      ]);
-      $this->role_menu['guest'][] = $this->api("POST", "role_menu", [
-        'id_role'=> $this->role['guest']['id'],
         'id_menu'=> $menu['id'],
         'options'=> json_encode([
           "view"=> true, "create"=> true, "update"=> true, "delete"=> true,
