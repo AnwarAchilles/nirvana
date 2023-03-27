@@ -170,12 +170,12 @@ class CoreController extends CI_Controller
   }
   private function layoutJavascriptNirvana() {
     $x = [];
-    foreach (glob(APPPATH.'/../storage/js/nirvana/package/*') as $row) {
-      $x[] = base_url('storage/js/nirvana/package/'.basename($row));
+    foreach (glob(APPPATH.'/../resource/js/nirvana/package/*') as $row) {
+      $x[] = base_url('resource/js/nirvana/package/'.basename($row));
     }
-    $x[] = base_url('storage/js/nirvana/loader.js');
-    $x[] = base_url('storage/js/nirvana/frontend.js');
-    $x[] = base_url('storage/js/nirvana/framework.js');
+    $x[] = base_url('resource/js/nirvana/loader.js');
+    $x[] = base_url('resource/js/nirvana/frontend.js');
+    $x[] = base_url('resource/js/nirvana/framework.js');
     return $x;
   }
   
@@ -287,7 +287,7 @@ class CoreController extends CI_Controller
    * ---- ---- ---- ---- */
   public function storage( $source, $data=null )
   {
-    $target = APPPATH.'../storage/'.$source;
+    $target = APPPATH.'../resource/'.$source;
     if ($data!==null) {
       file_put_contents( $target, $data );
       return TRUE;

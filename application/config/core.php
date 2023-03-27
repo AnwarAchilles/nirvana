@@ -71,10 +71,10 @@ $controller['layout']['default'] = [
     // source link
     'source'      => [
       'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons',
-      base_url('/storage/vendor/@fortawesome/fontawesome-pro/css/all.min.css'),
-      base_url('/storage/vendor/datatables-1.12.1/css/datatables.min.css'),
-      base_url('/storage/vendor/select2/dist/css/select2.min.css'),
-      base_url('/storage/css/cyruz.css'),
+      base_url('/resource/vendor/@fortawesome/fontawesome-pro/css/all.min.css'),
+      base_url('/resource/vendor/datatables-1.12.1/css/datatables.min.css'),
+      base_url('/resource/vendor/select2/dist/css/select2.min.css'),
+      base_url('/resource/css/cyruz.css'),
     ],
     
     // todo validate all source
@@ -90,13 +90,12 @@ $controller['layout']['default'] = [
     
     // source link
     'source'      => [
-      base_url('/storage/vendor/bootstrap/dist/js/bootstrap.bundle.min.js'),
-      base_url('/storage/vendor/@fortawesome/fontawesome-pro/js/all.min.js'),
-      base_url('/storage/vendor/jquery/dist/jquery.min.js'),
-      base_url('/storage/vendor/datatables-1.12.1/js/datatables.min.js'),
-      base_url('/storage/vendor/select2/dist/js/select2.full.min.js'),
-      base_url('/storage/js/cyruz.js'),
-      base_url('/storage/vendor/upup/upup.min.js'),
+      base_url('/resource/vendor/bootstrap/dist/js/bootstrap.bundle.min.js'),
+      base_url('/resource/vendor/@fortawesome/fontawesome-pro/js/all.min.js'),
+      base_url('/resource/vendor/jquery/dist/jquery.min.js'),
+      base_url('/resource/vendor/datatables-1.12.1/js/datatables.min.js'),
+      base_url('/resource/vendor/select2/dist/js/select2.full.min.js'),
+      base_url('/resource/js/cyruz.js'),
     ],
     
     // todo validate all source
@@ -132,10 +131,10 @@ $controller['layout']['cyruz'] = [
     // source link
     'source'      => [
       'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons',
-      base_url('/storage/vendor/@fortawesome/fontawesome-pro/css/all.min.css'),
-      base_url('/storage/vendor/datatables-1.12.1/css/datatables.min.css'),
-      base_url('/storage/vendor/select2/dist/css/select2.min.css'),
-      base_url('/storage/css/cyruz.css'),
+      base_url('/resource/vendor/@fortawesome/fontawesome-pro/css/all.min.css'),
+      base_url('/resource/vendor/datatables-1.12.1/css/datatables.min.css'),
+      base_url('/resource/vendor/select2/dist/css/select2.min.css'),
+      base_url('/resource/css/cyruz.css'),
     ],
     
     // todo validate all source
@@ -151,15 +150,14 @@ $controller['layout']['cyruz'] = [
     
     // source link
     'source'      => [
-      base_url('/storage/vendor/bootstrap/dist/js/bootstrap.bundle.min.js'),
-      base_url('/storage/vendor/@fortawesome/fontawesome-pro/js/all.min.js'),
-      base_url('/storage/vendor/jquery/dist/jquery.min.js'),
-      base_url('/storage/vendor/datatables-1.12.1/js/datatables.min.js'),
-      base_url('/storage/vendor/select2/dist/js/select2.full.min.js'),
-      base_url('/storage/vendor/ckeditor5-build-classic/ckeditor.js'),
-      base_url('/storage/vendor/chart.js/dist/chart.min.js'),
-      base_url('/storage/js/cyruz.js'),
-      base_url('/storage/vendor/upup/upup.min.js'),
+      base_url('/resource/vendor/bootstrap/dist/js/bootstrap.bundle.min.js'),
+      base_url('/resource/vendor/@fortawesome/fontawesome-pro/js/all.min.js'),
+      base_url('/resource/vendor/jquery/dist/jquery.min.js'),
+      base_url('/resource/vendor/datatables-1.12.1/js/datatables.min.js'),
+      base_url('/resource/vendor/select2/dist/js/select2.full.min.js'),
+      base_url('/resource/vendor/ckeditor5-build-classic/ckeditor.js'),
+      base_url('/resource/vendor/chart.js/dist/chart.min.js'),
+      base_url('/resource/js/cyruz.js'),
     ],
     
     // todo validate all source
