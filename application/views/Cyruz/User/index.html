@@ -9,11 +9,11 @@
         <i class="fa-duotone fa-{{ access.icon }} fa-swap-opacity fa-2x"></i>
       </div>
       <div class="card-text ms-4 w-100 d-block d-sm-flex justify-content-between">
-        <div class="mb-2 mb-sm-0 text-center text-sm-start">
+        <div class="mb-3 mb-sm-0">
           <h3 class="m-0">{{ table.header }}</h3>
           <p class="m-0 text-muted">{{ table.description }}</p>
         </div>
-        <div class="d-flex align-items-center justify-content-center justify-content-sm-end">
+        <div class="d-flex align-items-center">
           {% if access.options.create %}
           <button type="button" class="btn btn-primary : ms-2" onclick="NIRVANA.start('User', 'Create')">
             <i class="fa fa-add : me-1"></i> Create New

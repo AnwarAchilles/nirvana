@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class User extends BaseApi
 {
   
-
+  # create data
   public function create_REST()
   {
     $QUERY = $this->query;
@@ -26,7 +26,7 @@ class User extends BaseApi
     }
   }
 
-
+  # update data
   public function update_REST()
   {
     $QUERY = $this->query;

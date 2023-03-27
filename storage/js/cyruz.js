@@ -381,14 +381,14 @@ var content = $("#cz__content");
 // SIDEBAR btn icon fixed width
 var sidebar_btn_icon = $("#cz__sidebar_body .fa-duotone");
 sidebar_btn_icon.each( function(i, btn) {
-  $(btn).addClass("fa-fw");
+  // $(btn).addClass("fa-fw");
 });
 var sidebar_icon_solid = $("#cz__sidebar_body .fa-solid");
-sidebar_icon_solid.each( function(i, btn) {
-  var span = $(btn).next();
-  $(btn).addClass("fa-fw");
-  $(btn).addClass("fa-"+span.html()[0].toLowerCase());
-});
+// sidebar_icon_solid.each( function(i, btn) {
+//   var span = $(btn).next();
+//   $(btn).addClass("fa-fw");
+//   $(btn).addClass("fa-"+span.html()[0].toLowerCase());
+// });
 
 // SIDEBAR button collapse icon
 var sidebar_btn_collapse = $("#cz__sidebar_body .nav [data-bs-toggle='collapse']");
