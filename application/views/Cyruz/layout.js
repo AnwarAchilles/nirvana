@@ -18,7 +18,7 @@ const NIRVANA = new Framework({
   },
   
   User: {
-    url: base_url
+    url: base_url,
   },
 
   Menu: {

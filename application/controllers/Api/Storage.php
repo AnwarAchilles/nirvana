@@ -19,6 +19,39 @@ class Storage extends BaseApi
   }
 
 
+  public function upload_POST( $filename )
+  {
+    $extension = pathinfo( $this->file[$filename]['name'], PATHINFO_EXTENSION);
+    $location = str_replace('/index.php', '/storage/', $_SERVER['SCRIPT_FILENAME']);
+
+    if (! file_exists($location.'/'.$extension)) {
+      mkdir($location.'/'.$extension);
+    }
+
+    // $this->load->library('upload', [
+    //   'upload_path'=> ,
+    // ]);
+
+    // if ( $this->upload->do_upload( $filename ) ) {
+
+    // }
+
+    $this->data = $this->file;
+    $this->return(200);
+  }
+
+  // bulk upload by entries files
+  public function upload_entries_POST()
+  {
+    $this->load->library('upload', [
+      'upload_path'=> str_replace('/index.php', '', $_SERVER['SCRIPT_FILENAME']),
+    ]);
+
+    $this->data = $this->file;
+    $this->return(200);
+  }
+
+
   
 
 }

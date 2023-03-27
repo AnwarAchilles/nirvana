@@ -45,6 +45,8 @@ class CoreController extends CI_Controller
     $layout = $data['layout'];
     $layout['stylesheet'] = (isset($layout['stylesheet'])) ? $layout['stylesheet'] : [];
     $layout['javascript'] = (isset($layout['javascript'])) ? $layout['javascript'] : [];
+    // set frontend
+    $frontend = (isset($data['frontend'])) ? $data['frontend'] : [];
     // reset layout
     $data['layout'] = [];
     // layout controlling
@@ -72,7 +74,7 @@ class CoreController extends CI_Controller
     $output['stylesheet']['source'] = $source;
     
     // javascript loader
-    $source = $this->layoutJavascript( $layout, $config, $output );
+    $source = $this->layoutJavascript( $layout, $config, $output, $frontend );
     $config['javascript']['source'] = [];
     $output['javascript']['source'] = $source;
 
@@ -130,7 +132,7 @@ class CoreController extends CI_Controller
     }
     return $source;
   }
-  private function layoutJavascript( $layout, $config, $output ) {
+  private function layoutJavascript( $layout, $config, $output, $frontend ) {
     /*
     * todo javascript/js functions */
     $javascript = @array_merge($config['javascript'], $layout['javascript']);
@@ -151,6 +153,10 @@ class CoreController extends CI_Controller
         $source[] = base_url('/application/views'.$output['use'].'.js');
         $source[] = base_url('/application/views/'.$output['view'].'.js');
       }
+      // nirvana frontend component
+      foreach ($frontend as $component) {
+        $source[] = base_url('application/views/'.$component[1]); 
+       }
       // insert data from user
       if (isset($layout['javascript']['source'])) {
         $source = array_merge($source, $layout['javascript']['source']);
@@ -170,12 +176,12 @@ class CoreController extends CI_Controller
   }
   private function layoutJavascriptNirvana() {
     $x = [];
-    foreach (glob(APPPATH.'/../storage/js/nirvana/package/*') as $row) {
-      $x[] = base_url('storage/js/nirvana/package/'.basename($row));
+    foreach (glob(APPPATH.'/../resource/js/nirvana/package/*') as $row) {
+      $x[] = base_url('/resource/js/nirvana/package/'.basename($row));
     }
-    $x[] = base_url('storage/js/nirvana/loader.js');
-    $x[] = base_url('storage/js/nirvana/frontend.js');
-    $x[] = base_url('storage/js/nirvana/framework.js');
+    $x[] = base_url('/resource/js/nirvana/loader.js');
+    $x[] = base_url('/resource/js/nirvana/frontend.js');
+    $x[] = base_url('/resource/js/nirvana/framework.js');
     return $x;
   }
   
@@ -285,9 +291,9 @@ class CoreController extends CI_Controller
   /* ---- ---- ---- ----
    * STORAGE HANDLING
    * ---- ---- ---- ---- */
-  public function storage( $source, $data=null )
+  public function resource( $source, $data=null )
   {
-    $target = APPPATH.'../storage/'.$source;
+    $target = APPPATH.'../resource/'.$source;
     if ($data!==null) {
       file_put_contents( $target, $data );
       return TRUE;
