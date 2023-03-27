@@ -21,32 +21,34 @@ class PackageTable {
     params.dataSrc = options.patch.bind( this );
     params.order = options.order;
     // render table
-    this.__table[nest] = $(".datatables").DataTable({
-      serverSide: true,
-      columns: params.columns,
-      order: params.order,
-      ajax: {
-        url: this.__frontend.base.url+"/"+params.url,
-        type: params.type,
-        dataSrc: ( src ) => {
-          src.data.forEach( (data, i) => {
-            data.button = $(".datatables_button").html();
-
-            for (const name in data) {
-              data.button = data.button.replaceAll("{"+name+"}", data[name]);
-            }
-
-            data.button = data.button.replaceAll("{base_url}", base_url);
-            data.button = data.button.replaceAll("{current_url}", current_url);
-
-            params.dataSrc(data, i);
-
-            src.data[i] = data;
-          });
-          return src.data;
+    if ( ! $.fn.DataTable.isDataTable( '.datatables' ) ) {
+      this.__table[nest] = $(".datatables").DataTable({
+        serverSide: true,
+        columns: params.columns,
+        order: params.order,
+        ajax: {
+          url: this.__frontend.base.url+"/"+params.url,
+          type: params.type,
+          dataSrc: ( src ) => {
+            src.data.forEach( (data, i) => {
+              data.button = $(".datatables_button").html();
+  
+              for (const name in data) {
+                data.button = data.button.replaceAll("{"+name+"}", data[name]);
+              }
+  
+              data.button = data.button.replaceAll("{base_url}", base_url);
+              data.button = data.button.replaceAll("{current_url}", current_url);
+  
+              params.dataSrc(data, i);
+  
+              src.data[i] = data;
+            });
+            return src.data;
+          }
         }
-      }
-    });    
+      });
+    }
   }
   // reload table
   reload( nest ) {

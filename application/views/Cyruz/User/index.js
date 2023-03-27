@@ -168,7 +168,7 @@ NIRVANA.build( "User", ( Manifest ) => {
     },
     Clones: {
       Base: { 
-        app:["View", "Create", "Update", "Delete"], 
+        app:[ "View", "Create", "Update", "Delete" ], 
         property:["table"], 
         method:[ "buildSelect", "buildForm", "clearForm" ]
       },

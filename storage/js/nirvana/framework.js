@@ -28,7 +28,9 @@ class Framework {
       });
     }
     // building frontend
-    this[nest] = {};
+    if (typeof this[nest]!=='object') {
+      this[nest] = {};
+    }
     Object.entries( Frontend.Apps ).forEach((Apps)=> {
       let [newName, frontend] = Apps;
       // patching data
