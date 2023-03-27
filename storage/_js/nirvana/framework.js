@@ -25,12 +25,14 @@ class Framework {
     // create override
     this.override( nest, Frontend.Overrides );
     // create frontend
-    this[nest] = {};
     this.frontend( nest, Frontend.Apps );
-    // instance framework
-    this.instance( nest );
     // building clones
+    // if (typeof Frontend.Clones!=='undefined') {
+    //   this.__clone[nest] = Object.assign({}, Frontend.Clones);
+    // }
     this.clone( nest, Frontend.Clones );
+    // instance framework
+    this.instance( nest, Frontend );
   }
   // todo override create
   override( nest, Overrides ) {
@@ -90,25 +92,27 @@ class Framework {
         }
         // create clone prototype method
         app.forEach((app)=> {
-          let toFrontend = this[nest][app];
-          if (method.length>0) {
-            method.forEach((method)=> {
-              toFrontend.__proto__[method] = fromFrontend.__proto__[method];
-            });
-          }
-          if (property.length>0) {
-            property.forEach((property)=> {
-              if (typeof property!=='undefined') {
-                toFrontend[property] = fromFrontend[property];
-              }
-            });
+          if (typeof this[nest][app]!=='undefined') {
+            let toFrontend = this[nest][app];
+            if (method.length>0) {
+              method.forEach((method)=> {
+                toFrontend.__proto__[method] = fromFrontend.__proto__[method];
+              });
+            }
+            if (property.length>0) {
+              property.forEach((property)=> {
+                if (typeof property!=='undefined') {
+                  toFrontend[property] = fromFrontend[property];
+                }
+              });
+            }
           }
         });
       });
     }
   }
   // todo instance specified onMethod
-  instance( nest ) {
+  instance( nest, Frontend ) {
     Object.entries( this[nest] ).forEach((Apps)=> {
       let [name, frontend] = Apps;
       // instance onStart
@@ -120,6 +124,7 @@ class Framework {
         frontend.onSubmit();
       }
     });
+    this.clone( nest, Frontend.Clones );
   }
   // todo load frontend
   load( nest, frontend ) {

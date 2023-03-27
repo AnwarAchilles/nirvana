@@ -30,7 +30,6 @@ class PackageSelect {
         this.__select[nest].push({ id:select[0], text:select[1] });
       });
     }
-    console.log( this );
 
     let dropdownParent = "["+this.__frontend.base.repo+"-Modal='"+this.__frontend.base.name+"']";
     control.select2({ 

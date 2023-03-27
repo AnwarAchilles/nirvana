@@ -159,12 +159,11 @@ $controller['layout']['cyruz'] = [
       base_url('/resource/vendor/bootstrap/dist/js/bootstrap.bundle.min.js'),
       base_url('/resource/vendor/@fortawesome/fontawesome-pro/js/all.min.js'),
       base_url('/resource/vendor/jquery/dist/jquery.min.js'),
-      base_url('/resource/vendor/select2/dist/js/select2.full.min.js'),
+      base_url('/resource/vendor/select2/dist/js/select2.full.js'),
       base_url('/resource/vendor/datatables-1.12.1/js/datatables.min.js'),
       base_url('/resource/vendor/ckeditor5-build-classic/ckeditor.js'),
       base_url('/resource/vendor/chart.js/dist/chart.min.js'),
       base_url('/resource/js/cyruz.js'),
-      base_url('/resource/vendor/upup/upup.min.js'),
     ],
     
     // todo validate all source
