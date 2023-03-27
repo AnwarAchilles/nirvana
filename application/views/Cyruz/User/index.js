@@ -42,7 +42,7 @@ NIRVANA.build( "User", ( Manifest ) => {
       this.select.build("userRole", this.form.patch("user", "id_role"), {
         data: this.api("GET", "role"),
         patch: ( data )=> {
-          return [data.id_role, data.name+" ("+data.note+")"];
+          return [data.id_role, data.name];
         }
       });
     }
