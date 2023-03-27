@@ -2,7 +2,7 @@
 
 class M_Storage extends CoreModel
 {
-    public $table = 'archive';
+    public $table = 'storage';
 
     public function __construct()
     {
