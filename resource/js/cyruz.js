@@ -344,7 +344,7 @@ if (resultSetting('color') !== null) {
 
 
 $("#settings ._set_sidebar ._set_image img").each( function() {
-  var img = base_url+"/storage/images/sidebar-"+$(this).attr("sidebar-index")+".jpg";
+  var img = base_url+"/resource/images/sidebar-"+$(this).attr("sidebar-index")+".jpg";
   $(this).attr("src", img);
   $(this).on("click", function() {
     $("#cz__sidebar_background").css( "background-image", "url("+$(this).attr('src')+")" );
