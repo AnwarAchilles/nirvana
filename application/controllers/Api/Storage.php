@@ -31,7 +31,7 @@ class Storage extends BaseApi
         'source'=> json_encode($resource),
       ];
       // set output
-      $this->models->update(['where'=> ['id_storage'=>$this->id], 'data'=>$restorage]);
+      $this->models->put(['where'=> ['id_storage'=>$this->id], 'data'=>$restorage]);
       $this->data['id'] = $this->id;
       $this->return(200);
     }
@@ -64,12 +64,30 @@ class Storage extends BaseApi
         'source'=> json_encode($this->controller->upload->data()),
       ];
       // set output
-      $this->data['id'] = $this->models->insert(['data'=> $QUERY]);
+      $this->data['id'] = $this->models->set(['data'=> $QUERY]);
       $this->data['name'] = $QUERY['name'];
       $this->return(200);
     }
   }
   
-  
+  # todo delete image with file
+  public function delete_REST()
+  {
+    // get query
+    $QUERY = $this->query;
+    // check query
+    if ($this->config->api['prefix_id'] == TRUE) {
+      $QUERY['where']['id_'.$this->models->table] = $this->id;
+    }else {
+      $QUERY['where'] = ['id'=>$this->id];
+    }
+    // get storage data
+    $storage = $this->models->get(['where'=> ['id_storage'=> $this->id]])->row_array();
+    $source = json_decode($storage['source'], true);
+    unlink( $source['full_path'] );
+    // set output
+    $this->data = $this->models->del( $QUERY );
+    $this->return(200);
+  }
 
 }
