@@ -60,7 +60,7 @@ class Storage extends BaseApi
     if ( $this->controller->upload->do_upload( $filename ) ) {
       // create query data
       $QUERY = [
-        'name'=> $this->controller->upload->data('file_name'),
+        'name'=> $this->controller->upload->data('raw_name'),
         'source'=> json_encode($this->controller->upload->data()),
       ];
       // set output
