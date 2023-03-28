@@ -140,7 +140,7 @@ class Deploy extends BaseController
         'id_role'=> $this->role['admin']['id'],
         'id_menu'=> $menu['id'],
         'options'=> json_encode([
-          "view"=> true, "create"=> true, "update"=> true, "delete"=> true,
+          "detail"=> true, "create"=> true, "update"=> true, "delete"=> true,
           "print"=> true, "import"=> true, "export"=> true, "format"=> true,
         ]),
       ]);
