@@ -13,8 +13,9 @@
           <i class="fa-solid fa-times fa-xl"></i>
         </button>
       </div>
-      <div class="modal-body scrollbar">
-
+      <div class="modal-body container scrollbar">
+        <br>
+        
         <div class="mb-4 input-group align-items-center">
           <label class="form-label m-0 w-25">Name</label>
           <h6 class="m-0" Modal-Patch="name"></h6>
@@ -24,38 +25,9 @@
           <h6 class="m-0" Modal-Patch="note"></h6>
         </div>
 
-        <table class="table border m-0 bg-white">
-          <thead>
-            <tr>
-              <th width="5%">Icon</th>
-              <th width="100%">Name</th>
-              <th width="3%"><i class="fa fa-md fa-eye fa-fw : text-secondary me-1"></i></th>
-              <th width="3%"><i class="fa fa-md fa-add fa-fw : text-secondary me-1"></i></th>
-              <th width="3%"><i class="fa fa-md fa-edit fa-fw : text-secondary me-1"></i></th>
-              <th width="3%"><i class="fa fa-md fa-trash fa-fw : text-secondary me-1"></i></th>
-            </tr>
-          </thead>
-          <tbody class="boxMenu"></tbody>
-        </table>
-
       </div>
       <div class="modal-footer"></div>
     </form>
-
-    <div Role-Container="menu" class="d-none">
-      <table>
-        <tbody>
-          <tr>
-            <td Role-Patch="icon"></td>
-            <td Role-Patch="name"></td>
-            <td Role-Patch="optionView" class="text-center"></td>
-            <td Role-Patch="optionCreate" class="text-center"></td>
-            <td Role-Patch="optionUpdate" class="text-center"></td>
-            <td Role-Patch="optionDelete" class="text-center"></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
 
   </div>
 </div>

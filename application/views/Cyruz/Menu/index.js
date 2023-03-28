@@ -79,10 +79,14 @@ NIRVANA.build( "Menu", ( Manifest ) => {
     start( id ) {
       this.load("modal");
       this.api("GET", "menu/"+id, resp=> {
-        this.api("GET", "menu/"+resp.id_parent, resp=> {
-          this.modal.patch("parent", resp.data.name || "-");
+        this.api("GET", "menu/"+resp.data.id_parent, resp=> {
+          if (typeof resp.data.icon !== 'undefined') {
+            this.modal.patch("parent", '<i class="fa-duotone fa-'+resp.data.icon+' fa-fw : text-'+resp.data.color+' me-1"></i>'+resp.data.name);
+          }else {
+            this.modal.patch("parent", "");
+          }
         });
-        this.modal.patch("name", resp.data.name);
+        this.modal.patch("name_icon", '<i class="fa-duotone fa-'+resp.data.icon+' fa-fw : text-'+resp.data.color+' me-1"></i>'+resp.data.name);
         this.modal.patch("url", resp.data.url);
         this.modal.patch("note", resp.data.note);
       });

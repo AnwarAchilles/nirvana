@@ -43,7 +43,7 @@ NIRVANA.build( "Role", ( Manifest ) => {
       });
       this.modal.show();
       this.modal.trigger("after", "show", ()=> {
-        this.tableMenu( id );
+        // do something
       });
     }
   }
