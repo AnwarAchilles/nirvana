@@ -9,8 +9,8 @@ class Product extends CyruzController
   {
     // set layout
     $this->data['layout'] = [
-      'module'=> 'cyruz',
       'draw'=> true,
+      'module'=> 'cyruz',
       'layout'=> 'Cyruz/layout',
       'source'=> [ 'Cyruz', 'Product', 'index' ],
       'title'=> 'Product And Display',
@@ -30,6 +30,8 @@ class Product extends CyruzController
   {
     // set layout
     $this->data['layout'] = [
+      'module'=> 'cyruz',
+      'layout'=> 'Cyruz/layout-report',
       'source'=> [ 'Cyruz', 'Product', 'report', 'print' ],
       'title'=> 'sample',
     ];

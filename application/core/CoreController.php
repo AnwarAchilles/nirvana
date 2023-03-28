@@ -206,7 +206,6 @@ class CoreController extends CI_Controller
         if ($report['download']==TRUE) {
           header('Content-Disposition: attachment; filename="'.$report['filename'].'.pdf"');
         }
-        echo $source;
       // dom reader type
       }else {
         if ($report['viewer']==TRUE) {

@@ -16,7 +16,7 @@
   <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
   <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon-57x57.png">
-  <link rel="apple-touch-startup-image" href="{{ base_url('storage/images/logo.png') }}">
+  <link rel="apple-touch-startup-image" href="{{ base_url('assets/images/thermo-logo.png') }}">
 
   <!-- INTERNET EXPLORER SUPPORT -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -39,14 +39,14 @@
   <!-- Google / Search Engine Tags -->
   <meta itemprop="name" content="{{ layout.name }}">
   <meta itemprop="description" content="{{ layout.description }}">
-  <meta itemprop="image" content="{{ base_url('assets/images/main-banner-1.jpeg') }}">
+  <!-- <meta itemprop="image" content="{{ base_url('assets/images/main-banner-1.jpeg') }}"> -->
 
   <!-- Facebook Meta Tags -->
   <meta property="og:url" content="{{ base_url }}">
   <meta property="og:type" content="website">
   <meta property="og:title" content="{{ layout.name }}">
   <meta property="og:description" content="{{ layout.description }}">
-  <meta property="og:image" content="{{ base_url('assets/images/main-banner-1.jpeg') }}">
+  <!-- <meta property="og:image" content="{{ base_url('assets/images/main-banner-1.jpeg') }}"> -->
 
   <!-- Twitter Meta Tags -->
   <meta name="twitter:card" content="summary_large_image">
@@ -55,14 +55,14 @@
   <meta name="twitter:image" content="{{ base_url('assets/images/main-banner-1.jpeg') }}">
 
   <!-- home screen icon defaults - 48x48 -->
-  <link rel="apple-touch-icon" href="{{ base_url('storage/images/logo.png') }}"/> 
-  <link rel="icon" sizes="192x192" href="{{ base_url('storage/images/logo.png') }}" />
+  <link rel="apple-touch-icon" href="{{ base_url('resource/images/logo.png') }}"/> 
+  <link rel="icon" sizes="192x192" href="{{ base_url('resource/images/logo.png') }}" />
 
   <!-- ANDROID MANIFEST -->
-  <link rel="manifest" href="{{ base_url('manifest.json') }}">
+  <link rel="manifest" href="{{ base_url('manifest.webmanifest') }}">
 
   <!-- SHORTCUT ICONS -->
-  <link rel="shortcut icon" type="image/x-icon" href="{{ base_url('storage/images/logo.png') }}">
+  <link rel="shortcut icon" type="image/x-icon" href="{{ base_url('resource/images/logo.png') }}">
 
   <!-- TITLE -->
   <title>{{ layout.title }}</title>
@@ -71,8 +71,7 @@
   {% for style in layout.stylesheet.source %}
   <link href="{{ style }}" rel="stylesheet">
   {% endfor %}
-
-  {% if report.viewer == true %}
+  
   <style>
     body {
       /* font-family: 'Courier New', Courier, monospace; untuk struk bagus */
@@ -81,33 +80,17 @@
       background-color: white !important;
     }
   </style>
-  {% endif %}
   
 </head>
 <body>
 
-  <!-- LOADER -->
-  <div id="cz__loader" class="fixed-top w-100 h-100 bg-light" style="z-index:9999">
-    {% set loaderColor = ['primary', 'secondary', 'danger', 'warning', 'success', 'info'] %}
-    {% set loaderColor = random(loaderColor) %}
-    <div class="w-100 h-100 d-flex flex-row align-items-center justify-content-center">
-      <div class="spinner-border text-{{ loaderColor }}" role="status" style="width: 3rem; height: 3rem;">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-      <div class="spinner-grow text-{{ loaderColor }} position-absolute" role="status" style="width: 3rem; height: 3rem;">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-    </div>
-  </div>
-  <!-- /LOADER -->
-
   <!-- CONTENT TEMPLATE -->
   {% if (layout.draw != false) %}
-    {% include 'layout-draw.html' %}
+    {% include layout.use~'-draw.html' %}
   {% else %}
     {% include layout.view~'.html' %}
   {% endif %}
-  
+   <!-- /CONTENT TEMPLATE -->
 
   <!-- JAVASCRIPT PASS VARIABLE -->
   <script>
