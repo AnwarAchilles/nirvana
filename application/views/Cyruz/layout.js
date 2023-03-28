@@ -29,11 +29,11 @@ const NIRVANA = new Framework({
     url: base_url
   },
 
-  Product: {
+  Storage: {
     url: base_url
   },
 
-  Playground: {
+  Product: {
     url: base_url
   },
 

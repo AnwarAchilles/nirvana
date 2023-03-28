@@ -97,7 +97,7 @@ class Deploy extends BaseController
       'child'=> 0,
       'stack'=> 4,
       'name'=> 'Storage',
-      'url'=> 'cyruz/role',
+      'url'=> 'cyruz/storage',
       'icon'=> 'shelves',
       'color'=> 'primary',
     ]);
