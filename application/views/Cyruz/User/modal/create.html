@@ -2,7 +2,13 @@
   <div User="Create" class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable">
     <form class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Create New</h5>
+        <div>
+          <h4 class="m-0 modal-title">Create New</h4>
+          <small class="m-0 text-muted">
+            <i class="fa fa-info-circle : text-info"></i>
+            Tap icon for important informations
+          </small>
+        </div>
         <button type="button" class="btn text-danger" data-bs-dismiss="modal" aria-label="Close">
           <i class="fa-solid fa-times fa-xl"></i>
         </button>
@@ -25,9 +31,6 @@
           <select id="create-role" name="id_role" class="select2" data-placeholder="Select Role">
             <option></option>
           </select>
-        </div>
-        <div class="mb-4 input-group align-items-center">
-          <input id="create-pin" name="pin" placeholder="Pin" type="number" max-length="6" class="form-control" autocomplete="off">
         </div>
 
       </div>
