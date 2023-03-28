@@ -14,25 +14,22 @@ class Dashboard extends CyruzController
       'source'=> [ 'Cyruz', 'Dashboard', 'index' ],
       'title'=> 'Dashboard',
     ];
-    
-    $this->data['count']['user'] = $this->api("GET", "user/count")['count'];
-    $this->data['count']['menu'] = $this->api("GET", "menu/count")['count'];
-    $this->data['count']['role'] = $this->api("GET", "role/count")['count'];
-    $this->data['count']['product'] = $this->api("GET", "product/count")['count'];
-    
-    $totalCount = 0;
-    $totalCount += $this->data['count']['user'];
-    $totalCount += $this->data['count']['menu'];
-    $totalCount += $this->data['count']['role'];
-    $totalCount += $this->data['count']['product'];
-    
-    $this->data['totalCount'] = $totalCount;
+
+    $this->data['listcard'] = [
+      'user'=> 3, 'menu'=> 4, 'role'=> 5, 'storage'=> 6,
+    ];
+    $this->data['totalcount'] = 0;
+    foreach ($this->data['listcard'] as $name=>$id) {
+      $this->data['dataset'][ $name ] = $this->api('GET', 'menu/'.$id);
+      $this->data['datacount'][ $name ] = $this->api('GET', $name.'/count') ['count'];
+      $this->data['totalcount'] += $this->data['datacount'][ $name ];
+    }
 
     $totalCountDescription = 'This is summary text from each assets, ';
-    $totalCountDescription = $totalCountDescription.'total from User (' . $this->data['count']['user'] . ') ';
-    $totalCountDescription = $totalCountDescription.'total from Menu (' . $this->data['count']['menu'] . ') ';
-    $totalCountDescription = $totalCountDescription.'total from Role (' . $this->data['count']['role'] . ') ';
-    $totalCountDescription = $totalCountDescription.'total from product (' . $this->data['count']['product'] . ') ';
+    $totalCountDescription = $totalCountDescription.'total from User (' . $this->data['datacount']['user'] . ') ';
+    $totalCountDescription = $totalCountDescription.'total from Menu (' . $this->data['datacount']['menu'] . ') ';
+    $totalCountDescription = $totalCountDescription.'total from Role (' . $this->data['datacount']['role'] . ') ';
+    $totalCountDescription = $totalCountDescription.'total from Storage (' . $this->data['datacount']['storage'] . ') ';
     $this->data['totalCountDescription'] = $totalCountDescription;
 
     $this->data['toasted'] = $this->api("GET", "toasted/list", [

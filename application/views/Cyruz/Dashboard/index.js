@@ -7,23 +7,21 @@ NIRVANA.build( "Dashboard", (Manifest)=> {
     
     // initialize
     init() {
+      const dataChartPie = [];
 
-      this.chart('user', 'danger', [0, 11, 2, 17, 13, 11, 21]);
-      this.chart('menu', 'info', [0, 11, 2, 17, 13, 11, 21]);
-      this.chart('role', 'warning', [0, 11, 2, 17, 13, 11, 21]);
-      this.chart('product', 'success', [0, 11, 2, 17, 13, 11, 21]);
+      Object.entries( dataset ).forEach( Entry=> {
+        const [name, row] = Entry;
+        
+        // create chart area on card
+        this.chart(name, row.color, [0, 11, 2, 17, 13, 11, 21]);
 
-      let user = sidebars.administrator.childs.user;
-      let menu = sidebars.administrator.childs.menu;
-      let role = sidebars.administrator.childs.role;
-      let product = sidebars.product;
+        // create pie
+        let dataset = this.api("GET", "menu/"+row.id_menu).responseJSON.data;
+        let datacount = this.api("GET", name+"/count").responseJSON.data['count'];
+        dataChartPie.push([name, datacount, dataset.color]);
+      });
 
-      this.chartPie([
-        [ "user",  this.api("GET", "user/count").responseJSON.data['count'], user.color.replace('text-', '') ],
-        [ "menu", this.api("GET", "menu/count").responseJSON.data['count'], menu.color.replace('text-', '') ],
-        [ "role", this.api("GET", "role/count").responseJSON.data['count'], role.color.replace('text-', '') ],
-        [ "product", this.api("GET", "product/count").responseJSON.data['count'], product.color.replace('text-', '') ],
-      ]);
+      this.chartPie( dataChartPie );
     }
 
     // chart setup from cyruz

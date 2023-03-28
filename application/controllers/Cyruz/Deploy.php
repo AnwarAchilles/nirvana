@@ -55,7 +55,7 @@ class Deploy extends BaseController
       'stack'=> 1,
       'url'=> 'cyruz/dashboard',
       'icon'=> 'home',
-      'color'=> 'text-primary',
+      'color'=> 'primary',
     ]);
     $this->menu['administrator'] = $this->api("POST", "menu", [
       'name'=> 'Administrator',
@@ -63,7 +63,7 @@ class Deploy extends BaseController
       'stack'=> 2,
       'url'=> 'Administrator',
       'icon'=> 'folder-open',
-      'color'=> 'text-secondary',
+      'color'=> 'secondary',
     ]);
     $this->menu['user'] = $this->api("POST", "menu", [
       'id_parent'=> $this->menu['administrator']['id'],
@@ -72,7 +72,7 @@ class Deploy extends BaseController
       'name'=> 'User',
       'url'=> 'cyruz/user',
       'icon'=> 'user',
-      'color'=> 'text-danger',
+      'color'=> 'danger',
     ]);
     $this->menu['menu'] = $this->api("POST", "menu", [
       'id_parent'=> $this->menu['administrator']['id'],
@@ -81,7 +81,7 @@ class Deploy extends BaseController
       'name'=> 'Menu',
       'url'=> 'cyruz/menu',
       'icon'=> 'folder-tree',
-      'color'=> 'text-info',
+      'color'=> 'info',
     ]);
     $this->menu['role'] = $this->api("POST", "menu", [
       'id_parent'=> $this->menu['administrator']['id'],
@@ -90,16 +90,16 @@ class Deploy extends BaseController
       'name'=> 'Role',
       'url'=> 'cyruz/role',
       'icon'=> 'sitemap',
-      'color'=> 'text-warning',
+      'color'=> 'warning',
     ]);
-    $this->menu['role'] = $this->api("POST", "menu", [
+    $this->menu['storage'] = $this->api("POST", "menu", [
       'id_parent'=> $this->menu['administrator']['id'],
       'child'=> 0,
       'stack'=> 4,
       'name'=> 'Storage',
       'url'=> 'cyruz/role',
       'icon'=> 'shelves',
-      'color'=> 'text-primary',
+      'color'=> 'primary',
     ]);
     $this->menu['product'] = $this->api("POST", "menu", [
       'name'=> 'Product',
@@ -107,7 +107,7 @@ class Deploy extends BaseController
       'stack'=> 3,
       'url'=> 'cyruz/product',
       'icon'=> 'box-open',
-      'color'=> 'text-success',
+      'color'=> 'success',
     ]);
   }
 
