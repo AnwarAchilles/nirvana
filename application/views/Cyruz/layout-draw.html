@@ -16,7 +16,7 @@
       {% set target = str_replace('/', '-', data.url) %}
       <li>
         <a href="#{{ target }}" class="btn" data-bs-toggle="collapse">
-          <i class="fa-duotone fa-xl fa-fw fa-{{ data.icon }} : icon text- {{ data.color }}"></i>
+          <i class="fa-duotone fa-xl fa-fw fa-{{ data.icon }} : icon text-{{ data.color }}"></i>
           <span>{{ data.name }}</span>
         </a>
         <div class="collapse" id="{{ target }}">
@@ -27,7 +27,7 @@
             {% set target = str_replace('/', '-', data.url) %}
             <li>
               <a href="#{{ target }}" class="btn" data-bs-toggle="collapse">
-                <i class="fa-duotone fa-xl fa-fw fa-{{ data.icon }} : icon text- {{ data.color }}"></i>
+                <i class="fa-duotone fa-xl fa-fw fa-{{ data.icon }} : icon text-{{ data.color }}"></i>
                 <span>{{ data.name }}</span>
               </a>
               <div class="collapse" id="{{ target }}">
@@ -35,7 +35,7 @@
                   {% for data in data.childs %}
                   <li>
                     <a href="{{ base_url(data.url) }}" class="btn">
-                      <i class="fa-duotone fa-fw fa-xl fa-{{ data.icon }} : icon text- {{ data.color }}"></i>
+                      <i class="fa-duotone fa-fw fa-xl fa-{{ data.icon }} : icon text-{{ data.color }}"></i>
                       <span>{{ data.name }}</span>
                     </a>
                   </li>
@@ -46,7 +46,7 @@
             {% else %}
             <li>
               <a href="{{ base_url(data.url) }}" class="btn">
-                <i class="fa-duotone fa-fw fa-xl fa-{{ data.icon }} : icon text- {{ data.color }}"></i>
+                <i class="fa-duotone fa-fw fa-xl fa-{{ data.icon }} : icon text-{{ data.color }}"></i>
                 <span>{{ data.name }}</span>
               </a>
             </li>
@@ -59,7 +59,7 @@
       {% else %}
       <li>
         <a href="{{ base_url(data.url) }}" class="btn">
-          <i class="fa-duotone fa-stack fa-lg fa-{{ data.icon }} : icon text- {{ data.color }}"></i>
+          <i class="fa-duotone fa-fw fa-lg fa-{{ data.icon }} : icon text-{{ data.color }}"></i>
           <span>{{ data.name }}</span>
         </a>
       </li>

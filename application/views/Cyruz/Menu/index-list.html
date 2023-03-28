@@ -4,7 +4,7 @@
   <li class="list-group-item : pe-0">
     <div class="d-flex align-items-center flex-wrap py-2 pe-3">
       <small class="badge text-muted">{{ parent.stack }}</small>
-      <i class="fa-duotone fa-fw fa-{{ parent.icon }} fa-xl : {{ ' '~parent.color }} me-3"></i>
+      <i class="fa-duotone fa-fw fa-{{ parent.icon }} fa-xl : text-{{ parent.color }} me-3"></i>
       <div class="flex-grow-1 col text-truncate">
         <h6 class="m-0">{{ parent.name }}</h6>
         {% if parent.childs %}
@@ -48,7 +48,7 @@
       <li class="list-group-item  : pe-0 ms-1 me-0 border-end-0">
         <div class="d-flex align-items-center flex-wrap py-2 pe-3">
           <small class="badge text-muted">{{ child.stack }}</small>
-          <i class="fa-duotone fa-fw fa-{{ child.icon }} fa-xl : {{ ' '~child.color }} me-3"></i>
+          <i class="fa-duotone fa-fw fa-{{ child.icon }} fa-xl : text-{{ child.color }} me-3"></i>
           <div class="flex-grow-1 col text-truncate">
             <h6 class="m-0">{{ child.name }}</h6>
             {% if child.childs %}
@@ -92,7 +92,7 @@
           <li class="list-group-item : pe-0 ms-1 me-0 border-end-0">
             <div class="d-flex align-items-center flex-wrap py-2 pe-3">
               <small class="badge text-muted">{{ child_.stack }}</small>
-              <i class="fa-duotone fa-fw fa-{{ child_.icon }} fa-xl : {{ ' '~child_.color }} me-3"></i>
+              <i class="fa-duotone fa-fw fa-{{ child_.icon }} fa-xl : text-{{ child_.color }} me-3"></i>
               <div class="flex-grow-1 col text-truncate">
                 <h6 class="m-0">{{ child_.name }}</h6>
                 {% if child.child %}
