@@ -74,8 +74,8 @@ NIRVANA.build( "Menu", ( Manifest ) => {
     }
   }
 
-  /* MENU:VIEW Frontend */
-  class View extends CyruzFrontend {
+  /* MENU:DETAIL Frontend */
+  class Detail extends CyruzFrontend {
     start( id ) {
       this.load("modal");
       this.api("GET", "menu/"+id, resp=> {
@@ -205,14 +205,14 @@ NIRVANA.build( "Menu", ( Manifest ) => {
   return {
     Apps: {
       Base: new Base,
-      View: new View,
+      Detail: new Detail,
       Create: new Create,
       Update: new Update,
       Delete: new Delete,
     },
     Clones: {
       Base: { 
-        app:["View", "Create", "Update", "Delete"], 
+        app:["Detail", "Create", "Update", "Delete"], 
         property:["table"], 
         method:[ "buildList", "buildSelect", "buildForm", "clearForm", "iconPreview" ]
       },

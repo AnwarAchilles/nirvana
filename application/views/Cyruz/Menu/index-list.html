@@ -28,7 +28,7 @@
           {% endif %}
           
           {% if access.options.view %}
-          <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'View', '{{ parent.id_menu }}')"><i class="fa fa-fw fa-eye : me-1 text-secondary"></i> View</button></li>
+          <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'Detail', '{{ parent.id_menu }}')"><i class="fa fa-fw fa-eye : me-1 text-secondary"></i> Detail</button></li>
           {% endif %}
       
           {% if access.options.update %}
@@ -72,7 +72,7 @@
               {% endif %}
               
               {% if access.options.view %}
-              <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'View', '{{ child.id_menu }}')"><i class="fa fa-fw fa-eye : me-1 text-secondary"></i> View</button></li>
+              <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'Detail', '{{ child.id_menu }}')"><i class="fa fa-fw fa-eye : me-1 text-secondary"></i> Detail</button></li>
               {% endif %}
           
               {% if access.options.update %}
@@ -116,7 +116,7 @@
                   {% endif %}
                   
                   {% if access.options.view %}
-                  <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'View', '{{ child_.id_menu }}')"><i class="fa fa-fw fa-eye : me-1 text-secondary"></i> View</button></li>
+                  <li><button class="dropdown-item" onclick="NIRVANA.start('Menu', 'Detail', '{{ child_.id_menu }}')"><i class="fa fa-fw fa-eye : me-1 text-secondary"></i> Detail</button></li>
                   {% endif %}
               
                   {% if access.options.update %}

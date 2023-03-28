@@ -68,8 +68,8 @@ NIRVANA.build( "Product", ( Manifest ) => {
     }
   }
 
-  /* PRODUCT:VIEW Frontend */
-  class View extends Frontend {
+  /* PRODUCT:DETAIL Frontend */
+  class Detail extends Frontend {
     start( id ) {
       this.load("modal");
       this.modalPatch( id );
@@ -229,7 +229,7 @@ NIRVANA.build( "Product", ( Manifest ) => {
   return {
     Apps: {
       Base:     new Base,
-      View:     new View,
+      Detail:   new Detail,
       Create:   new Create,
       Update:   new Update,
       Delete:   new Delete,
@@ -240,7 +240,7 @@ NIRVANA.build( "Product", ( Manifest ) => {
     },
     Clones: {
       Base: { 
-        app:        [ "View", "Create", "Update", "Delete", "Import" ],
+        app:        [ "Detail", "Create", "Update", "Delete", "Import" ],
         property:   [ "table" ],
         method:     [ "buildSelect", "modalPatch", "buildForm", "clearForm", "buildToast" ],
       },

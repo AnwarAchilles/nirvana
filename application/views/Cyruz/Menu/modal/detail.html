@@ -1,6 +1,6 @@
-<div Product-Modal="View" class="modal fade" aria-labelledby="modal-size-center-scroll" aria-hidden="true">
-  <div Product="View" class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content">
+<div Menu-Modal="Detail" class="modal fade" aria-labelledby="modal-size-center-scroll" aria-hidden="true">
+  <div Menu="Detail" class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable">
+    <form class="modal-content">
       <div class="modal-header">
         <div>
           <h4 class="m-0 modal-title">Detail</h4>
@@ -16,20 +16,24 @@
       <div class="modal-body scrollbar">
 
         <div class="mb-4 input-group align-items-center">
-          <label class="form-label m-0 w-25">Category</label>
-          <h6 class="m-0" Modal-Patch="category"></h6>
+          <label class="form-label m-0 w-25">Menu</label>
+          <h6 class="m-0" Modal-Patch="parent"></h6>
         </div>
         <div class="mb-4 input-group align-items-center">
           <label class="form-label m-0 w-25">Name</label>
           <h6 class="m-0" Modal-Patch="name"></h6>
         </div>
-        <div class="mb-4">
-          <label class="form-label m-0 w-25">Content</label>
-          <div class="m-1 border-start p-3" Modal-Patch="content"></div>
+        <div class="mb-4 input-group align-items-center">
+          <label class="form-label m-0 w-25">Url</label>
+          <h6 class="m-0" Modal-Patch="url"></h6>
+        </div>
+        <div class="mb-4 input-group align-items-center">
+          <label class="form-label m-0 w-25">Note's</label>
+          <h6 class="m-0" Modal-Patch="note"></h6>
         </div>
 
       </div>
       <div class="modal-footer"></div>
-    </div>
+    </form>
   </div>
 </div>

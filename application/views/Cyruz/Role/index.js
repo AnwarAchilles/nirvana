@@ -31,8 +31,8 @@ NIRVANA.build( "Role", ( Manifest ) => {
     }
   }
 
-  /* ROLE:VIEW Frontend */
-  class View extends CyruzFrontend {
+  /* ROLE:DETAIL Frontend */
+  class Detail extends CyruzFrontend {
     init() {
       this.load("modal");
     }
@@ -189,7 +189,7 @@ NIRVANA.build( "Role", ( Manifest ) => {
   return {
     Apps: {
       Base: new Base,
-      View: new View,
+      Detail: new Detail,
       Create: new Create,
       Update: new Update,
       Delete: new Delete,
@@ -197,7 +197,7 @@ NIRVANA.build( "Role", ( Manifest ) => {
     },
     Clones: {
       Base: { 
-        app:[ "View", "Create", "Update", "Delete" ], 
+        app:[ "Detail", "Create", "Update", "Delete" ], 
         property:[ "table" ], 
         method:[ "buildForm", "clearForm" ]
       }
