@@ -9,7 +9,7 @@ class Company extends CyruzController
   {
     parent::__construct();
 
-    $this->data['layout']['draw'] = FALSE;
+    $this->data['layout']['draw'] = TRUE;
   }
 
   # index page
