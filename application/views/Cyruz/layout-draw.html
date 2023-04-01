@@ -3,8 +3,8 @@
   <div id="cz__sidebar_background"></div>
   <!-- NAVIGATIONS HEAD -->
   <div id="cz__sidebar_head" class="text-center">
-    <h2 class="m-0 font-700"><b>Cyruz.</b></h2>
-    <small class="text-muted d-block font-500" style="font-size:70%; margin-top:-3px;">Template Admin</small>
+    <h2 class="m-0 font-700"><b>{{ company.name }}</b></h2>
+    <small class="text-muted d-block font-500" style="font-size:70%; margin-top:-3px;">{{ company.description }}</small>
   </div>
   <!-- END NAVIGATIONS BAR -->
   <!-- NAVIGATIONS BODY -->
@@ -196,7 +196,7 @@
           <li><a class="dropdown-item" href="#"><i class="fa fa-user : me-2"></i> Profile</a></li>
           <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-gear : me-2"></i> Settings</a></li> -->
           <!-- <li><hr class="dropdown-divider"></li> -->
-          <li><a class="dropdown-item" href="{{ base_url('/cyruz/auth/logout') }}"><i class="fa fa-power-off : me-2"></i> Logout</a></li>
+          <li><a class="dropdown-item" href="{{ base_url('/Cyruz/Auth/logout') }}"><i class="fa fa-power-off : me-2"></i> Logout</a></li>
         </ul>
       </div>
     </div>

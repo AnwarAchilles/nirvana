@@ -11,6 +11,9 @@ NIRVANA.build( "Storage", ( Manifest ) => {
           {data:"button", width:"5%"},
           {data:"no"},
           {data:"name"},
+          {data:"fullname"},
+          {data:"directory"},
+          {data:"resize"},
         ],
         http: ["GET", "api/storage"],
         patch: ( data )=> {
@@ -32,15 +35,6 @@ NIRVANA.build( "Storage", ( Manifest ) => {
       this.form.patch("default", "name").val("");
       this.form.patch("default", "upload").val("");
     }
-    // todo build select2
-    buildSelect() {
-      // this.select.build("userRole", this.form.patch("user", "id_role"), {
-      //   data: this.api("GET", "role"),
-      //   patch: ( data )=> {
-      //     return [data.id_role, data.name];
-      //   }
-      // });
-    }
   }
 
   /* STORAGE:DETAIL Frontend */
@@ -50,8 +44,18 @@ NIRVANA.build( "Storage", ( Manifest ) => {
     }
     start( id ) {
       this.api("GET", "storage/"+id, resp=> {
-        this.modal.patch("name", resp.data.name);
-        this.modal.patch("source").html( JSON.stringify(JSON.parse(resp.data.source), null, 4) );
+        this.modal.patch("name").text(resp.data.name);
+
+        this.modal.patch("source").html("");
+        Object.entries( JSON.parse(resp.data.source) ).forEach( Entry=> {
+          const [name, value] = Entry;
+          this.modal.patch("source").append("<tr><th class='py-1'>"+name+"</th><td class='py-1'>"+value+"</td></tr>");
+        });
+      });
+      this.api("GET", "storage_menu/linked/"+id, resp=> {
+        resp.data.forEach( row=> {
+          this.modal.patch("linked").append('<small class="badge bg-info me-2">'+row.name+'</small>');
+        });
       });
       this.modal.show();
     }
@@ -67,19 +71,19 @@ NIRVANA.build( "Storage", ( Manifest ) => {
     }
     start() {
       this.buttonSubmit();
-      this.buildSelect();
       this.modal.show();
     }
     submit() {
       this.buttonSubmit("disable", process=> {
         this.buildForm();
         this.api("POST", "storage/upload/upload", this.form.data("default"), resp=> {
+          this.saveHistory();
+          this.saveToast();
           this.table.reload("storage");
           this.clearForm();
           this.modal.hide();
           this.buttonSubmit("enable");
           this.buildToast("success");
-          this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
         });
       });
     }
@@ -103,11 +107,12 @@ NIRVANA.build( "Storage", ( Manifest ) => {
     submit() {
       this.buttonSubmit("disable", process=> {
         this.api("DELETE", "storage/"+this.id, {}, resp=> {
+          this.saveHistory();
+          this.saveToast();
           this.table.reload("storage");
           this.modal.hide();
           this.buttonSubmit("enable");
           this.buildToast("success");
-          this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
         });
       });
     }
@@ -125,7 +130,7 @@ NIRVANA.build( "Storage", ( Manifest ) => {
       Base: { 
         app:["Detail", "Create", "Delete"], 
         property:["table"], 
-        method:[ "buildSelect", "buildForm", "clearForm" ]
+        method:[ "buildForm", "clearForm" ]
       },
     }
   };

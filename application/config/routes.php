@@ -49,12 +49,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'Welcome';
-$route['404_override'] = 'Not_Found';
+$route['default_controller'] = 'Blank';
+$route['404_override'] = 'Blank/not_found';
 $route['translate_uri_dashes'] = FALSE;
 
 
-/* DYNAMIC API */
+
+
+
+
+
+
+// todo router admin cyruz
+$route['Cyruz'] = 'Cyruz/Dashboard';
+$route['cyruz'] = 'Cyruz/Dashboard';
+
+// todo nirvana docs
+$route['docs'] = 'Welcome';
+
+
+
+
+
+
+
+
+/* 
+ * DYNAMIC API
+ * carefull dont edit this line cause for the api work properly */
 $route['api/(.+)'] = function ( $param ) {
   $param = explode('/', $param);
   $return = '';
@@ -96,7 +118,3 @@ $route['api/(.+)'] = function ( $param ) {
 
   return $return;
 };
-
-
-// admin 
-$route['cyruz'] = 'cyruz/dashboard';

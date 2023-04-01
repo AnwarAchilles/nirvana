@@ -30,6 +30,8 @@ class CoreApi extends RestController
 
   public $data;
 
+  public $payload;
+
   
   /* ---- ---- ---- ----
    * MAIN CONSTRUCT
@@ -41,8 +43,6 @@ class CoreApi extends RestController
     // load config
     $this->config->load('core');
     $this->config->api = $this->config->item('api');
-
-    // load controller
 
     // reset
     $this->query=[];
@@ -178,7 +178,7 @@ class CoreApi extends RestController
   /* ---- ---- ---- ----
    * ACCESSABLE METHOD
    * ---- ---- ---- ---- */
-  public function return( $status=404, $message=null )
+  public function return( $status=203, $message=null )
   {
     $this->_development();
     if ($this->config->api['mode']!=='production') {
@@ -210,6 +210,15 @@ class CoreApi extends RestController
       $this->return( 406, $message );
     }else {
       return true;
+    }
+  }
+
+  public function method( $name )
+  {
+    if (isset($this->method[$name])) {
+      return $this->method[$name];
+    }else {
+      return false;
     }
   }
 

@@ -105,3 +105,28 @@ div.table-responsive>div.dataTables_wrapper>div.row:nth-child(3) [class*="col-"]
 .form-check-input {
   margin-top: 0em;
 }
+
+
+
+/* card optimize on mobile */
+@media (max-width: 640px) {
+  .card-clip {
+    font-size: 0.6rem;
+    padding: 0.8rem;
+  }
+  .card .card-clip .card-text {
+    padding: 10px 50px;
+  }
+  .card .card-body .card-text {
+    padding: 10px 25px;
+  }
+  #cz__sidebar_body > .nav a.btn {
+    filter: drop-shadow(0 0 3px rgba(255,255,255,0.1));
+  }
+}
+
+
+/* .card {
+  border: 1px solid rgba(0,0,0,0.1);
+} */
+

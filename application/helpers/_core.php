@@ -57,5 +57,17 @@ if ( ! function_exists('dd')) {
 
 
 
-
+# function for debugging data and stop
+if ( ! function_exists('images')) {
+	// 
+	// @ data
+	// 
+	function images( $image='', $state='empty' ) {
+		if (empty($image)) {
+			return base_url('resource/images/no-image.png');
+		}else {
+			return base_url( 'storage/'.$image );
+		}
+	}
+}
 

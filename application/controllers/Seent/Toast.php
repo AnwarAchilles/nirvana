@@ -1,10 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Seent_Event extends BaseController
+class Seent_Event extends SeentController
 {
   /* todo live toasted */
-  public function toasted() {
+  public function index() {
     date_default_timezone_set("asia/jakarta");
 
     $data = $this->api("GET", "toasted", [

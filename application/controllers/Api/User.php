@@ -19,9 +19,9 @@ class User extends BaseApi
 
     $check = $this->models->get(['where'=>['email'=>$data['email']]])->result();
     if (isset($check[0])) {
-      $this->return(404, "User Already Exists");
+      $this->return(203, "User Already Exists");
     }else {
-      $this->data = $this->models->set( $QUERY );
+      $this->data['id'] = $this->models->set( $QUERY );
       $this->return(200, "User Created");
     }
   }

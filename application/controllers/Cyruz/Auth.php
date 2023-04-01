@@ -6,46 +6,44 @@ class Auth extends CyruzController
 {
   
   public $auth = TRUE;
+
+  # main
+  public function __construct()
+  {
+    parent::__construct();
+
+    $this->data['layout']['draw'] = FALSE;
+  }
   
-  // index page
+  # index page
   public function index()
   {
     $this->login();
   }
 
-  // todo login user
+  # todo login user
   public function login()
   {
-    $this->data['layout'] = [
-      'module'=> 'cyruz',
-      'draw'=> FALSE,
-      'layout'=> 'Cyruz/layout',
-      'source'=> [ 'Cyruz', 'Auth', 'login' ],
-      'title'=> 'Authentications Login',
-    ];
+    $this->data['layout']['source'] = [ 'Cyruz', 'Auth', 'login' ];
+    $this->data['layout']['title'] = 'Authentications Login';
 
     $this->layout( $this->data );
   }
 
-  // todo register user
+  # todo register user
   public function register()
   {
-    $this->data['layout'] = [
-      'module'=> 'cyruz',
-      'draw'=> FALSE,
-      'layout'=> 'Cyruz/layout',
-      'source'=> [ 'Cyruz', 'Auth', 'register' ],
-      'title'=> 'Authentications Register',
-    ];
+    $this->data['layout']['source'] = [ 'Cyruz', 'Auth', 'register' ];
+    $this->data['layout']['title'] = 'Authentications Register';
 
     $this->layout( $this->data );
   }
 
-  // todo logout user
+  # todo logout user
   public function logout()
   {
     session_unset();
     session_destroy();
-    redirect(base_url('cyruz/auth'));
+    redirect(base_url('Cyruz/Auth'));
   }
 }

@@ -63,11 +63,12 @@ NIRVANA.build( "Role", ( Manifest ) => {
       this.buttonSubmit("disable", process=> {
         this.buildForm();
         this.api("POST", "role", this.form.value("role"), resp=> {
+          this.saveHistory();
+          this.saveToast();
           this.table.reload("role");
           this.clearForm();
           this.modal.hide();
           this.buildToast("success");
-          this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
         });
       });
     }
@@ -93,12 +94,13 @@ NIRVANA.build( "Role", ( Manifest ) => {
       this.buttonSubmit("disable", process=> {
         this.buildForm();
         this.api("PUT", "role/"+this.id, this.form.value("role"), resp=> {
+          this.saveHistory();
+          this.saveToast();
           this.table.reload("role");
           this.clearForm();
           this.modal.hide();
           this.buttonSubmit("enable");
           this.buildToast("success");
-          this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
         });
       });
     }
@@ -123,11 +125,12 @@ NIRVANA.build( "Role", ( Manifest ) => {
     submit() {
       this.buttonSubmit("disable", process=> {
         this.api("DELETE", "role/"+this.id, {}, resp=> {
+          this.saveHistory();
+          this.saveToast();
           this.table.reload("role");
           this.modal.hide();
           this.buttonSubmit("enable");
           this.buildToast("success");
-          this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
         });
       });
     }
@@ -142,13 +145,15 @@ NIRVANA.build( "Role", ( Manifest ) => {
     start( id_role ) {
       this.id_role = id_role;
       this.buttonSubmit();
+      
       $("[type='checkbox']").prop("checked", false);
+
       this.api("GET", "role_menu/id_role/"+id_role, resp=> {
         resp.data.forEach( row=> {
           this.patch("menu-"+row.id_menu).prop("checked", true);
-          
           Object.entries( row.options ).forEach( Entry=> {
             const [name, value] = Entry;
+            // let state = (value==='true') ? true : false;
             this.patch("menu-"+row.id_menu+"-option-"+name).prop("checked", value);
           });
         });
@@ -158,7 +163,7 @@ NIRVANA.build( "Role", ( Manifest ) => {
     optionsChecks( elements ) {
       let status = $(elements).prop('checked');
       let target = $(elements).attr('data-to');
-      $("."+target).prop('checked', status);
+      $("."+target).prop('checked', status).trigger('changes');
     }
     submit() {
       this.buttonSubmit("disable", process=> {
@@ -176,6 +181,8 @@ NIRVANA.build( "Role", ( Manifest ) => {
           this.api("POST", "role_menu/entries", controls, resp=> {
             count++;
             if (count == Object.keys(data).length) {
+              this.saveHistory();
+              this.saveToast();
               this.modal.hide();
               this.buttonSubmit("enable");
             }

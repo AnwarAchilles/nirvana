@@ -12,7 +12,7 @@
         </div>
         <div class="card-text w-100">
           <div class="px-3">
-            <h3 class="m-0">Cyruz. Register</h3>
+            <h3 class="m-0">{{ company.name }}</h3>
             <p class="m-0 text-muted">Register your credentials to login with role as a guest</p>
           </div>
         </div>
@@ -60,7 +60,7 @@
               </label>
             </div>
             <div class="mb-3 d-flex justify-content-between align-items-center">
-              <a href="{{ base_url('cyruz/auth/login') }}" type="button" class="btn btn-link text-decoration-none">Login Here</a>
+              <a href="{{ base_url('cyruz/auth/login') }}" type="button" class="btn btn-link px-0 text-decoration-none">Login Here</a>
               <button type="submit" class="btn btn-primary">Register</button>
             </div>
           </form>

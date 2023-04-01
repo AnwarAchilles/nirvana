@@ -16,7 +16,7 @@
       </div>
       
       <div class="card-body p-3 overflow-auto scrollbar">
-
+        
         <!-- PARENTS LOOPLINE -->
         <ul class="list-group : rounded-0">
           {% for i, menu in menus %}
@@ -50,7 +50,7 @@
               <!-- LIST OPTIONS -->
               <ul id="collapse-options-{{ menu.id_menu }}" class="nav w-100 : collapse">
                 <input type="text" name="id_menu" value="{{ menu.id_menu }}" hidden>
-                {% for name, option in options %}
+                {% for name, option in menu.options %}
                 <li class="nav-link text-dark">
                   <input Role-Patch="menu-{{ menu.id_menu }}-option-{{ name }}" type="checkbox" name="options[{{ name }}]" class="options-{{ menu.id_menu }} : form-check-input">
                   <label class="ms-1">{{ ucfirst(name) }}</label>
@@ -93,7 +93,7 @@
                   <!-- LIST OPTIONS -->
                   <ul id="collapse-options-{{ menu.id_menu }}" class="nav w-100 : collapse">
                     <input type="text" name="id_menu" value="{{ menu.id_menu }}" hidden>
-                    {% for name, option in options %}
+                    {% for name, option in menu.options %}
                     <li class="nav-link text-dark">
                       <input Role-Patch="menu-{{ menu.id_menu }}-option-{{ name }}" type="checkbox" name="options[{{ name }}]" class="options-{{ menu.id_menu }} : form-check-input">
                       <label class="ms-1">{{ ucfirst(name) }}</label>
@@ -136,7 +136,7 @@
                       <!-- LIST OPTIONS -->
                       <ul id="collapse-options-{{ menu.id_menu }}" class="nav w-100 : collapse">
                         <input type="text" name="id_menu" value="{{ menu.id_menu }}" hidden>
-                        {% for name, option in options %}
+                        {% for name, option in menu.options %}
                         <li class="nav-link text-dark">
                           <input Role-Patch="menu-{{ menu.id_menu }}-option-{{ name }}" type="checkbox" name="options[{{ name }}]" class="options-{{ menu.id_menu }} : form-check-input">
                           <label class="ms-1">{{ ucfirst(name) }}</label>

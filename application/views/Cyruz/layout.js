@@ -33,9 +33,18 @@ const NIRVANA = new Framework({
     url: base_url
   },
 
+  Company: {
+    url: base_url
+  },
+
+  History: {
+    url: base_url
+  },
+
   Product: {
     url: base_url
   },
+  
 
 });
 
@@ -51,11 +60,19 @@ class CyruzFrontend extends Frontend {
     
     if (opt=='success') {
       this.toast.patch("icon", '<i class="fa-duotone fa-2x fa-check-circle fa-beat : text-success me-3"></i>');
-      this.toast.patch("text", '<strong class="me-auto">'+this.base.name+' Sucessfully</strong>');
+      if (typeof response!=='undefined') {
+        this.toast.patch("text", '<strong class="me-auto">'+response+'</strong>');
+      }else {
+        this.toast.patch("text", '<strong class="me-auto">'+this.base.name+' Sucessfully</strong>');
+      }
     }
     if (opt=='failed') {
       this.toast.patch("icon", '<i class="fa-duotone fa-2x fa-times-circle fa-beat : text-danger me-3"></i>');
-      this.toast.patch("text", '<strong class="me-auto">'+this.base.name+' Failed</strong>');
+      if (typeof response!=='undefined') {
+        this.toast.patch("text", '<strong class="me-auto">'+response+'</strong>');
+      }else {
+        this.toast.patch("text", '<strong class="me-auto">'+this.base.name+' Failed</strong>');
+      }
     }
     this.toast.show();
   }
@@ -77,6 +94,33 @@ class CyruzFrontend extends Frontend {
     if (typeof nextProcess!=='undefined') {
       setTimeout(nextProcess, 500);
     }
+  }
+
+  // todo save to history api
+  saveHistory( name='' ) {
+    this.api("POST", "history", {
+      id_menu: access.id_menu, 
+      id_user: users.id_user, 
+      prefix: this.base.repo, 
+      status: this.base.name,
+      name: name 
+    });
+  }
+
+  // todo save toast
+  saveToast( header, message ) {
+    let _header = users.email;
+    let _message = this.base.name+" "+this.base.repo;
+    if (typeof header!=='undefined') {
+      _header = header; 
+    }
+    if (typeof message!=='undefined') {
+      _message = message; 
+    }
+    this.api("POST", "toasted", {
+      header: _header, 
+      message: _message
+    });
   }
 }
 

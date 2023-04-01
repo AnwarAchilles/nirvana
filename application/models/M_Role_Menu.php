@@ -1,6 +1,6 @@
 <?php
 
-class M_Role_Menu extends CoreModel
+class M_Role_menu extends CoreModel
 {
     public $table = 'role_menu';
 

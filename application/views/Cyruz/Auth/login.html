@@ -6,7 +6,13 @@
     <img src="{{ base_url('resource/images/sidebar-1.jpg') }}" class="h-100" style="opacity:0.3">
   </div>
 
-  <div Auth="Login" class="col-lg-5 m-auto p-4">
+  <div Auth="Login" class="col-12 col-lg-5 m-auto p-4">
+    
+    <a href="{{ base_url() }}" type="button" class="btn btn-sm btn-primary mb-4">
+      <i class="fa-duotone fa-arrow-left : me-2"></i>
+      Homepage
+    </a>
+
     <div class="card">
       <div class="card-clip-box w-100">
         <div class="card-clip icon center left : bg-primary shadow">
@@ -14,7 +20,7 @@
         </div>
         <div class="card-text w-100">
           <div class="px-3">
-            <h3 class="m-0">Cyruz.</h3>
+            <h3 class="m-0">{{ company.name }}</h3>
             <p class="m-0 text-muted">Login your credentials to go</p>
           </div>
         </div>
@@ -47,7 +53,7 @@
               </label>
             </div>
             <div class="mb-3 d-flex justify-content-between align-items-center">
-              <a href="{{ base_url('cyruz/auth/register') }}" type="button" class="btn btn-link text-decoration-none">Register Here</a>
+              <a href="{{ base_url('cyruz/auth/register') }}" type="button" class="btn btn-link px-0 text-decoration-none">Register Here</a>
               <button Auth-Patch="submit" type="submit" class="btn btn-primary">Login</button>
             </div>
           </form>

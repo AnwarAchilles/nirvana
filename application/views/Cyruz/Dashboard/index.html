@@ -1,15 +1,19 @@
 
 {% for name, data in dataset %}
 <!-- COUNT USER -->
-<div class="col-12 col-md-3">
+<div class="col-md-3">
   <div class="cz__dashboard_card {{ ' '~name }} : card py-2 card-clip-box">
-    <div class="card-clip icon left : bg-{{ data.color }} shadow">
-      <i class="fa-duotone fa-{{ data.icon }} fa-2x"></i>
-    </div>
-    <div class="card-body px-5 text-center">
-      <small class="text-muted font-700">weekly data</small>
-      <h2 class="m-0 font-700">{{ datacount[ name ] }}</h2>
-      <h5 class="mb-1">{{ ucfirst(name) }}'s</h5>
+    <div class="card-header text-center">
+      <div class="card-clip icon left center : bg-{{ data.color }} shadow">
+        <i class="fa-duotone fa-{{ data.icon }} fa-2x"></i>
+      </div>
+      <div class="card-text text-start text-sm-center">
+        <div class="px-3">
+          <small class="text-muted font-700">weekly data</small>
+          <h2 class="m-0 font-700">{{ datacount[ name ] }}</h2>
+          <h5 class="mb-1">{{ ucfirst(name) }}'s</h5>
+        </div>
+      </div>
     </div>
     <canvas class="position-absolute h-75" style="bottom:0;" width="650px" height="300%"></canvas>
   </div>

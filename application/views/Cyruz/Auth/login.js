@@ -51,11 +51,12 @@ NIRVANA.build( "Auth", ( Manifest )=> {
           }
           if (resp.message=="user-not-found") {
             this.buildToast("failed", "Credentials Not Avaliable");
+            this.buttonSubmit("enable");
           }
           if (resp.message=="password-wrong") {
             this.buildToast("failed", "Wrong Password");
+            this.buttonSubmit("enable");
           }
-          this.buttonSubmit("enable");
         });
       });
     }

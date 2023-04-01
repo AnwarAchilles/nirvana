@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Welcome extends BaseController
 {
-  // index page
+  # index page
   public function index()
   {
     $data['layout'] = [
@@ -16,7 +16,7 @@ class Welcome extends BaseController
     $this->layout($data);
   }
 
-  // load content
+  # load content
   public function content( $name )
   {
     echo $this->load->view('Welcome/Content/'.$name.'.html', null, true);

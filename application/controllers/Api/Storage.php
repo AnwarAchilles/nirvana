@@ -32,7 +32,7 @@ class Storage extends BaseApi
       ];
       // set output
       $this->models->put(['where'=> ['id_storage'=>$this->id], 'data'=>$restorage]);
-      $this->data['id'] = $this->id;
+      $this->data['id_storage'] = $this->id;
       $this->return(200);
     }
   }
@@ -42,13 +42,14 @@ class Storage extends BaseApi
   {
     // get extension and location
     $extension = pathinfo( $this->file[$filename]['name'], PATHINFO_EXTENSION);
-    $location = FCPATH.'storage\\';
+    $extension = strtolower($extension);
+    $location = FCPATH.'storage/';
     // check if there have repository for this extension
-    if (! file_exists($location.'\\'.$extension)) {
-      mkdir($location.'\\'.$extension, 777);
+    if (! file_exists($location.'/'.$extension)) {
+      mkdir($location.'/'.$extension, 0777);
     }
     // move to repository/extension/
-    $location = $location.'\\'.$extension.'\\';
+    $location = $location.'/'.$extension.'/';
     // set uploader library
     $this->controller->load->library('upload', [
       'upload_path'=> $location,
@@ -58,15 +59,26 @@ class Storage extends BaseApi
     ]);
     // do upload
     if ( $this->controller->upload->do_upload( $filename ) ) {
+      // set upload data
+      $upload_data = $this->controller->upload->data();
+      $upload_data['file_dir'] = 'storage/'.$extension;
+      $upload_data['image_dir'] = 'storage/'.$extension.'/'.$this->controller->upload->data('file_name');
       // create query data
       $QUERY = [
         'name'=> (isset($this->method['name'])) ? $this->method['name'] : $this->controller->upload->data('raw_name'),
-        'source'=> json_encode($this->controller->upload->data()),
+        'fullname'=> $upload_data['file_name'],
+        'directory'=> $extension,
+        'source'=> json_encode( $upload_data ),
       ];
       // set output
-      $this->data['id'] = $this->models->set(['data'=> $QUERY]);
+      $this->data['id_storage'] = $this->models->set(['data'=> $QUERY]);
       $this->data['name'] = $QUERY['name'];
+      $this->data['url_image'] = base_url('storage/'.$extension.'/'.$this->controller->upload->data('file_name'));
       $this->return(200);
+    }else {
+      $this->data['location'] = $location;
+      $this->data['error'] = $this->controller->upload->display_errors();
+      $this->return(203);
     }
   }
   

@@ -3,7 +3,7 @@
 NIRVANA.build( "Product", ( Manifest ) => {
 
   /* PRODUCT:BASE Frontend */
-  class Base extends Frontend {
+  class Base extends CyruzFrontend {
     init() {
       this.load("table");
       this.table.build("product", {
@@ -15,21 +15,6 @@ NIRVANA.build( "Product", ( Manifest ) => {
         http: ["GET", "api/product"],
         patch: ( data )=> {}
       });
-    }
-    // todo build toast
-    buildToast( opt, response ) {
-      this.toast.container("Default");
-      this.toast.use("Default");
-
-      if (opt=='success') {
-        this.toast.patch("icon", '<i class="fa-duotone fa-2x fa-check-circle fa-beat : text-success me-3"></i>');
-        this.toast.patch("text", '<strong class="me-auto">'+this.base.name+' Sucessfully</strong>');
-      }
-      if (opt=='failed') {
-        this.toast.patch("icon", '<i class="fa-duotone fa-2x fa-times-circle fa-beat : text-danger me-3"></i>');
-        this.toast.patch("text", '<strong class="me-auto">'+this.base.name+' Failed</strong>');
-      }
-      this.toast.show();
     }
     // todo build form
     buildForm() {
@@ -64,12 +49,12 @@ NIRVANA.build( "Product", ( Manifest ) => {
     clearForm() {
       this.form.patch("product", "category").val(0).trigger("change");
       this.form.patch("product", "name").val("");
-      this.form.patch("product", "content").val("");
+      this.form.patch("product", "content").setData("");
     }
   }
 
   /* PRODUCT:DETAIL Frontend */
-  class Detail extends Frontend {
+  class Detail extends CyruzFrontend {
     start( id ) {
       this.load("modal");
       this.modalPatch( id );
@@ -78,7 +63,7 @@ NIRVANA.build( "Product", ( Manifest ) => {
   }
 
   /* PRODUCT:CREATE Frontend */
-  class Create extends Frontend {
+  class Create extends CyruzFrontend {
     init() {
       this.load("modal");
       this.load("toast");
@@ -89,23 +74,28 @@ NIRVANA.build( "Product", ( Manifest ) => {
       this.editor.build("ProductContent", this.form.patch("product", "content")[0] );
     }
     start() {
+      this.buttonSubmit();
       this.buildSelect();
       this.modal.show();
     }
     submit() {
       this.buildForm();
-      this.api("POST", "product", this.form.value("product"), resp=> {
-        this.table.reload("product");
-        this.clearForm();
-        this.modal.hide();
-        this.buildToast("success");
-        this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
+      this.buttonSubmit("disable", process=> {
+        this.api("POST", "product", this.form.value("product"), resp=> {
+          this.saveHistory();
+          this.saveToast();
+          this.table.reload("product");
+          this.clearForm();
+          this.modal.hide();
+          this.buildToast("success");
+          this.buttonSubmit("enable");
+        });
       });
     }
   }
 
   /* PRODUCT:UPDATE Frontend */
-  class Update extends Frontend {
+  class Update extends CyruzFrontend {
     init() {
       this.load("modal");
       this.load("toast");
@@ -116,7 +106,9 @@ NIRVANA.build( "Product", ( Manifest ) => {
       this.editor.build("ProductContent", this.form.patch("product", "content")[0] );
     }
     start(id) {
+      this.buttonSubmit();
       this.buildSelect();
+
       this.id = id;
 
       this.api("GET", "product/"+this.id, resp=> {
@@ -128,40 +120,48 @@ NIRVANA.build( "Product", ( Manifest ) => {
     }
     submit() {
       this.buildForm();
-      this.api("PUT", "product/"+this.id, this.form.value("product"), resp=> {
-        this.table.reload("product");
-        this.clearForm();
-        this.modal.hide();
-        this.buildToast("success");
-        this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
+      this.buttonSubmit("disable", process=> {
+        this.api("PUT", "product/"+this.id, this.form.value("product"), resp=> {
+          this.saveHistory();
+          this.saveToast();
+          this.table.reload("product");
+          this.clearForm();
+          this.modal.hide();
+          this.buildToast("success");
+          this.buttonSubmit("enable");
+        });
       });
     }
   }
 
   /* PRODUCT:DELETE Frontend */
-  class Delete extends Frontend {
+  class Delete extends CyruzFrontend {
     init() {
       this.load("modal");
       this.load("toast");
-      this.load("form");
     }
     start( id ) {
+      this.buttonSubmit();
       this.id = id;
       this.modalPatch( id );
       this.modal.show();
     }
     submit() {
-      this.api("DELETE", "product/"+this.id, {}, resp=> {
-        this.table.reload("product");
-        this.modal.hide();
-        this.buildToast("success");
-        this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
+      this.buttonSubmit("disable", process=> {
+        this.api("DELETE", "product/"+this.id, {}, resp=> {
+          this.saveHistory();
+          this.saveToast();
+          this.table.reload("product");
+          this.modal.hide();
+          this.buildToast("success");
+          this.buttonSubmit("enable");
+        });
       });
     }
   }
 
   /* PRODUCT:PRINT Frontend */
-  class Print extends Frontend {
+  class Print extends CyruzFrontend {
     init() {
       this.load("modal");
       this.load("toast");
@@ -179,7 +179,7 @@ NIRVANA.build( "Product", ( Manifest ) => {
   }
 
   /* PRODUCT:FORMAT Frontend */
-  class Format extends Frontend {
+  class Format extends CyruzFrontend {
     init() {
       this.load("modal");
       this.load("toast");
@@ -191,36 +191,43 @@ NIRVANA.build( "Product", ( Manifest ) => {
   }
 
   /* PRODUCT:IMPORT Frontend */
-  class Import extends Frontend {
+  class Import extends CyruzFrontend {
     init() {
       this.load("modal");
       this.load("toast");
       this.load("form");
     }
     start() {
+      this.buttonSubmit();
       this.modal.show();
     }
     submit() {
       this.form.build("product", {
         excel: this.form.patch("product", "excel").prop("files")[0],
       });
-      this.xhttp("POST", this.base.url+"Cyruz/Product/import", this.form.data("product"), resp=> {
-        this.modal.hide();
-        this.table.reload("product");
-        this.buildToast("success");
-        this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
+      this.buttonSubmit("disable", process=> {
+        this.xhttp("POST", this.base.url+"Cyruz/Product/import", this.form.data("product"), resp=> {
+          this.saveHistory();
+          this.saveToast();
+          this.modal.hide();
+          this.table.reload("product");
+          this.buildToast("success");
+          this.buttonSubmit("enable");
+        });
       });
     }
   }
 
   /* PRODUCT:EXPORT Frontend */
-  class Export extends Frontend {
+  class Export extends CyruzFrontend {
     init() {
       this.load("modal");
       this.load("toast");
       this.load("form");
     }
     start() {
+      this.saveHistory();
+      this.saveToast();
       this.redirect( this.base.url+"Cyruz/Product/export");
     }
   }
@@ -242,7 +249,7 @@ NIRVANA.build( "Product", ( Manifest ) => {
       Base: { 
         app:        [ "Detail", "Create", "Update", "Delete", "Import" ],
         property:   [ "table" ],
-        method:     [ "buildSelect", "modalPatch", "buildForm", "clearForm", "buildToast" ],
+        method:     [ "buildSelect", "modalPatch", "buildForm", "clearForm" ],
       },
     }
   };

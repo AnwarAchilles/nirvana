@@ -8,7 +8,7 @@ require_once APPPATH.'/third_party/Dompdf/autoload.inc.php';
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
-class PdfTools {
+class Pdftools {
     public function generate($html, $filename='', $paper = '', $orientation = '', $stream=TRUE)
     {   
         $options = new Options();

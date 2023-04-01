@@ -35,6 +35,7 @@ NIRVANA.build( "User", ( Manifest ) => {
       this.form.patch("user", "name").val("");
       this.form.patch("user", "email").val("");
       this.form.patch("user", "password").val("");
+      this.form.patch("user", "password2").val("");
       this.form.patch("user", "id_role").val("");
     }
     // todo build select2
@@ -82,18 +83,23 @@ NIRVANA.build( "User", ( Manifest ) => {
       this.buttonSubmit("disable", process=> {
         this.buildForm();
         this.api("POST", "user", this.form.value("user"), resp=> {
+          if (resp.status == 200) {
+            this.saveHistory();
+            this.saveToast();
+            this.buildToast("success", resp.message);
+          }else {
+            this.buildToast("failed", resp.message);
+          }
           this.table.reload("user");
           this.clearForm();
           this.modal.hide();
           this.buttonSubmit("enable");
-          this.buildToast("success");
-          this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
         });
       });
     }
   }
 
-  /* PRODUCT:UPDATE Frontend */
+  /* USER:UPDATE Frontend */
   class Update extends CyruzFrontend {
     init() {
       this.load("modal");
@@ -117,18 +123,19 @@ NIRVANA.build( "User", ( Manifest ) => {
       this.buttonSubmit("disable", process=> {
         this.buildForm();
         this.api("PUT", "user/"+this.id, this.form.value("user"), resp=> {
+          this.saveHistory();
+          this.saveToast();
           this.table.reload("user");
           this.clearForm();
           this.modal.hide();
           this.buttonSubmit("enable");
           this.buildToast("success");
-          this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
         });
       });
     }
   }
 
-  /* PRODUCT:DELETE Frontend */
+  /* USER:DELETE Frontend */
   class Delete extends CyruzFrontend {
     init() {
       this.load("modal");
@@ -147,11 +154,12 @@ NIRVANA.build( "User", ( Manifest ) => {
     submit() {
       this.buttonSubmit("disable", process=> {
         this.api("DELETE", "user/"+this.id, {}, resp=> {
+          this.saveHistory();
+          this.saveToast();
           this.table.reload("user");
           this.modal.hide();
           this.buttonSubmit("enable");
           this.buildToast("success");
-          this.api("POST", "toasted", {header:users.email, message:this.base.name+" "+this.base.repo});
         });
       });
     }

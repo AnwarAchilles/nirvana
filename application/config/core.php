@@ -12,7 +12,7 @@ $config['loader'] = [
   'api'           => [ 'BaseApi' ],
 
   // todo load controller
-  'controller'    => [ 'BaseController', 'Cyruz/CyruzController' ],
+  'controller'    => [ 'BaseController', 'Cyruz/CyruzController', 'Guest/GuestController', 'Seent/SeentController', ],
 
   // todo load model
   'model'         => [ 'BaseModel' ],
@@ -108,7 +108,7 @@ $controller['layout']['default'] = [
 ];
 
 // layouting
-$controller['layout']['cyruz'] = [
+$controller['layout']['Cyruz'] = [
   
   // todo use layout-draw as wrapper
   'draw'          => false,
@@ -168,6 +168,69 @@ $controller['layout']['cyruz'] = [
   
   ],
 ];
+
+// layouting
+$controller['layout']['Pringo'] = [
+  
+  // todo use layout-draw as wrapper
+  'draw'          => false,
+  
+  // todo set page title
+  'title'         => 'Layouting Engine',
+  
+  // todo set page tab color
+  'tab_color'     => '#000000',
+  
+  // todo set page name
+  'name'          => 'Layouting Engine',
+  
+  // todo set page description
+  'description'   => 'Layouting structure base twig engine',
+  
+  // todo setup stylesheet/css
+  'stylesheet'    => [
+    
+    // source link
+    'source'      => [
+      base_url('resource/pringo/css/vendor/icofont.min.css'),
+      base_url('resource/pringo/css/plugins/animate.min.css'),
+      base_url('resource/pringo/css/plugins/swiper-bundle.min.css'),
+      base_url('resource/pringo/css/plugins/aos.css'),
+      base_url('resource/pringo/css/plugins/selectric.css'),
+      base_url('resource/pringo/css/style.css'),
+    ],
+    
+    // todo validate all source
+    'validate'    => false,
+    
+    // todo auto builder extends layout[source]
+    'builder'     => true,
+  
+  ],
+  
+  // todo setup javascript/js
+  'javascript'    => [
+    
+    // source link
+    'source'      => [
+      base_url('resource/pringo/js/vendor/vendor.min.js'),
+      base_url('resource/pringo/js/plugins/plugins.min.js'),
+      base_url('resource/pringo/js/ajax-contact.js'),
+      base_url('resource/pringo/js/plugins/aos.js'),
+      base_url('resource/pringo/js/plugins/waypoints.js'),
+      base_url('resource/pringo/js/plugins/jquery.selectric.min.js'),
+      base_url('resource/pringo/js/main.min.js'),
+    ],
+    
+    // todo validate all source
+    'validate'    => false,
+    
+    // todo auto builder extends layout[source]
+    'builder'     => true,
+  
+  ],
+];
+
 
 // report handling
 $controller['report'] = [

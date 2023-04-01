@@ -4,17 +4,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Product extends CyruzController
 {
+
+  # main
+  public function __construct()
+  {
+    parent::__construct();
+
+    $this->data['layout']['draw'] = TRUE;
+  }
+
   # index page
   public function index()
   {
-    // set layout
-    $this->data['layout'] = [
-      'draw'=> true,
-      'module'=> 'cyruz',
-      'layout'=> 'Cyruz/layout',
-      'source'=> [ 'Cyruz', 'Product', 'index' ],
-      'title'=> 'Product And Display',
-    ];
+    $this->data['layout']['title'] = 'Product And Display';
+    $this->data['layout']['source'] = [ 'Cyruz', 'Product', 'index' ];
+
     $this->data['table'] = [
       'header'=> 'Product And Display',
       'description'=> 'Todo management user for this website',
@@ -28,13 +32,9 @@ class Product extends CyruzController
   # report print
   public function print( $id )
   {
-    // set layout
-    $this->data['layout'] = [
-      'module'=> 'cyruz',
-      'layout'=> 'Cyruz/layout-report',
-      'source'=> [ 'Cyruz', 'Product', 'report', 'print' ],
-      'title'=> 'sample',
-    ];
+    $this->data['layout']['layout'] = 'Cyruz/layout-report';
+    $this->data['layout']['title'] = 'Print | Product And Display';
+    $this->data['layout']['source'] = [ 'Cyruz', 'Product', 'report', 'print' ];
     // set report pdf
     $this->data['report'] = [
       'type'=> 'PDF',
@@ -54,9 +54,7 @@ class Product extends CyruzController
   public function format()
   {
     // set layout
-    $this->data['layout'] = [
-      'source'=> [ 'Cyruz', 'Product', 'report', 'format' ],
-    ];
+    $this->data['layout']['source'] = [ 'Cyruz', 'Product', 'report', 'format' ];
     // set report
     $this->data['report'] = [
       'type'=> 'EXCEL',

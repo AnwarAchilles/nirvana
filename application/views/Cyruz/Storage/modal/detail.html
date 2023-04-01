@@ -1,5 +1,5 @@
 <div Storage-Modal="Detail" class="modal fade" aria-labelledby="modal-size-center-scroll" aria-hidden="true">
-  <div Storage="Detail" class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable">
+  <div Storage="Detail" class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
     <form class="modal-content">
       <div class="modal-header">
         <div>
@@ -21,8 +21,14 @@
           <h6 class="m-0" Modal-Patch="name"></h6>
         </div>
         <div class="mb-4 input-group align-items-center">
-          <label class="form-label m-0 w-25">Source</label>
-          <h6 class="m-0" Modal-Patch="source"></h6>
+          <label class="form-label m-0 w-25">Linked</label>
+          <h6 class="m-0" Modal-Patch="linked"></h6>
+        </div>
+        <div class="mb-4 w-100 scrollbar">
+          <button class="btn btn-sm btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#source">Show Source</button>
+          <div id="source" class="collapse py-4">
+            <table class="m-0 table table-sm table-bordered border" Modal-Patch="source"></table>
+          </div>
         </div>
 
       </div>
