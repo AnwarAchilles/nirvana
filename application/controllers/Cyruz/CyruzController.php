@@ -21,7 +21,7 @@ class CyruzController extends CoreController
     $this->data['users'] = $this->session->userdata("credentials");
     // set default layout
     $this->data['layout']['module'] = 'Cyruz';
-    $this->data['layout']['layout'] = 'Cyruz/Layout';
+    $this->data['layout']['layout'] = 'Cyruz/layout';
     // set sidebars
     $this->data['sidebars'] = @ $this->sidebars();
     // set access
