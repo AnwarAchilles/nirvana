@@ -33,6 +33,7 @@ class Twig_Node implements Twig_NodeInterface
      * @param int     $lineno     The line number
      * @param string  $tag        The tag name associated with the Node
      */
+    #[\ReturnTypeWillChange]
     public function __construct(array $nodes = array(), array $attributes = array(), $lineno = 0, $tag = null)
     {
         $this->nodes = $nodes;
@@ -41,6 +42,7 @@ class Twig_Node implements Twig_NodeInterface
         $this->tag = $tag;
     }
 
+    #[\ReturnTypeWillChange]
     public function __toString()
     {
         $attributes = array();
@@ -69,6 +71,7 @@ class Twig_Node implements Twig_NodeInterface
         return implode("\n", $repr);
     }
 
+    #[\ReturnTypeWillChange]
     public function toXml($asDom = false)
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -99,6 +102,7 @@ class Twig_Node implements Twig_NodeInterface
         return $asDom ? $dom : $dom->saveXml();
     }
 
+    #[\ReturnTypeWillChange]
     public function compile(Twig_Compiler $compiler)
     {
         foreach ($this->nodes as $node) {
@@ -106,11 +110,13 @@ class Twig_Node implements Twig_NodeInterface
         }
     }
 
+    #[\ReturnTypeWillChange]
     public function getLine()
     {
         return $this->lineno;
     }
 
+    #[\ReturnTypeWillChange]
     public function getNodeTag()
     {
         return $this->tag;
@@ -123,6 +129,7 @@ class Twig_Node implements Twig_NodeInterface
      *
      * @return bool    true if the attribute is defined, false otherwise
      */
+    #[\ReturnTypeWillChange]
     public function hasAttribute($name)
     {
         return array_key_exists($name, $this->attributes);
@@ -135,6 +142,7 @@ class Twig_Node implements Twig_NodeInterface
      *
      * @return mixed The attribute value
      */
+    #[\ReturnTypeWillChange]
     public function getAttribute($name)
     {
         if (!array_key_exists($name, $this->attributes)) {
@@ -150,6 +158,7 @@ class Twig_Node implements Twig_NodeInterface
      * @param string The attribute name
      * @param mixed  The attribute value
      */
+    #[\ReturnTypeWillChange]
     public function setAttribute($name, $value)
     {
         $this->attributes[$name] = $value;
@@ -160,6 +169,7 @@ class Twig_Node implements Twig_NodeInterface
      *
      * @param string The attribute name
      */
+    #[\ReturnTypeWillChange]
     public function removeAttribute($name)
     {
         unset($this->attributes[$name]);
@@ -172,6 +182,7 @@ class Twig_Node implements Twig_NodeInterface
      *
      * @return bool    true if the node with the given name exists, false otherwise
      */
+    #[\ReturnTypeWillChange]
     public function hasNode($name)
     {
         return array_key_exists($name, $this->nodes);
@@ -184,6 +195,7 @@ class Twig_Node implements Twig_NodeInterface
      *
      * @return Twig_Node A Twig_Node instance
      */
+    #[\ReturnTypeWillChange]
     public function getNode($name)
     {
         if (!array_key_exists($name, $this->nodes)) {
@@ -199,6 +211,7 @@ class Twig_Node implements Twig_NodeInterface
      * @param string    The node name
      * @param Twig_Node A Twig_Node instance
      */
+    #[\ReturnTypeWillChange]
     public function setNode($name, $node = null)
     {
         $this->nodes[$name] = $node;
@@ -209,16 +222,19 @@ class Twig_Node implements Twig_NodeInterface
      *
      * @param string The node name
      */
+    #[\ReturnTypeWillChange]
     public function removeNode($name)
     {
         unset($this->nodes[$name]);
     }
 
+    #[\ReturnTypeWillChange]
     public function count()
     {
         return count($this->nodes);
     }
 
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new ArrayIterator($this->nodes);
