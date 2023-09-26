@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Include head content if specified in LAYOUT -->
+  {% if (LAYOUT.head) %}
+    {% include LAYOUT.useHead %}
+  {% endif %}
+
+  <!-- Setup stylesheet root -->
+  {{ STYLESHEET | raw }}
+
+  <!-- Include stylesheets from LAYOUT.source.stylesheet -->
+  {% for row in LAYOUT.source.stylesheet %}
+    <link rel="stylesheet" href="{{ row }}">
+  {% endfor %}
+
+</head>
+<body>
+
+  <!-- Include draw or view content based on LAYOUT.draw -->
+  {% if (LAYOUT.draw) %}
+    {% include LAYOUT.useDraw %}
+  {% else %}
+    {% include LAYOUT.useView %}
+  {% endif %}
+
+  <!-- Embed JavaScript Layout: Transfer PHP variable to JavaScript Layout -->
+  {{ JAVASCRIPT | raw }}
+
+  <!-- Include external JavaScript files from LAYOUT.source.javascript -->
+  {% for row in LAYOUT.source.javascript %}
+    <script src="{{ row }}"></script>
+  {% endfor %}
+
+  {% if LAYOUT.offline %}
+  <!-- Offline worker initialize -->
+  <script>
+    if ( (navigator.onLine)&&(location.protocol=='https:') ) {
+      let State = setTimeout( process=> {
+        UpUp.start({
+          'content-url': LAYOUT.load('current_url'),
+          'assets': [].concat(
+            LAYOUT.load('useOffline'),
+            Array.from(document.querySelectorAll('img')).map((img) => img.getAttribute('src')),
+            LAYOUT.load('source')['stylesheet'],
+            LAYOUT.load('source')['javascript'],
+          ),
+          'service-worker-url': '/upup.sw.min.js',
+        });
+        console.log('Nirvana Offline Ready ..');
+        clearTimeout(State);
+      }, 5000);
+    }
+  </script>
+  {% endif %}
+
+</body>
+</html>

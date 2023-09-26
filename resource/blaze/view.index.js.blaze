@@ -1,0 +1,30 @@
+
+/**
+ * Define a custom component named "@{ name-capital }" that extends the "Nirvana" class.
+ * This component is used within the NV framework.
+ *
+ * @class @{ name-capital }
+ * @extends Nirvana
+ */
+NV.component(
+  class @{ name-capital } extends Nirvana {
+
+    /**
+     * Constructor for the "@{ name-capital }" component.
+     * You can perform additional setup and logic here.
+     */
+    constructor() {
+      super();
+      
+      // Add your initialization code here
+    }
+
+    /**
+     * A method to update the content of an "h1" element.
+     */
+    countNumber() {
+      // Update the content of the "h1" element to display the result of 5 + 5
+      this.select("h1").innerHTML = 5 + 5;
+    }
+  }
+);

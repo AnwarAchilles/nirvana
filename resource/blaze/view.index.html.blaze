@@ -1,0 +1,11 @@
+
+
+<div nv-component="@{ name-capital }">
+  
+  {# This is heading #}
+  <h1>Example of @{ name-capital }</h1>
+
+  {# This is paragraph #}
+  <p>You are now in {{ current_url() }}</p>
+
+</div>

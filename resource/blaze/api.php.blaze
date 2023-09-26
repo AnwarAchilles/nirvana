@@ -1,0 +1,26 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+/**
+ * Class @{ name-capital }
+ *
+ * This class represents a custom API controller that extends CoreApi.
+ *
+ * @class @{ name-capital }
+ * @extends CoreApi
+ */
+class @{ name-capital } extends CoreApi
+{
+
+  /**
+   * Constructor for the @{ name-capital } class.
+   * 
+   * You can perform additional setup and logic here.
+   */
+  public function __construct() {
+    parent::__construct();
+
+    // Add your initialization code here
+  }
+
+}

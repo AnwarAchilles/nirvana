@@ -1,0 +1,29 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+/**
+ * Class _@{ name-capital }
+ *
+ * This class represents a custom model that extends CoreModel.
+ *
+ * @class _@{ name-capital }
+ * @extends CoreModel
+ */
+class _@{ name-capital } extends CoreModel
+{
+
+  /**
+   * The name of the database table associated with this model.
+   *
+   * @var string
+   */
+  public $table = '@{ name-lower }';
+
+  /**
+   * The primary key for the database table.
+   *
+   * @var string
+   */
+  public $primary_key = 'id_@{ name-lower }';
+  
+}

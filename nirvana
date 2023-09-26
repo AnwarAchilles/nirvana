@@ -1,0 +1,20 @@
+<?php
+
+
+if (isset($argv[1])) {
+  
+  if ($argv[1]=='serve') {
+    echo shell_exec("php -S localhost:8000");
+    exit();
+  }
+  
+  $argv[1] = 'command/'.$argv[1];
+
+}else {
+  $argv[1] = 'command/base';
+}
+
+array_shift($argv);
+$command = implode(' ', $argv);
+echo shell_exec("php index.php $command");
+exit();
