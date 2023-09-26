@@ -205,7 +205,8 @@ class CoreApi extends RestController
       );
 
       // Handle query parameters
-      $file = $_FILES;
+      $this->files = $_FILES;
+      $this->file = $_FILES;
       
       // Check if 'Q' query parameter exists and move it to $this->query
       if (isset($this->method['Q'])) {
@@ -553,73 +554,103 @@ class CoreApi extends RestController
   // Method Mapping for GET Requests
   public function index_GET()
   {
-    if (empty($this->index)) {
-      $this->list_REST();
-    } else {
-      $this->show_REST();
+    if (in_array('BaseApi', class_parents($this))) {
+      if (empty($this->index)) {
+        $this->list_REST();
+      } else {
+        $this->show_REST();
+      }
     }
   }
   public function list_GET()
   {
-    $this->list_REST();
+    if (in_array('BaseApi', class_parents($this))) {
+      $this->list_REST();
+    }
   }
   public function show_GET()
   {
-    $this->show_REST();
+    if (in_array('BaseApi', class_parents($this))) {
+      $this->show_REST();
+    }
   }
 
   // Method Mapping for POST Requests
   public function list_POST()
   {
-    $this->list_REST();
+    if (in_array('BaseApi', class_parents($this))) {
+      $this->list_REST();
+    }
   }
   public function show_POST()
   {
-    $this->show_REST();
+    if (in_array('BaseApi', class_parents($this))) {
+      $this->show_REST();
+    }
   }
   public function create_POST()
   {
-    $this->create_REST();
+    if (in_array('BaseApi', class_parents($this))) {
+      $this->create_REST();
+    }
   }
   public function index_POST()
   {
-    $this->create_REST();
+    if (in_array('BaseApi', class_parents($this))) {
+      $this->create_REST();
+    }
   }
 
   // Method Mapping for PUT and PATCH Requests
   public function update_GET()
   {
-    $this->update_REST();
+    if (in_array('BaseApi', class_parents($this))) {
+      $this->update_REST();
+    }
   }
   public function update_POST()
   {
-    $this->update_REST();
+    if (in_array('BaseApi', class_parents($this))) {
+      $this->update_REST();
+    }
   }
   public function index_PUT()
   {
-    $this->update_REST();
+    if (in_array('BaseApi', class_parents($this))) {
+      $this->update_REST();
+    }
   }
   public function index_PATCH()
   {
-    $this->update_REST();
+    if (in_array('BaseApi', class_parents($this))) {
+      $this->update_REST();
+    }
   }
   public function update_PATCH()
   {
-    $this->update_REST();
+    if (in_array('BaseApi', class_parents($this))) {
+      $this->update_REST();
+    }
   }
 
   // Method Mapping for DELETE Requests
   public function delete_GET()
   {
-    $this->delete_REST();
+    if (in_array('BaseApi', class_parents($this))) {
+      $this->delete_REST();
+    }
   }
   public function delete_POST()
   {
-    $this->delete_REST();
+    if (in_array('BaseApi', class_parents($this))) {
+      $this->delete_REST();
+    }
   }
   public function index_DELETE()
   {
-    $this->delete_REST();
+    if (in_array('BaseApi', class_parents($this))) {
+      $this->delete_REST();
+    }
   }
 
 
