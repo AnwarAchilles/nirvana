@@ -86,8 +86,8 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 
 
-defined("PATH_ROOT")            OR define("PATH_ROOT", __DIR__."..\\..\\..\\");
-defined("PATH_APPLICATION")     OR define("PATH_APPLICATION", __DIR__."..\\..\\..\\application\\");
-defined("PATH_ARCHIVE")         OR define("PATH_ARCHIVE", __DIR__."..\\..\\..\\archive\\");
-defined("PATH_RESOURCE")        OR define("PATH_RESOURCE", __DIR__."..\\..\\..\\resource\\");
-defined("PATH_STORAGE")         OR define("PATH_STORAGE", __DIR__."..\\..\\..\\storage\\");
+defined("PATH_ROOT")            OR define("PATH_ROOT", __DIR__."\\..\\..\\");
+defined("PATH_APPLICATION")     OR define("PATH_APPLICATION", __DIR__."\\..\\..\\application\\");
+defined("PATH_ARCHIVE")         OR define("PATH_ARCHIVE", __DIR__."\\..\\..\\archive\\");
+defined("PATH_RESOURCE")        OR define("PATH_RESOURCE", __DIR__."\\..\\..\\resource\\");
+defined("PATH_STORAGE")         OR define("PATH_STORAGE", __DIR__."\\..\\..\\storage\\");

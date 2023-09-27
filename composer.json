@@ -17,7 +17,8 @@
 		"anwarachilles/php-tracer": "^1.0",
 		"firebase/php-jwt": "^6.8",
 		"fakerphp/faker": "^1.23",
-		"virdiggg/seeder-ci3": "^1.0"
+		"virdiggg/seeder-ci3": "^1.0",
+		"visus/cuid2": "^4.0"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

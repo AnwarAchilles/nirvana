@@ -8,6 +8,8 @@
  * printCallStack
  * snake2pascal
  * pascal2snake
+ * removeHtmlComment
+ * precent2decimal
  * 
  * ---- ---- ---- ---- */
 
@@ -93,5 +95,18 @@ if (!function_exists('removeHtmlComment')) {
   {
     // Use preg_replace to remove HTML comments
     return preg_replace('/<!--(.*?)-->/s', '', $string);
+  }
+}
+
+
+/**
+ * Mengubah persentase menjadi desimal.
+ *
+ * @param float $persentase Persentase yang ingin diubah.
+ * @return float Desimal yang setara dengan persentase.
+ */
+if (!function_exists('percent2decimal')) {
+  function percent2decimal($persentase) {
+      return $persentase / 100;
   }
 }

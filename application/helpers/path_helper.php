@@ -25,7 +25,7 @@ if (!function_exists('resource')) {
   {
     if ($asPath) {
       // Return the real path of the source
-      return PATH_RESOURCE . $source;
+      return realpath(PATH_RESOURCE . $source);
     } else {
       // Return the URL for the source
       return base_url('resource/' . $source);
@@ -48,7 +48,7 @@ if (!function_exists('archive')) {
   {
     if ($asPath) {
       // Return the real path of the source
-      return PATH_ARCHIVE . $source;
+      return realpath(PATH_ARCHIVE . $source);
     } else {
       // Return the URL for the source
       return base_url('archive/' . $source);
@@ -71,7 +71,7 @@ if (!function_exists('storage')) {
   {
     if ($asPath) {
       // Return the real path of the source
-      return PATH_STORAGE . $source;
+      return realpath(PATH_STORAGE . $source);
     } else {
       // Return the URL for the source
       return base_url('storage/' . $source);

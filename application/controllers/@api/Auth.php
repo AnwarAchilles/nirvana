@@ -8,10 +8,24 @@
 class Auth extends BaseApi
 {
   /**
-   * Disable JWT authentication for this API.
-   * @var bool
+   * This variable determines whether the system is in secure mode or not.
+   * Set it to TRUE for secure mode, and FALSE for non-secure mode.
    */
   public $secure = FALSE;
+
+  /**
+   * This array contains a list of forbidden actions.
+   * These actions should not be accessible.
+   */
+  public $forbidden = [ 
+    'list_REST',
+    'show_REST',
+    'create_REST',
+    'update_REST',
+    'delete_REST',
+    'paginate_REST',
+    'entries_REST',
+  ];
 
   /**
    * Perform user login and generate a JWT token.

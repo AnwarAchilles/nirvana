@@ -58,6 +58,9 @@ class CoreApi extends RestController
   // Version directory
   public $version;
 
+  // Add forbidden access to some class
+  public $forbidden = [];
+
 
 
 
@@ -78,6 +81,9 @@ class CoreApi extends RestController
     // Load configuration
     $this->config->load('core');
     $this->config->api = $this->config->item('api');
+
+    // Populate development information
+    self::_development();
 
     $this->return = [];
     
@@ -129,18 +135,30 @@ class CoreApi extends RestController
         }
         if (!file_exists($modelFilePath)) {
           // Return a 404 response if the model file is not found
-          $this->return(404, ['message' => 'Model undefined']);
+          $this->development['[+]-Model'] = 'Model undefined';
         } else {
+          $this->development['[+]-Model'] = [];
           if ($versioning) {
+            $file = $segments[2].'/_' . ucfirst($models);
             // Load the model and assign it to $mod
             $this->load->model($segments[2].'/_' . ucfirst($models), 'models');
           }else {
+            $file = '_' . ucfirst($models);
             // Load the model and assign it to $mod
             $this->load->model('_' . ucfirst($models), 'models');
           }
+          $this->development['[+]-Model']['file'] = $file;
+          $this->development['[+]-Model']['table'] = (isset($this->models->table)) ? $this->models->table : '';
+          $this->development['[+]-Model']['primary_key'] = (isset($this->models->primary_key)) ? $this->models->primary_key : '';
+          $this->development['[+]-Model']['paginate'] = (isset($this->models->paginate)) ? $this->models->paginate : false;
+          $this->development['[+]-Model']['has_one'] = (isset($this->models->has_one)) ? $this->models->has_one : [];
+          $this->development['[+]-Model']['belongs_to'] = (isset($this->models->belongs_to)) ? $this->models->belongs_to : [];
+          $this->development['[+]-Model']['has_many'] = (isset($this->models->has_many)) ? $this->models->has_many : [];
           $this->mod = $this->models;
         }
       }
+      // if ($this->models) {
+      // }
     } catch (Exception $e) {
       // Handle exceptions if needed
     }
@@ -353,8 +371,6 @@ class CoreApi extends RestController
     }
   }
 
-
-
   /**
    * Set the development state for debugging purposes.
    *
@@ -447,16 +463,20 @@ class CoreApi extends RestController
    *
    * @return array The modified data with the serial number injected, or the original data if 'serial' is not set.
    */
-  public function serialNumber($injection)
+  public function serialNumber($injection='')
   {
-    // Check if 'serial' is set in the request method data
-    if (isset($this->method['serial'])) {
-      // Generate a unique serial number and inject it into the provided data
-      $injection['serial'] = strtoupper(uniqid($this->models->table . "."));
+    if ($injection) {
+      // Check if 'serial' is set in the request method data
+      if (isset($this->method['serial'])) {
+        // Generate a unique serial number and inject it into the provided data
+        $injection['serial'] = strtolower($this->models->table . "-" . new Visus\Cuid2\Cuid2());
+      }
+  
+      // Return the modified data with the serial number injected, or the original data
+      return $injection;
+    }else {
+      return strtolower($this->models->table . "-" . new Visus\Cuid2\Cuid2());
     }
-
-    // Return the modified data with the serial number injected, or the original data
-    return $injection;
   }
 
   /**
@@ -470,9 +490,6 @@ class CoreApi extends RestController
    */
   public function return($status = 203, $message = null)
   {
-    // Populate development information
-    $this->_development();
-
     // Initialize the response array
     $return = [];
 
@@ -512,6 +529,21 @@ class CoreApi extends RestController
 
 
   /**
+   * Check if the given method name is forbidden.
+   *
+   * @param string $methoName The name of the method to check.
+   * @throws Some_Exception_Class Description of exception
+   * @return void
+   */
+  protected function forbidden( $methodName )
+  {
+    if (in_array($methodName, $this->forbidden)) {
+      $this->return(403, 'Endpoint Has Forbidden');
+    }
+  }
+
+
+  /**
    * Get a specific request method or retrieve all request methods.
    *
    * This function allows you to retrieve a specific request method's data by providing its name,
@@ -539,6 +571,183 @@ class CoreApi extends RestController
 
 
 
+
+  /* ---- ---- ---- ----
+   * REST MAPING
+   * ---- ---- ---- ---- */
+
+
+  /**
+   * List resources.
+   *
+   * @request: GET
+   * @endpoint: /api/table
+   */
+  public function list_REST()
+  {
+    $this->forbidden(__FUNCTION__);
+
+    $this->models->builder($this->query);
+    $this->models->relation();
+    $this->return['total'] = $this->models->apiCountRows();
+    $this->data = $this->models->apiGetAll();
+
+    if ($this->data) {
+      $this->return(200, "Success");
+    } else {
+      $this->return(400, "Failed");
+    }
+  }
+
+  /**
+   * Show a single resource.
+   *
+   * @request: GET
+   * @endpoint: /api/table/{id}
+   */
+  public function show_REST()
+  {
+    $this->forbidden(__FUNCTION__);
+
+    $this->models->builder($this->query);
+    $this->models->relation();
+    $this->data = $this->models->apiGet($this->id);
+
+    if ($this->data) {
+      $this->return(200, "Success");
+    } else {
+      $this->return(400, "Failed");
+    }
+  }
+
+  /**
+   * Create a new resource.
+   *
+   * @request: GET, POST
+   * @endpoint: /api/table
+   */
+  public function create_REST()
+  {
+    $this->forbidden(__FUNCTION__);
+
+    $this->models->builder($this->query);
+    $isCreate = $this->models->apiCreate($this->serialNumber($this->method));
+    $this->data[$this->models->primary_key] = $isCreate;
+
+    if ($isCreate) {
+      $this->return(200, "Success");
+    } else {
+      $this->return(400, "Failed");
+    }
+  }
+
+  /**
+   * Update an existing resource.
+   *
+   * @request: GET, POST, PUT
+   * @endpoint: /api/table/{id}
+   */
+  public function update_REST()
+  {
+    $this->forbidden(__FUNCTION__);
+
+    if ($this->id) {
+      $this->models->builder($this->query);
+      $isUpdate = $this->models->apiUpdate($this->method, $this->id);
+
+      if ($isUpdate) {
+        $this->models->builder($this->query);
+        $this->models->relation();
+        $this->data = $this->models->apiGet($this->id);
+
+        $this->return(200, "Success");
+      } else {
+        $this->return(400, "Failed");
+      }
+    } else {
+      $this->return(400, "ID required");
+    }
+  }
+
+  /**
+   * Delete a resource.
+   *
+   * @request: GET, POST, DELETE
+   * @endpoint: /api/table/{id}
+   */
+  public function delete_REST()
+  {
+    $this->forbidden(__FUNCTION__);
+
+    if ($this->id) {
+      $this->data = $this->models
+        ->builder($this->query)
+        ->relation()
+        ->apiGet($this->id);
+      $isDelete = $this->models
+        ->builder($this->query)
+        ->apiDelete($this->id);
+      if ($isDelete) {
+        $this->return(200, "Success");
+      } else {
+        $this->return(400, "Failed");
+      }
+    } else {
+      $this->return(400, "ID required");
+    }
+  }
+
+  /**
+   * Paginate resources.
+   *
+   * @request: GET
+   * @endpoint: /api/table/paginate
+   */
+  public function paginate_REST()
+  {
+    $this->forbidden(__FUNCTION__);
+
+    $this->models->builder($this->query);
+    $this->models->relation();
+    $current = (empty($this->id)) ? 1 : $this->id;
+    $total = $this->models->apiCountRows();
+    if(isset($this->models->paginate)) {
+      $slice = $this->models->paginate;
+    }else {
+      $slice = $total;
+    }
+    $this->return['total'] = $total;
+    $this->return['paginate']['current'] = $current;
+    $this->return['paginate']['total'] = ceil($total / $slice);
+    $this->return['paginate']['slice'] = $slice;
+    $this->data = $this->models->apiPaginate($slice, $current);
+
+    $this->return(200);
+  }
+
+  /**
+   * Handle resource entries.
+   *
+   * @request: POST
+   * @endpoint: /api/table/entries
+   */
+  public function entries_REST()
+  {
+    $this->forbidden(__FUNCTION__);
+    
+    $this->models->builder($this->query);
+    $isCreate = $this->models->apiEntries($this->serialNumber($this->method));
+    $this->data[$this->models->primary_key] = $isCreate;
+
+    if ($isCreate) {
+      $this->return(200, "Success");
+    } else {
+      $this->return(400, "Failed");
+    }
+  }
+
+
+
   /* ---- ---- ---- ----
    * METHOD MAPING
    * ---- ---- ---- ---- */
@@ -554,103 +763,89 @@ class CoreApi extends RestController
   // Method Mapping for GET Requests
   public function index_GET()
   {
-    if (in_array('BaseApi', class_parents($this))) {
-      if (empty($this->index)) {
-        $this->list_REST();
-      } else {
-        $this->show_REST();
-      }
+    if (empty($this->index)) {
+      $this->list_REST();
+    } else {
+      $this->show_REST();
     }
   }
   public function list_GET()
   {
-    if (in_array('BaseApi', class_parents($this))) {
-      $this->list_REST();
-    }
+    $this->list_REST();
   }
   public function show_GET()
   {
-    if (in_array('BaseApi', class_parents($this))) {
-      $this->show_REST();
-    }
+    $this->show_REST();
   }
 
   // Method Mapping for POST Requests
   public function list_POST()
   {
-    if (in_array('BaseApi', class_parents($this))) {
-      $this->list_REST();
-    }
+    $this->list_REST();
   }
   public function show_POST()
   {
-    if (in_array('BaseApi', class_parents($this))) {
-      $this->show_REST();
-    }
+    $this->show_REST();
   }
   public function create_POST()
   {
-    if (in_array('BaseApi', class_parents($this))) {
-      $this->create_REST();
-    }
+    $this->create_REST();
   }
   public function index_POST()
   {
-    if (in_array('BaseApi', class_parents($this))) {
-      $this->create_REST();
-    }
+    $this->create_REST();
   }
 
   // Method Mapping for PUT and PATCH Requests
   public function update_GET()
   {
-    if (in_array('BaseApi', class_parents($this))) {
-      $this->update_REST();
-    }
+    $this->update_REST();
   }
   public function update_POST()
   {
-    if (in_array('BaseApi', class_parents($this))) {
-      $this->update_REST();
-    }
+    $this->update_REST();
   }
   public function index_PUT()
   {
-    if (in_array('BaseApi', class_parents($this))) {
-      $this->update_REST();
-    }
+    $this->update_REST();
   }
   public function index_PATCH()
   {
-    if (in_array('BaseApi', class_parents($this))) {
-      $this->update_REST();
-    }
+    $this->update_REST();
   }
   public function update_PATCH()
   {
-    if (in_array('BaseApi', class_parents($this))) {
-      $this->update_REST();
-    }
+    $this->update_REST();
   }
 
   // Method Mapping for DELETE Requests
   public function delete_GET()
   {
-    if (in_array('BaseApi', class_parents($this))) {
-      $this->delete_REST();
-    }
+    $this->delete_REST();
   }
   public function delete_POST()
   {
-    if (in_array('BaseApi', class_parents($this))) {
-      $this->delete_REST();
-    }
+    $this->delete_REST();
   }
   public function index_DELETE()
   {
-    if (in_array('BaseApi', class_parents($this))) {
-      $this->delete_REST();
-    }
+    $this->delete_REST();
+  }
+
+  // Method Mapping for PAGINATE Requests
+  public function paginate_GET()
+  {
+    $this->paginate_REST();
+  }
+
+  // Method Mapping for ENTRIES Requests
+  public function entries_GET()
+  {
+    $this->entries_REST();
+  }
+  public function entries_POST()
+  {
+    $this->entries_REST();
   }
 
 
