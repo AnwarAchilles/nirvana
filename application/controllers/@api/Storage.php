@@ -12,6 +12,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Storage extends CoreApi
 {
 
+  public $secure = FALSE;
+
   /**
    * Constructor for the Storage class.
    * 
@@ -26,13 +28,13 @@ class Storage extends CoreApi
   }
 
   private function upload_file( $file ) {
-    if ($this->file['type'] == 'image/png') {
+    if ($file['type'] == 'image/png') {
       $this->upload_file_image( $file );
     }
   }
 
   private function upload_file_image( $file ) {
-
+    $this->data = $file;
   }
 
 
@@ -46,7 +48,7 @@ class Storage extends CoreApi
     $this->return(200, "Success Upload to storage");
   }
 
-  public function delete_POST( $uuid ) {
+  public function discard_POST( $uuid ) {
     
   }
 
