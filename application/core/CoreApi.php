@@ -111,8 +111,8 @@ class CoreApi extends RestController
     try {
       $segments = $this->uri->segments;
       $versioning = false;
-
-      if (file_exists(PATH_APPLICATION.'/controllers/@api/'.$segments[2].'/')) {
+      
+      if (file_exists(PATH_APPLICATION.'/models/'.ucfirst($segments[2]).'/')) {
         $versioning = true;
       }
       

@@ -46,12 +46,13 @@ class CoreRouter extends CI_Router {
       }
       
       if (file_exists(PATH_APPLICATION.'controllers/@api/'.$segments[0].'/')) {
-        $this->set_directory('@api/'.$segments[0]);
         if (file_exists(PATH_ROOT.'application/controllers/@api/'.$segments[0].'/'.ucfirst($segments[1]).'.php')) {
+          $this->set_directory('@api/'.$segments[0]);
           array_shift($segments);
           $segments[0] = ucfirst($segments[0]);
           return $segments;
         } else {
+          $this->set_directory('@api');
           array_shift($segments);
           $segments[0] = $this->api;
           return $segments;

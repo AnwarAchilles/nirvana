@@ -8,7 +8,7 @@
  * all apis configurations here
  * ---- ---- ---- ---- */
 
-// set mode development | productions
+// set mode development | production
 $api['mode'] = 'development';
 
 // JWT token expired set in milisecond
