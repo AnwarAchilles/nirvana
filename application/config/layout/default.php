@@ -35,6 +35,9 @@ $config['layout'] = [
 
   ],
 
+  // Whether to bundling or not
+  'bundling'=> FALSE,
+
   // Bundle Configuration
   // This section defines options for bundling source files into a single file.
   'bundle'=> [

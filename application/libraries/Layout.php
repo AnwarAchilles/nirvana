@@ -238,25 +238,31 @@ class Layout {
     }
     
     if ($Configure['bundle']['stylehseet']) {
-      $stylesheetBundle = [];
-      foreach ($Configure['source']['stylesheet'] as $stylesheet) {
-        $stylesheetBundle[] = "\n/* Source: $stylesheet */ \n".$this->Codeigniter->minify->css(
-          file_get_contents($stylesheet)
-        );
+      if ($Configure['bundling']) {
+        $stylesheetBundle = [];
+        $header = "/*\n *\n * STYLESHEET BUNDLE\n *\n datetime: ".date('Y-m-d H:i:s')."\n */\n";
+        foreach ($Configure['source']['stylesheet'] as $stylesheet) {
+          $parse = "\n/* Source: $stylesheet */ \n";
+          $parse = $parse.file_get_contents($stylesheet);
+          $stylesheetBundle[] = $parse;
+        }
+        file_put_contents(resource('stylesheet/layout.bundle.css', true), $header.implode("\n", $stylesheetBundle));
       }
-      file_put_contents(resource('stylesheet/layout.bundle.css', true), implode("\n", $stylesheetBundle));
       $Configure['source']['stylesheet'] = [];
       $Configure['source']['stylesheet'][0] = resource('stylesheet/layout.bundle.css');
     }
 
     if ($Configure['bundle']['javascript']) {
-      $javascriptBundle = [];
-      foreach ($Configure['source']['javascript'] as $javascript) {
-        $javascriptBundle[] = "\n/* Source: $javascript */ \n".$this->Codeigniter->minify->js(
-          file_get_contents($javascript)
-        );
+      if ($Configure['bundling']) {
+        $javascriptBundle = [];
+        $header = "/*\n *\n * JAVASCRIPT BUNDLE\n * datetime: ".date('Y-m-d H:i:s')."\n */\n";
+        foreach ($Configure['source']['javascript'] as $javascript) {
+          $parse = "\n/* Source: $javascript */ \n";
+          $parse = $parse.file_get_contents($javascript);
+          $javascriptBundle[] = $parse;
+        }
+        file_put_contents(resource('javascript/layout.bundle.js', true), $header.implode("\n", $javascriptBundle));
       }
-      file_put_contents(resource('javascript/layout.bundle.js', true), implode("\n", $javascriptBundle));
       $Configure['source']['javascript'] = [];
       $Configure['source']['javascript'][0] = resource('javascript/layout.bundle.js');
     }
