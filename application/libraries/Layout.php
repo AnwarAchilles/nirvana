@@ -9,6 +9,8 @@ class Layout {
   private $Codeigniter;
 
   private $Twig;
+
+  private $inConfigure = "";
   
   public $Data = [];
 
@@ -149,8 +151,10 @@ class Layout {
   public function config( $name='default' ) {
     if (file_exists(PATH_APPLICATION.'/config/layout/'.strtolower($name).'.php')) {
       $this->Codeigniter->config->load('/layout/'.strtolower($name));
+      $this->inConfigure = $name;
     }else {
       $this->Codeigniter->config->load('/layout/default');
+      $this->inConfigure = 'default';
     }
     $this->Configure = $this->Codeigniter->config->item('layout');
   }
@@ -236,35 +240,43 @@ class Layout {
     if ( ($Configure['bundle']['stylehseet']) || ($Configure['bundle']['javascript']) ) {
       $this->Codeigniter->load->library("minify");
     }
-    
+
     if ($Configure['bundle']['stylehseet']) {
+      $fileTarget = 'stylesheet/layout/'.$this->inConfigure.'.bundle.css';
+      if (!resource($fileTarget, true)) {
+        file_put_contents(PATH_RESOURCE.$fileTarget, '');
+      }
       if ($Configure['bundling']) {
         $stylesheetBundle = [];
-        $header = "/*\n *\n * STYLESHEET BUNDLE\n *\n datetime: ".date('Y-m-d H:i:s')."\n */\n";
+        $header = "/*\n *\n * NIRVANA:STYLESHEET BUNDLE\n *\n datetime: ".date('Y-m-d H:i:s')."\n */\n";
         foreach ($Configure['source']['stylesheet'] as $stylesheet) {
           $parse = "\n/* Source: $stylesheet */ \n";
           $parse = $parse.file_get_contents($stylesheet);
           $stylesheetBundle[] = $parse;
         }
-        file_put_contents(resource('stylesheet/layout.bundle.css', true), $header.implode("\n", $stylesheetBundle));
+        file_put_contents(resource($fileTarget, true), $header.implode("\n", $stylesheetBundle));
       }
       $Configure['source']['stylesheet'] = [];
-      $Configure['source']['stylesheet'][0] = resource('stylesheet/layout.bundle.css');
+      $Configure['source']['stylesheet'][0] = resource($fileTarget);
     }
 
     if ($Configure['bundle']['javascript']) {
+      $fileTarget = 'javascript/layout/'.$this->inConfigure.'.bundle.js';
+      if (!resource($fileTarget, true)) {
+        file_put_contents(PATH_RESOURCE.$fileTarget, '');
+      }
       if ($Configure['bundling']) {
         $javascriptBundle = [];
-        $header = "/*\n *\n * JAVASCRIPT BUNDLE\n * datetime: ".date('Y-m-d H:i:s')."\n */\n";
+        $header = "/*\n *\n * NIRVANA:JAVASCRIPT BUNDLE\n * datetime: ".date('Y-m-d H:i:s')."\n */\n";
         foreach ($Configure['source']['javascript'] as $javascript) {
           $parse = "\n/* Source: $javascript */ \n";
           $parse = $parse.file_get_contents($javascript);
           $javascriptBundle[] = $parse;
         }
-        file_put_contents(resource('javascript/layout.bundle.js', true), $header.implode("\n", $javascriptBundle));
+        file_put_contents(resource($fileTarget, true), $header.implode("\n", $javascriptBundle));
       }
       $Configure['source']['javascript'] = [];
-      $Configure['source']['javascript'][0] = resource('javascript/layout.bundle.js');
+      $Configure['source']['javascript'][0] = resource($fileTarget);
     }
     
     return $Configure;
