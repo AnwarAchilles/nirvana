@@ -82,9 +82,7 @@ class CoreApi extends RestController
     $this->config->load('core');
     $this->config->api = $this->config->item('api');
 
-    // Populate development information
-    self::_development();
-
+    
     $this->return = [];
     
     self::_validate_jwt();
@@ -92,6 +90,9 @@ class CoreApi extends RestController
     self::_setup_index();
     self::_setup_method();
     self::_validate_formdata();
+
+    // Populate development information
+    self::_development();
   }
 
 
@@ -176,20 +177,43 @@ class CoreApi extends RestController
   {
     try {
       $segments = $this->uri->segments;
+      $versioning = false;
+      
+      if (file_exists(PATH_APPLICATION.'/models/'.ucfirst($segments[2]).'/')) {
+        $versioning = true;
+      }
+
       // Initialize the index/id
       $index = '';
-      if (isset($segments[3])) {
-        // Check if the requested method exists
-        if (
-          method_exists($this, $segments[3] . '_GET') ||
-          method_exists($this, $segments[3] . '_POST') ||
-          method_exists($this, $segments[3] . '_PUT') ||
-          method_exists($this, $segments[3] . '_DELETE') ||
-          method_exists($this, $segments[3] . '_PATCH')
-        ) {
-          $index = (isset($segments[4])) ? $segments[4] : '';
-        } else {
-          $index = (isset($segments[3])) ? $segments[3] : '';
+      if ($versioning) {
+        if (isset($segments[4])) {
+          // Check if the requested method exists
+          if (
+            method_exists($this, $segments[4] . '_GET') ||
+            method_exists($this, $segments[4] . '_POST') ||
+            method_exists($this, $segments[4] . '_PUT') ||
+            method_exists($this, $segments[4] . '_DELETE') ||
+            method_exists($this, $segments[4] . '_PATCH')
+          ) {
+            $index = (isset($segments[5])) ? $segments[5] : '';
+          } else {
+            $index = (isset($segments[4])) ? $segments[4] : '';
+          }
+        }
+      }else {
+        if (isset($segments[3])) {
+          // Check if the requested method exists
+          if (
+            method_exists($this, $segments[3] . '_GET') ||
+            method_exists($this, $segments[3] . '_POST') ||
+            method_exists($this, $segments[3] . '_PUT') ||
+            method_exists($this, $segments[3] . '_DELETE') ||
+            method_exists($this, $segments[3] . '_PATCH')
+          ) {
+            $index = (isset($segments[4])) ? $segments[4] : '';
+          } else {
+            $index = (isset($segments[3])) ? $segments[3] : '';
+          }
         }
       }
       // Convert the index to either an integer or a string
@@ -589,8 +613,8 @@ class CoreApi extends RestController
 
     $this->models->builder($this->query);
     $this->models->relation();
-    $this->return['total'] = $this->models->apiCountRows();
     $this->data = $this->models->apiGetAll();
+    $this->return['total'] = $this->models->apiCountRows();
 
     if ($this->data) {
       $this->return(200, "Success");
@@ -720,6 +744,7 @@ class CoreApi extends RestController
     $this->return['paginate']['current'] = $current;
     $this->return['paginate']['total'] = ceil($total / $slice);
     $this->return['paginate']['slice'] = $slice;
+    $this->models->builder($this->query);
     $this->data = $this->models->apiPaginate($slice, $current);
 
     $this->return(200);

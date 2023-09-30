@@ -21,13 +21,14 @@ class CoreEloquent extends Avenirer_Model
       foreach ($Query as $CIBuilder=>$SetQuery) {
         if (is_array($SetQuery)) {
           foreach ($SetQuery as $Key=>$Value) {
-            if (method_exists($this, $CIBuilder)) {
-              $this->$CIBuilder( $Key, $Value );
+            if (method_exists($this->_database, $CIBuilder)) {
+              $this->_database->$CIBuilder( $Key, $Value );
             }
           }
         }
       }
     }
+    // $this->_database->like('name', 'Fast');
     return $this;
   }
 

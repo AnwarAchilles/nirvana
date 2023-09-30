@@ -16,6 +16,11 @@ class Layout {
 
   public $Configure = [];
 
+  public $Source = [
+    'stylesheet' => [],
+    'javascript' => []
+  ];
+
   public $Stylesheet = [];
 
   public $Javascript = [];
@@ -175,6 +180,22 @@ class Layout {
     }
   }
 
+  public function source( $name, $value=[]) {
+    if (!empty($value)) {
+      if (is_array($value)) {
+        $this->Source[$name] = array_merge_recursive($this->Source[$name], $value);
+      }else {
+        $this->Source[$name] = $value;
+      }
+    }else {
+      if (isset($this->Source[$name])) {
+        return $this->Source[$name];
+      }else {
+        return false;
+      }
+    }
+  }
+
   public function render() {
     $Data = $this->Data;
     $Configure = $this->Configure;
@@ -215,6 +236,7 @@ class Layout {
     $this->Data['STYLESHEET'] = $this->styleSetup( $this->style() );
     $this->Data['JAVASCRIPT'] = $this->_script_classed( array_merge($Configure, $this->script()) );
 
+
     $this->view($Configure['useLayout']);
   }
 
@@ -222,25 +244,23 @@ class Layout {
     // stylesheet
     $Configure['source']['stylesheet'] = array_merge(
       $Configure['source']['stylesheet'], [
-        base_url('application/views/'.$Configure['usePath'].'layout.css'),
-        base_url('application/views/'.str_replace('html', 'css', $Configure['useView'])),
+        base_url('application/views/'.$Configure['usePath'].'layout.css')
+      ], $this->Source['stylesheet'], [
+        base_url('application/views/'.str_replace('html', 'css', $Configure['useView']))
       ]
     );
     // javascript
     $Configure['source']['javascript'] = array_merge(
       $Configure['source']['javascript'], [
-        base_url('application/views/'.$Configure['usePath'].'layout.js'),
-        base_url('application/views/'.str_replace('html', 'js', $Configure['useView'])),
+        base_url('application/views/'.$Configure['usePath'].'layout.js')
+      ], $this->Source['javascript'], [
+        base_url('application/views/'.str_replace('html', 'js', $Configure['useView']))
       ]
     );
     return $Configure;
   }
 
   private function bundle_source( $Configure ) {
-    if ( ($Configure['bundle']['stylehseet']) || ($Configure['bundle']['javascript']) ) {
-      $this->Codeigniter->load->library("minify");
-    }
-
     if ($Configure['bundle']['stylehseet']) {
       $fileTarget = 'stylesheet/layout/'.$this->inConfigure.'.bundle.css';
       if (!resource($fileTarget, true)) {
