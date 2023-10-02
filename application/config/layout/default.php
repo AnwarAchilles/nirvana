@@ -43,7 +43,7 @@ $config['layout'] = [
     'active'=> TRUE,
 
     // process bundling while reload
-    'process'=> TRUE,
+    'process'=> FALSE,
 
     // filename prefix
     'filename'=> 'default',
