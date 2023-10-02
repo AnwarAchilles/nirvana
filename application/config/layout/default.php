@@ -35,18 +35,24 @@ $config['layout'] = [
 
   ],
 
-  // Whether to bundling or not
-  'bundling'=> FALSE,
-
   // Bundle Configuration
   // This section defines options for bundling source files into a single file.
   'bundle'=> [
-    
-    // Bundle stylesheets into one file (set to TRUE to enable)
-    'stylehseet'=> TRUE,
 
-    // Bundle JavaScript files into one file (set to TRUE to enable)
-    'javascript'=> TRUE,
+    // activate feature
+    'active'=> FALSE,
+
+    // process bundling while reload
+    'process'=> FALSE,
+
+    // filename prefix
+    'filename'=> 'panel',
+    
+    // Bundle stylesheets into one file (set to source)
+    'stylehseet'=> [],
+
+    // Bundle JavaScript files into one file (set source)
+    'javascript'=> [],
 
   ],
   

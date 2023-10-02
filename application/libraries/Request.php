@@ -40,6 +40,7 @@ class Request {
     $this->_targetUrl( $url );
     $this->_tokenJwt();
     $this->Curl->option(CURLOPT_HTTPHEADER, $this->Configure['headers']);
+    $this->Curl->option(CURLOPT_SSL_VERIFYPEER, false);
     $methodName = strtolower($method);
     if (count($params)) {
       $this->Curl->$methodName( $params );

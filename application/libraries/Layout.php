@@ -212,8 +212,13 @@ class Layout {
       $Configure['source']['javascript'][] = resource('javascript/upup/upup.min.js');
     }
     
-    $Configure = $this->render_source( $Configure );
-    $Configure = $this->bundle_source( $Configure );
+    if ($Configure['bundle']['active']) {
+      $Configure = $this->bundle_source( $Configure, 'stylesheet' );
+      $Configure = $this->bundle_source( $Configure, 'javascript' );
+    }else {
+      $Configure = $this->render_source( $Configure );
+    }
+    
     
     if ($Configure['offline']) {
       $target = $_SERVER['DOCUMENT_ROOT'].'/upup.sw.min.js';
@@ -235,11 +240,11 @@ class Layout {
     $this->Data['LAYOUT'] = $Configure;
     $this->Data['STYLESHEET'] = $this->styleSetup( $this->style() );
     $this->Data['JAVASCRIPT'] = $this->_script_classed( array_merge($Configure, $this->script()) );
-
-
+    
+    
     $this->view($Configure['useLayout']);
   }
-
+  
   private function render_source( $Configure ) {
     // stylesheet
     $Configure['source']['stylesheet'] = array_merge(
@@ -247,11 +252,11 @@ class Layout {
         base_url('application/views/'.$Configure['usePath'].'layout.css')
       ], $this->Source['stylesheet'], [
         base_url('application/views/'.str_replace('html', 'css', $Configure['useView']))
-      ]
-    );
-    // javascript
-    $Configure['source']['javascript'] = array_merge(
-      $Configure['source']['javascript'], [
+        ]
+      );
+      // javascript
+      $Configure['source']['javascript'] = array_merge(
+        $Configure['source']['javascript'], [
         base_url('application/views/'.$Configure['usePath'].'layout.js')
       ], $this->Source['javascript'], [
         base_url('application/views/'.str_replace('html', 'js', $Configure['useView']))
@@ -260,46 +265,32 @@ class Layout {
     return $Configure;
   }
 
-  private function bundle_source( $Configure ) {
-    if ($Configure['bundle']['stylehseet']) {
-      $fileTarget = 'stylesheet/layout/'.$this->inConfigure.'.bundle.css';
-      if (!resource($fileTarget, true)) {
-        file_put_contents(PATH_RESOURCE.$fileTarget, '');
+  private function bundle_source( $Configure, $For ) {
+    $ext = [
+      'stylesheet'=> 'css',
+      'javascript'=> 'js',
+    ];
+    
+    $fileTarget = $For.'/layout/'.$Configure['bundle']['filename'].'.bundle.'.$ext[$For];
+    
+    if ($Configure['bundle']['process']) {
+      foreach ($Configure['bundle'][$For] as $row) {
+        $Configure['source'][$For][] = base_url("application/views/".$row);
       }
-      if ($Configure['bundling']) {
-        $stylesheetBundle = [];
-        $header = "/*\n *\n * NIRVANA:STYLESHEET BUNDLE\n *\n datetime: ".date('Y-m-d H:i:s')."\n */\n";
-        foreach ($Configure['source']['stylesheet'] as $stylesheet) {
-          $parse = "\n/* Source: $stylesheet */ \n";
-          $parse = $parse.file_get_contents($stylesheet);
-          $stylesheetBundle[] = $parse;
-        }
-        file_put_contents(resource($fileTarget, true), $header.implode("\n", $stylesheetBundle));
+      $dataBundling = [];
+      $header = "/*\n *\n * NIRVANA:STYLESHEET BUNDLE\n *\n datetime: ".date('Y-m-d H:i:s')."\n */\n";
+      foreach ($Configure['source'][$For] as $row) {
+        $parse = "\n/* Source: $row */ \n";
+        $parse = $parse.file_get_contents($row);
+        $dataBundling[] = $parse;
       }
-      $Configure['source']['stylesheet'] = [];
-      $Configure['source']['stylesheet'][0] = resource($fileTarget);
+      file_put_contents(resource($fileTarget, true), $header.implode("\n", $dataBundling));
     }
-
-    if ($Configure['bundle']['javascript']) {
-      $fileTarget = 'javascript/layout/'.$this->inConfigure.'.bundle.js';
-      if (!resource($fileTarget, true)) {
-        file_put_contents(PATH_RESOURCE.$fileTarget, '');
-      }
-      if ($Configure['bundling']) {
-        $javascriptBundle = [];
-        $header = "/*\n *\n * NIRVANA:JAVASCRIPT BUNDLE\n * datetime: ".date('Y-m-d H:i:s')."\n */\n";
-        foreach ($Configure['source']['javascript'] as $javascript) {
-          $parse = "\n/* Source: $javascript */ \n";
-          $parse = $parse.file_get_contents($javascript);
-          $javascriptBundle[] = $parse;
-        }
-        file_put_contents(resource($fileTarget, true), $header.implode("\n", $javascriptBundle));
-      }
-      $Configure['source']['javascript'] = [];
-      $Configure['source']['javascript'][0] = resource($fileTarget);
-    }
+    
+    $Configure['source'][$For] = [];
+    $Configure['source'][$For][0] = resource($fileTarget);
     
     return $Configure;
   }
-
+  
 }

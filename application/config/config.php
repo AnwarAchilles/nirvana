@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 // $config['base_url'] = 'https://localhost/__Project/Nirvana3';
-$config['base_url'] = 'https://__Project.test/Nirvana3';
+$config['base_url'] = 'https://__Project.test/Nirvana';
 
 /*
 |--------------------------------------------------------------------------
@@ -542,6 +542,4 @@ $config['proxy_ips'] = '';
 
 $config['twig_template_path'] = PATH_APPLICATION.'views';
 $config['twig_cache_path'] = PATH_ARCHIVE.'/twigs';
-$config['twig_cache_enable'] = FALSE;
-// $config['twig_extension'] = '.html';
-// $config['twig_debugger'] = FALSE;
+$config['twig_cache_enable'] = TRUE;

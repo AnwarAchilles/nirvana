@@ -71,4 +71,14 @@ class CoreController extends CI_Controller
     $this->layout->script('storage', storage());
   }
 
+  public function component( $filename ) {
+    $filename = str_ireplace('.', '/', $filename);
+    $target = realpath(PATH_APPLICATION.'/views/@component/'.$filename.'.html');
+    if (file_exists($target)) {
+      $this->layout->view('/@component/'.$filename.'.html');
+    }else {
+      echo "<span>Element with <b>$target</b> Not Found</span>";
+    }
+  }
+
 }
