@@ -1,0 +1,139 @@
+/*
+ *
+ * NIRVANA:STYLESHEET BUNDLE
+ *
+ datetime: 2023-10-02 21:09:48
+ */
+
+/* Source: https://__Project.test/Nirvana/application/views/layout.css */ 
+
+
+/* Source: https://__Project.test/Nirvana/application/views/welcome.css */ 
+
+
+
+body {
+  color: rgb(61, 61, 61);
+  margin: 0;
+  font-family: Arial;
+}
+
+blockquote > * {
+  word-spacing: 0.1rem;
+  letter-spacing: 0.02rem;
+  line-height: 1.1rem;
+  transform: rotate(0.8deg);
+}
+
+hr {
+  border-color: rgba(0, 0, 0, 0.05);
+}
+
+
+.background {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  /* background-color: var(--layout-red) !important; */
+  background-image:
+    linear-gradient(to top, black, black, black, white ),
+    linear-gradient(to left, black, black, black, white ),
+    linear-gradient(to right, black, black, white ),
+    linear-gradient(to bottom, black, black, white ),
+    var(--LAYOUT-shakuganNoShana)
+  ;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-blend-mode: screen;
+  filter: grayscale(1);
+  opacity: 0.08;
+  margin-bottom: -60px;
+}
+
+
+
+
+[nv-component='welcome'] {
+  position: fixed;
+  top: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+[nv-component='welcome'] p,
+[nv-component='welcome'] h1,
+[nv-component='welcome'] h2,
+[nv-component='welcome'] h3,
+[nv-component='welcome'] h4,
+[nv-component='welcome'] h5,
+[nv-component='welcome'] h6 {
+  margin: 0;
+}
+
+[nv-component='welcome'] div {
+  text-align: center;
+  /* transform: perspective(500px) rotateY(20deg); */
+}
+
+[nv-component='welcome'] .container {
+  width: 70%;
+  margin-top: -50px;
+}
+
+[nv-component='welcome'] blockquote {
+  color: grey;
+  background-color: rgba(255,255,255,0.3);
+  backdrop-filter: blur(10px);
+  max-width: 440px;
+  margin: auto;
+  font-size: 0.8rem;
+  position: relative;
+  padding: 25px;
+  transform: rotate(-1.5deg);
+  box-shadow: 0 0 200px 0 rgba(0, 0, 0, 0.1);
+}
+[nv-component='welcome'] blockquote::before {
+  content: "“";
+  color: #fb4b38;
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  margin-top: -25px;
+  margin-left: 10px;
+  font-size: 90px;
+}
+
+[nv-component='welcome'] blockquote>.line-top {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  position: absolute;
+  width: 150%;
+  margin-left: -25%;
+  top: 0;
+}
+[nv-component='welcome'] blockquote>.line-left {
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  position: absolute;
+  height: 150%;
+  margin-top: -10%;
+  top: 0;
+  left: 0;
+}
+[nv-component='welcome'] blockquote>.line-right {
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  position: absolute;
+  height: 150%;
+  margin-top: -5%;
+  top: 0;
+  right: 0;
+}
+[nv-component='welcome'] blockquote>.line-bottom {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  position: absolute;
+  width: 150%;
+  bottom: 0;
+}

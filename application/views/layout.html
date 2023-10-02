@@ -36,21 +36,36 @@
   {% if LAYOUT.offline %}
   <!-- Offline worker initialize -->
   <script>
-    if ( (navigator.onLine)&&(location.protocol=='https:') ) {
-      let State = setTimeout( process=> {
-        UpUp.start({
-          'content-url': LAYOUT.load('current_url'),
-          'assets': [].concat(
-            LAYOUT.load('useOffline'),
-            Array.from(document.querySelectorAll('img')).map((img) => img.getAttribute('src')),
-            LAYOUT.load('source')['stylesheet'],
-            LAYOUT.load('source')['javascript'],
-          ),
-          'service-worker-url': '/upup.sw.min.js',
-        });
-        console.log('Nirvana Offline Ready ..');
-        clearTimeout(State);
-      }, 5000);
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistration().then(function (registration) {
+        if (registration && registration.active) {
+          console.log('✓ Nirvana Offline is active ..');
+        } else {
+          console.log('⟳ Service Worker prepare installation ..');
+          if ( (navigator.onLine)&&(location.protocol=='https:') ) {
+            let State = setTimeout( process=> {
+              UpUp.start({
+                'content-url': LAYOUT.load('current_url'),
+                'assets': [].concat(
+                  LAYOUT.load('useOffline'),
+                  Array.from(document.querySelectorAll('img')).map((img) => img.getAttribute('src')),
+                  LAYOUT.load('source')['stylesheet'],
+                  LAYOUT.load('source')['javascript'],
+                ),
+                // 'service-worker-url': '/upup.sw.min.js',
+              });
+              console.log('✓ Nirvana Offline activated ..');
+              clearTimeout(State);
+            }, 5000);
+          }else {
+            console.log("✗ Nirvana Offline not in https ..");
+          }
+        }
+      }).catch(function (error) {
+        console.error('✗ Nirvana Offline Error registration:', error);
+      });
+    } else {
+      console.log('✗ Nirvana Offline not supported ..');
     }
   </script>
   {% endif %}

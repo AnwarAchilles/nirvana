@@ -230,7 +230,6 @@ class Layout {
         $Configure = $this->render_source( $Configure );
       }
       
-      
       if ($Configure['offline']) {
         $target = $_SERVER['DOCUMENT_ROOT'].'/upup.sw.min.js';
         if (!file_exists($target)) {
@@ -300,6 +299,9 @@ class Layout {
         $parse = "\n/* Source: $row */ \n";
         $parse = $parse.file_get_contents($row);
         $dataBundling[] = $parse;
+      }
+      if (!resource($fileTarget, true)) {
+        trigger_error("Bundle not found: $fileTarget", E_USER_ERROR);
       }
       file_put_contents(resource($fileTarget, true), $header.implode("\n", $dataBundling));
     }

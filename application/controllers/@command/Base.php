@@ -51,7 +51,13 @@ class Base extends CoreController
       }
       $Clean = glob(PATH_ARCHIVE.'/twigs/*');
       foreach ($Clean as $row) {
-        unlink($row);
+        $Cleann = glob($row.'/*');
+        foreach ($Cleann as $row) {
+          unlink($row);
+        }
+        if (is_dir($row)) {
+          rmdir($row);
+        }
       }
 echo "﹒Caches cleared!\n";
     }
