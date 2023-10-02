@@ -28,7 +28,7 @@ class Layout {
 
   public function __construct() {
     
-    $Codeigniter =& get_instance();    
+    $Codeigniter =& get_instance();
     
     $Configure = [];
     if ($Codeigniter->config->item('twig_cache_enable')) {
@@ -197,50 +197,67 @@ class Layout {
   }
 
   public function render() {
-    $Data = $this->Data;
-    $Configure = $this->Configure;
+    $this->Codeigniter->load->driver('cache');
     
-    $Configure['viewSlice'] = explode('.', $Configure['view']);
-
-    $Configure['usePath'] = str_replace('.', '/', $Configure['path']).'/';
-    $Configure['useLayout'] = $Configure['usePath'].'layout.html';
-    $Configure['useHead'] = $Configure['usePath'].'layout.head.html';
-    $Configure['useDraw'] = $Configure['usePath'].'layout.draw.html';
-    $Configure['useView'] = str_replace('.', '/', $Configure['path'].'.'.$Configure['view']).'.html';
-    
-    if ($Configure['offline']) {
-      $Configure['source']['javascript'][] = resource('javascript/upup/upup.min.js');
-    }
-    
-    if ($Configure['bundle']['active']) {
-      $Configure = $this->bundle_source( $Configure, 'stylesheet' );
-      $Configure = $this->bundle_source( $Configure, 'javascript' );
+    if ($this->Configure['bundle']['active']) {
+      $cacheName = __CLASS__.'_'.$this->inConfigure;
     }else {
-      $Configure = $this->render_source( $Configure );
-    }
-    
-    
-    if ($Configure['offline']) {
-      $target = $_SERVER['DOCUMENT_ROOT'].'/upup.sw.min.js';
-      if (!file_exists($target)) {
-        $worker = file_get_contents(resource('javascript/upup/upup.sw.min.js'));
-        file_put_contents($target, $worker);
-      }
-      $offline = [];
-      foreach ($this->style() as $css) {
-        if (str_contains($css, 'http') || str_contains($css, 'https')) {
-          $cleaning = str_replace('url(', '', $css);
-          $cleaning = str_replace(')', '', $css);
-          $offline[] = $cleaning;
-        }
-      }
-      $Configure['useOffline'][] = $offline;
+      $cacheName = __CLASS__.'_'.$this->inConfigure.'_'.str_replace('/', '.', str_replace(base_url(), '', current_url()));
     }
 
-    $this->Data['LAYOUT'] = $Configure;
-    $this->Data['STYLESHEET'] = $this->styleSetup( $this->style() );
-    $this->Data['JAVASCRIPT'] = $this->_script_classed( array_merge($Configure, $this->script()) );
+    $cached = $this->Codeigniter->cache->file->get($cacheName);
     
+    if (!$cached) {
+    
+      $Configure = $this->Configure;
+      
+      $Configure['viewSlice'] = explode('.', $Configure['view']);
+  
+      $Configure['usePath'] = str_replace('.', '/', $Configure['path']).'/';
+      $Configure['useLayout'] = $Configure['usePath'].'layout.html';
+      $Configure['useHead'] = $Configure['usePath'].'layout.head.html';
+      $Configure['useDraw'] = $Configure['usePath'].'layout.draw.html';
+      $Configure['useView'] = str_replace('.', '/', $Configure['path'].'.'.$Configure['view']).'.html';
+      
+      if ($Configure['offline']) {
+        $Configure['source']['javascript'][] = resource('javascript/upup/upup.min.js');
+      }
+      
+      if ($Configure['bundle']['active']) {
+        $Configure = $this->bundle_source( $Configure, 'stylesheet' );
+        $Configure = $this->bundle_source( $Configure, 'javascript' );
+      }else {
+        $Configure = $this->render_source( $Configure );
+      }
+      
+      
+      if ($Configure['offline']) {
+        $target = $_SERVER['DOCUMENT_ROOT'].'/upup.sw.min.js';
+        if (!file_exists($target)) {
+          $worker = file_get_contents(resource('javascript/upup/upup.sw.min.js'));
+          file_put_contents($target, $worker);
+        }
+        $offline = [];
+        foreach ($this->style() as $css) {
+          if (str_contains($css, 'http') || str_contains($css, 'https')) {
+            $cleaning = str_replace('url(', '', $css);
+            $cleaning = str_replace(')', '', $css);
+            $offline[] = $cleaning;
+          }
+        }
+        $Configure['useOffline'][] = $offline;
+      }
+
+      $this->Data['LAYOUT'] = $Configure;
+      $this->Data['STYLESHEET'] = base64_encode($this->styleSetup( $this->style() ));
+      $this->Data['JAVASCRIPT'] = base64_encode($this->_script_classed( array_merge($Configure, $this->script()) ));
+      
+      $this->Codeigniter->cache->file->save($cacheName, $this->Data, 86400);
+    }else {
+      $this->Data = $cached;
+      $Configure = $cached['LAYOUT'];
+    }
+
     
     $this->view($Configure['useLayout']);
   }

@@ -8,7 +8,7 @@
   {% endif %}
 
   <!-- Setup stylesheet root -->
-  {{ STYLESHEET | raw }}
+  {{ base64_decode(STYLESHEET) | raw }}
 
   <!-- Include stylesheets from LAYOUT.source.stylesheet -->
   {% for row in LAYOUT.source.stylesheet %}
@@ -26,7 +26,7 @@
   {% endif %}
 
   <!-- Embed JavaScript Layout: Transfer PHP variable to JavaScript Layout -->
-  {{ JAVASCRIPT | raw }}
+  {{ base64_decode(JAVASCRIPT) | raw }}
 
   <!-- Include external JavaScript files from LAYOUT.source.javascript -->
   {% for row in LAYOUT.source.javascript %}
