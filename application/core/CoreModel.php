@@ -19,11 +19,15 @@ $BASE->eloquent();
 class CoreModel extends CI_Model
 {
 
+  public $cache_prefix = 'Core';
+
   /**
    * CoreModel constructor.
    */
   public function __construct() {
     parent::__construct();
+
+    $this->load->driver('cache');
 
     // Additional constructor logic can be added here if needed
   }
@@ -79,34 +83,88 @@ class CoreModel extends CI_Model
    * API methods for common operations on the model.
    */
   public function apiCountRows() {
-    return $this->db->get($this->table)->num_rows();
+    $cached_data = $this->cache->file->get($this->cachePrefix('_count'));
+    if (!$cached_data) {
+      $cached_data = $this->db->get($this->table)->num_rows();
+      $this->cache->file->save($this->cachePrefix('_count'), $cached_data, 86400);
+    }
+    return $cached_data;
   }
 
   public function apiGetAll() {
-    return $this->db->get($this->table)->result_array();
+    $cached_data = $this->cache->file->get($this->cachePrefix('_list'));
+    if (!$cached_data) {
+      $cached_data = $this->db->get($this->table)->result_array();
+      $this->cache->file->save($this->cachePrefix('_list'), $cached_data, 86400);
+    }
+    return $cached_data;
   }
 
   public function apiGet( $id ) {
-    return $this->db->where($this->primary_key, $id)->get($this->table)->row_array();
+    $cached_data = $this->cache->file->get($this->cachePrefix('_list'));
+    if (!$cached_data) {
+      $cached_data = $this->db->where($this->primary_key, $id)->get($this->table)->row_array();
+      $this->cache->file->save($this->cachePrefix('_show_'.$id), $cached_data, 86400);
+    }
+    return $cached_data;
   }
 
   public function apiCreate( $data ) {
-    return $this->db->insert( $this->table, $data );
+    $process = $this->db->insert( $this->table, $data );
+    $this->cache->file->delete($this->cachePrefix('_count'));
+    $this->cache->file->delete($this->cachePrefix('_list'));
+    $this->cleanPaginate();
+    return $process;
   }
 
   public function apiUpdate( $data, $id ) {
-    return $this->db->where($this->primary_key, $id)->update( $this->table, $data );
+    $process = $this->db->where($this->primary_key, $id)->update( $this->table, $data );
+    $this->cache->file->delete($this->cachePrefix('_count'));
+    $this->cache->file->delete($this->cachePrefix('_list'));
+    $this->cache->file->delete($this->cachePrefix('_show_'.$id));
+    $this->cleanPaginate();
+    return $process;
   }
 
   public function apiDelete( $id ) {
-    return $this->db->where($this->primary_key, $id)->delete($this->table);
+    $process = $this->db->where($this->primary_key, $id)->delete($this->table);
+    $this->cache->file->delete($this->cachePrefix('_count'));
+    $this->cache->file->delete($this->cachePrefix('_list'));
+    $this->cache->file->delete($this->cachePrefix('_show_'.$id));
+    $this->cleanPaginate();
+    return $process;
   }
 
-  public function apiPaginate( $slice, $current ) {
-    return $this->db->limit( $slice, $current )->get($this->table)->result_array();
+  public function apiPaginate( $slice, $current, $total ) {
+    $cached_data = $this->cache->file->get($this->cachePrefix('_paginate_'.$total.'_'.$current));
+    if (!$cached_data) {
+      $cached_data = $this->db->limit( $slice, $current )->get($this->table)->result_array();
+      $this->cache->file->save($this->cachePrefix('_paginate_'.$total.'_'.$current), $cached_data, 86400);
+    }
+    return $cached_data;
+  }
+
+  public function cleanPaginate() {
+    foreach ( glob(PATH_ARCHIVE.'/caches/*') as $row ) {
+      if (str_contains($row, $this->cache_prefix.'_'.$this->table.'_paginate_')) {
+        $name = pathinfo($row, PATHINFO_FILENAME);
+        $name = str_replace($this->cache_prefix.'_', '', $name);
+        $name = str_replace($this->table.'_', '_', $name);
+        $this->cache->file->delete($this->cachePrefix($name));
+      }
+    }
   }
 
   public function apiEntries( $entry ) {
-    return $this->db->insert_batch($this->table, $entry);
+    $process = $this->db->insert_batch($this->table, $entry);
+    $this->cache->file->delete($this->cachePrefix('_count'));
+    $this->cache->file->delete($this->cachePrefix('_list'));
+    $this->cleanPaginate();
+    return $process;
   }
+
+  private function cachePrefix( $name ) {
+    return $this->cache_prefix.'_'.$this->table.$name;
+  }
+
 }

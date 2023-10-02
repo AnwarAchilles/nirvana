@@ -82,6 +82,7 @@ class CoreApi extends RestController
     $this->config->load('core');
     $this->config->api = $this->config->item('api');
 
+    $this->load->driver('cache');
     
     $this->return = [];
     
@@ -417,6 +418,26 @@ class CoreApi extends RestController
     $this->dev = $this->development;
   }
 
+  /**
+   * Check if the given method name is forbidden.
+   *
+   * @param string $methoName The name of the method to check.
+   * @throws Some_Exception_Class Description of exception
+   * @return void
+   */
+  private function forbidden( $methodName )
+  {
+    if (in_array($methodName, $this->forbidden)) {
+      $this->return(403, 'Endpoint Has Forbidden');
+    }
+  }
+
+
+
+
+
+
+
 
 
   /* ---- ---- ---- ----
@@ -549,21 +570,6 @@ class CoreApi extends RestController
 
     // Send the response using the RestController's response method
     $this->response($return, $status, false);
-  }
-
-
-  /**
-   * Check if the given method name is forbidden.
-   *
-   * @param string $methoName The name of the method to check.
-   * @throws Some_Exception_Class Description of exception
-   * @return void
-   */
-  protected function forbidden( $methodName )
-  {
-    if (in_array($methodName, $this->forbidden)) {
-      $this->return(403, 'Endpoint Has Forbidden');
-    }
   }
 
 
@@ -745,7 +751,7 @@ class CoreApi extends RestController
     $this->return['paginate']['total'] = ceil($total / $slice);
     $this->return['paginate']['slice'] = $slice;
     $this->models->builder($this->query);
-    $this->data = $this->models->apiPaginate($slice, $current);
+    $this->data = $this->models->apiPaginate($slice, $current, $total);
 
     $this->return(200);
   }

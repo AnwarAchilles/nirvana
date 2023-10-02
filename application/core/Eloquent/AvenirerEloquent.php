@@ -10,6 +10,11 @@ require_once PATH_APPLICATION.'/third_party/Avenirer_Model.php';
  */
 class CoreEloquent extends Avenirer_Model
 {
+
+  public $delete_cache_on_save = FALSE;
+
+  public $cache_prefix = 'Avenirer';
+
   /**
    * Initialize the builder with provided query conditions.
    *
@@ -61,34 +66,66 @@ class CoreEloquent extends Avenirer_Model
    * API methods for common operations on the model.
    */
   public function apiCountRows() {
-    return $this->count_rows();
+    return $this->set_cache('count')->count_rows();
   }
 
   public function apiGetAll() {
-    return $this->get_all();
+    return $this->set_cache('list')->get_all();
   }
 
   public function apiGet( $id ) {
-    return $this->get( $id );
+    return $this->set_cache('show_'.$id)->get( $id );
   }
 
   public function apiCreate( $data ) {
-    return $this->insert( $data );
+    $process = $this->insert( $data );
+    $this->delete_cache('count');
+    $this->set_cache('count')->get_all();
+    $this->set_cache('list')->get_all();
+    $this->cleanPaginate();
+    return $process;
   }
-
+  
   public function apiUpdate( $data, $id ) {
-    return $this->update( $data, $id );
+    $process = $this->update( $data, $id );
+    $this->delete_cache('count');
+    $this->delete_cache('show_'.$id);
+    $this->set_cache('count')->get_all();
+    $this->set_cache('list')->get_all();
+    $this->cleanPaginate();
+    return $process;
   }
-
+  
   public function apiDelete( $id ) {
-    return $this->delete( $id );
+    $process =  $this->delete( $id );
+    $this->delete_cache('count');
+    $this->delete_cache('show_'.$id);
+    $this->set_cache('count')->get_all();
+    $this->set_cache('list')->get_all();
+    $this->cleanPaginate();
+    return $process;
   }
 
-  public function apiPaginate( $slice, $current ) {
-    return $this->paginate( $slice, $current );
+  public function apiPaginate( $slice, $current, $total ) {
+    return $this->set_cache('paginate_'.$total)->paginate( $slice, $current );
+  }
+  public function cleanPaginate() {
+    foreach ( glob(PATH_ARCHIVE.'/caches/*') as $row ) {
+      if (str_contains($row, 'paginate_')) {
+        $name = pathinfo($row, PATHINFO_FILENAME);
+        $name = str_replace($this->cache_prefix.'_', '', $name);
+        $name = str_replace($this->table.'_', '', $name);
+        $this->delete_cache($name);
+      }
+    }
   }
 
   public function apiEntries( $entry ) {
-    return $this->insert($entry);
+    $process = $this->insert($entry);
+    $this->delete_cache('count');
+    $this->set_cache('count')->get_all();
+    $this->set_cache('list')->get_all();
+    $this->cleanPaginate();
+    return $process;
   }
 }
