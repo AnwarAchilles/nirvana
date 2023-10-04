@@ -29,6 +29,8 @@ class Layout {
   public function __construct() {
     
     $Codeigniter =& get_instance();
+
+    $Codeigniter->config->load('twig');
     
     $Configure = [];
     if ($Codeigniter->config->item('twig_cache_enable')) {
@@ -50,6 +52,8 @@ class Layout {
 
     $this->Codeigniter = $Codeigniter;
     $this->Twig = $Environment;
+
+    
   }
 
 
@@ -199,13 +203,13 @@ class Layout {
   public function render() {
     $this->Codeigniter->load->driver('cache');
     
-    if ($this->Configure['bundle']['active']) {
-      $cacheName = __CLASS__.'_'.$this->inConfigure;
+    $cacheName = __CLASS__.'_'.$this->inConfigure.'_'.str_replace('/', '.', str_replace(base_url(), '', current_url()));
+    
+    if ($this->Configure['cache']) {
+      $cached = $this->Codeigniter->cache->file->get($cacheName);
     }else {
-      $cacheName = __CLASS__.'_'.$this->inConfigure.'_'.str_replace('/', '.', str_replace(base_url(), '', current_url()));
+      $cached = false;
     }
-
-    $cached = $this->Codeigniter->cache->file->get($cacheName);
     
     if (!$cached) {
     
@@ -230,6 +234,7 @@ class Layout {
         $Configure = $this->render_source( $Configure );
       }
       
+      
       if ($Configure['offline']) {
         $target = $_SERVER['DOCUMENT_ROOT'].'/upup.sw.min.js';
         if (!file_exists($target)) {
@@ -251,7 +256,9 @@ class Layout {
       $this->Data['STYLESHEET'] = base64_encode($this->styleSetup( $this->style() ));
       $this->Data['JAVASCRIPT'] = base64_encode($this->_script_classed( array_merge($Configure, $this->script()) ));
       
-      $this->Codeigniter->cache->file->save($cacheName, $this->Data, 86400);
+      if ($this->Configure['cache']) {
+        $this->Codeigniter->cache->file->save($cacheName, $this->Data, 86400);
+      }
     }else {
       $this->Data = $cached;
       $Configure = $cached['LAYOUT'];
@@ -299,9 +306,6 @@ class Layout {
         $parse = "\n/* Source: $row */ \n";
         $parse = $parse.file_get_contents($row);
         $dataBundling[] = $parse;
-      }
-      if (!resource($fileTarget, true)) {
-        trigger_error("Bundle not found: $fileTarget", E_USER_ERROR);
       }
       file_put_contents(resource($fileTarget, true), $header.implode("\n", $dataBundling));
     }
