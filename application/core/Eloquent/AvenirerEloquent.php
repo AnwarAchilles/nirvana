@@ -66,7 +66,7 @@ class CoreEloquent extends Avenirer_Model
    * API methods for common operations on the model.
    */
   public function apiCountRows() {
-    return $this->set_cache('count')->count_rows();
+    return $this->count_rows();
   }
 
   public function apiGetAll() {
@@ -107,7 +107,7 @@ class CoreEloquent extends Avenirer_Model
   }
 
   public function apiPaginate( $slice, $current, $total ) {
-    return $this->set_cache('paginate_'.$total)->paginate( $slice, $current );
+    return $this->set_cache('paginate_'.$total.'_'.$current)->paginate( $slice, $current );
   }
   public function cleanPaginate() {
     foreach ( glob(PATH_ARCHIVE.'/caches/*') as $row ) {
