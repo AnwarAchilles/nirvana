@@ -21,6 +21,9 @@ $config['layout'] = [
   // Whether to set offline web page
   'offline'=> TRUE,
 
+  // setup cache parse data
+  'cache'=> FALSE,
+
   // Source Configuration
   // Configuration for Stylesheet and JavaScript List
   'source'=> [
