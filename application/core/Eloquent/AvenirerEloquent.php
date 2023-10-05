@@ -66,7 +66,8 @@ class CoreEloquent extends Avenirer_Model
    * API methods for common operations on the model.
    */
   public function apiCountRows() {
-    return $this->count_rows();
+    $total = (array) $this->get_all();
+    return count($total);
   }
 
   public function apiGetAll() {
@@ -79,29 +80,23 @@ class CoreEloquent extends Avenirer_Model
 
   public function apiCreate( $data ) {
     $process = $this->insert( $data );
-    $this->delete_cache('count');
-    $this->set_cache('count')->get_all();
-    $this->set_cache('list')->get_all();
+    $this->delete_cache('list');
     $this->cleanPaginate();
     return $process;
   }
   
   public function apiUpdate( $data, $id ) {
     $process = $this->update( $data, $id );
-    $this->delete_cache('count');
     $this->delete_cache('show_'.$id);
-    $this->set_cache('count')->get_all();
-    $this->set_cache('list')->get_all();
+    $this->delete_cache('list');
     $this->cleanPaginate();
     return $process;
   }
   
   public function apiDelete( $id ) {
     $process =  $this->delete( $id );
-    $this->delete_cache('count');
     $this->delete_cache('show_'.$id);
-    $this->set_cache('count')->get_all();
-    $this->set_cache('list')->get_all();
+    $this->delete_cache('list');
     $this->cleanPaginate();
     return $process;
   }
@@ -111,11 +106,9 @@ class CoreEloquent extends Avenirer_Model
   }
   public function cleanPaginate() {
     foreach ( glob(PATH_ARCHIVE.'/caches/*') as $row ) {
-      if (str_contains($row, 'paginate_')) {
+      if (str_contains($row, $this->cache_prefix.'_'.$this->table.'_paginate')) {
         $name = pathinfo($row, PATHINFO_FILENAME);
-        $name = str_replace($this->cache_prefix.'_', '', $name);
-        $name = str_replace($this->table.'_', '', $name);
-        $this->delete_cache($name);
+        $this->cache->file->delete($name);
       }
     }
   }
@@ -123,8 +116,7 @@ class CoreEloquent extends Avenirer_Model
   public function apiEntries( $entry ) {
     $process = $this->insert($entry);
     $this->delete_cache('count');
-    $this->set_cache('count')->get_all();
-    $this->set_cache('list')->get_all();
+    $this->delete_cache('list');
     $this->cleanPaginate();
     return $process;
   }
