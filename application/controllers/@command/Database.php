@@ -32,7 +32,7 @@ class Database extends CI_Controller
 			$resOld = $this->db->select('version')->from('migration')->get()->row();
 			$version = $resOld->version;
 
-			if (!$this->migration->version($version - 1)) {
+			if (!$this->migration->version(0)) {
 				show_error($this->migration->error_string());
 				return;
 			}

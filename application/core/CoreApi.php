@@ -508,19 +508,18 @@ class CoreApi extends RestController
    *
    * @return array The modified data with the serial number injected, or the original data if 'serial' is not set.
    */
-  public function serialNumber($injection='')
+  public function serialNumber( $serial='', $length=24, $injection='' )
   {
-    if ($injection) {
-      // Check if 'serial' is set in the request method data
-      if (isset($this->method['serial'])) {
-        // Generate a unique serial number and inject it into the provided data
-        $injection['serial'] = strtolower($this->models->table . "-" . new Visus\Cuid2\Cuid2());
-      }
-  
+    $useSerial = (isset($this->models->serial)) ? $this->models->serial : $serial;
+    $useLength = (isset($this->models->serial_length)) ? $this->models->serial_length : $length;
+
+    if (!empty($injection)) {
+      // Generate a unique serial number and inject it into the provided data
+      $injection['serial'] = strtolower($useSerial . "-" . new Visus\Cuid2\Cuid2($useLength));
       // Return the modified data with the serial number injected, or the original data
       return $injection;
     }else {
-      return strtolower($this->models->table . "-" . new Visus\Cuid2\Cuid2());
+      return strtolower($useSerial . "-" . new Visus\Cuid2\Cuid2($useLength));
     }
   }
 
@@ -738,7 +737,6 @@ class CoreApi extends RestController
     $this->forbidden(__FUNCTION__);
 
     $this->models->builder($this->query);
-    $this->models->relation();
     $current = (empty($this->id)) ? 1 : $this->id;
     $total = $this->models->apiCountRows();
     if(isset($this->models->paginate)) {
@@ -751,6 +749,7 @@ class CoreApi extends RestController
     $this->return['paginate']['total'] = ceil($total / $slice);
     $this->return['paginate']['slice'] = $slice;
     $this->models->builder($this->query);
+    $this->models->relation();
     $this->data = $this->models->apiPaginate($slice, $current, $total);
 
     $this->return(200);

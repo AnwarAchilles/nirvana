@@ -26,7 +26,9 @@
   {% endif %}
 
   <!-- Embed JavaScript Layout: Transfer PHP variable to JavaScript Layout -->
+  {{ base64_decode(DATA) | raw }}
   {{ base64_decode(JAVASCRIPT) | raw }}
+
 
   <!-- Include external JavaScript files from LAYOUT.source.javascript -->
   {% for row in LAYOUT.source.javascript %}

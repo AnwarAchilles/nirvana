@@ -76,9 +76,12 @@ class CoreController extends CI_Controller
     $target = realpath(PATH_APPLICATION.'/views/@component/'.$filename.'.html');
     if (file_exists($target)) {
       $this->layout->view('/@component/'.$filename.'.html');
-    }else {
-      echo "<span>Element with <b>$target</b> Not Found</span>";
     }
+  }
+
+  public function country( $alpha3 ) {
+    $this->config->load('country/'.strtolower($alpha3).'.php');
+    $this->country = $this->config->item('country');
   }
 
 }

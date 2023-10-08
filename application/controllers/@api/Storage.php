@@ -64,7 +64,7 @@ class Storage extends BaseApi
     }
 
     // Generate a unique serial number for the file.
-    $serial = $this->serialNumber();
+    $serial = $this->serialNumber('storage', 24);
 
     // Configuration for file upload.
     $config['upload_path'] = $directory;

@@ -140,18 +140,18 @@ class Layout {
     }
     return $Result;
   }
-  public function _script_classed( $Object ) {
+  public function _script_classed( $Object, $className ) {
     $Class = [];
     $Class[] = "<script>";
-    $Class[] = "class Layout {";
+    $Class[] = "class ".ucfirst($className)." {";
     foreach ($this->_script_secure( $Object ) as $Variable=>$Value) {
       $Class[] = "\tstatic ".$Variable.' = "'.$Value.'"';
     }
-    $Class[] = "\tstatic load".'( $Variable ) { if (Layout[$Variable]) { let Data = atob(Layout[$Variable]); if (Layout.isJSON(Data)) { return JSON.parse(Data); }else { return Data; } }else {return false;} }';
+    $Class[] = "\tstatic load".'( $Variable ) { if ('.ucfirst($className).'[$Variable]) { let Data = atob('.ucfirst($className).'[$Variable]); if ('.ucfirst($className).'.isJSON(Data)) { return JSON.parse(Data); }else { return Data; } }else {return false;} }';
     $Class[] = "\tstatic isJSON(str) { try { JSON.parse(str); return true; } catch (e) { return false; } }";
     $Class[] = "}";
-    $Class[] = "const LAYOUT = Layout;";
-    $Class[] = "window.LAYOUT = Layout;";
+    // $Class[] = "const ".strtoupper($className)." = ".ucfirst($className).";";
+    // $Class[] = "window.".strtoupper($className)." = ".ucfirst($className).";";
     $Class[] = "</script>";
     return implode("\n", $Class);
   }
@@ -213,6 +213,7 @@ class Layout {
     
     if (!$cached) {
     
+      $Data = $this->Data;
       $Configure = $this->Configure;
       
       $Configure['viewSlice'] = explode('.', $Configure['view']);
@@ -253,8 +254,9 @@ class Layout {
       }
 
       $this->Data['LAYOUT'] = $Configure;
+      $this->Data['DATA'] = base64_encode($this->_script_classed( $Data, 'NirvanaData'));
       $this->Data['STYLESHEET'] = base64_encode($this->styleSetup( $this->style() ));
-      $this->Data['JAVASCRIPT'] = base64_encode($this->_script_classed( array_merge($Configure, $this->script()) ));
+      $this->Data['JAVASCRIPT'] = base64_encode($this->_script_classed( array_merge($Configure, $this->script()), 'NirvanaLayout'));
       
       if ($this->Configure['cache']) {
         $this->Codeigniter->cache->file->save($cacheName, $this->Data, 86400);
