@@ -519,6 +519,7 @@ class CoreApi extends RestController
       // Return the modified data with the serial number injected, or the original data
       return $injection;
     }else {
+      dd($useSerial);
       return strtolower($useSerial . "-" . new Visus\Cuid2\Cuid2($useLength));
     }
   }
@@ -660,7 +661,7 @@ class CoreApi extends RestController
     $this->forbidden(__FUNCTION__);
 
     $this->models->builder($this->query);
-    $isCreate = $this->models->apiCreate($this->serialNumber($this->method));
+    $isCreate = $this->models->apiCreate($this->serialNumber('', 12, $this->method));
     $this->data[$this->models->primary_key] = $isCreate;
 
     if ($isCreate) {
