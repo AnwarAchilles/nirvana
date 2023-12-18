@@ -10,8 +10,28 @@
  * pascal2snake
  * removeHtmlComment
  * precent2decimal
+ * convertTimestamp
+ * textCutWord
  * 
  * ---- ---- ---- ---- */
+
+
+/**
+ * (Abandoned Do Not Use)
+ */
+if (!function_exists('__')) {
+  function __( $language )
+  {
+    $query = explode('.', $language);
+    $line = $query[0];
+    unset($query[0]);
+    $arrayNested = implode("']['", $query);
+    $code = "lang('$line')['$arrayNested']";
+    try {
+      return eval("return $code;");
+    }catch(Exception $e) {}
+  }
+}
 
 
 
@@ -109,4 +129,44 @@ if (!function_exists('percent2decimal')) {
   function percent2decimal($persentase) {
       return $persentase / 100;
   }
+}
+
+
+
+
+
+function convertTimestamp($timestamp) {
+  $seconds = $timestamp % 60;
+  $minutes = floor(($timestamp % 3600) / 60);
+  $hours = floor(($timestamp % 86400) / 3600);
+  $days = floor(($timestamp % 2592000) / 86400);
+  $months = floor($timestamp / 2592000);
+
+  return "$months months, $days days, $hours hours, $minutes minutes, $seconds seconds";
+}
+
+
+function removeHTML($input) {
+  return preg_replace('/<\/?[^>]+(>|$)/', '', $input);
+}
+
+
+function textCutWord($text, $maxWords) {
+  $words = explode(' ', $text);
+  if (count($words) <= $maxWords) {
+      return $text; // If the text has fewer words than $maxWords, return the original text.
+  }
+  $truncatedText = implode(' ', array_slice($words, 0, $maxWords));
+  return $truncatedText;
+}
+
+function cleanUrl($url) {
+  // Remove extra slashes
+  $cleanUrl = preg_replace('#/+#', '/', $url);
+
+  // Remove double slashes after the domain
+  $cleanUrl = preg_replace('#^(https?://[^/]+)/+#i', '$1/', $cleanUrl);
+  $cleanUrl = str_replace('https:/', 'https://', $cleanUrl);
+
+  return $cleanUrl;
 }

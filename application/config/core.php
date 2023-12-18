@@ -39,7 +39,8 @@ $config['loader'] = [
   'model'         => [ 'BaseModel' ],
   
   // todo load library
-  'libraries'     => [ 'layout', 'request', 'minify', 'blaze', 'session' ],
+  // 'libraries'     => [],
+  'libraries'     => [ 'layout', 'RequestHttp', 'minify', 'blaze', 'session' ],
   
   // todo load helper
   'helper'        => [ 'text' ]

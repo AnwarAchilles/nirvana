@@ -19,6 +19,8 @@ $BASE->model();
 class CoreController extends CI_Controller
 {
 
+  public $useSession = FALSE;
+
   /**
    * Constructor for the class.
    *
@@ -35,11 +37,21 @@ class CoreController extends CI_Controller
 
     // Load libraries
     foreach ($this->config->loader['libraries'] as $key => $value) {
-        if (!is_numeric($key)) {
+      if ($value=='session') {
+        if ($this->useSession==TRUE) {
+          if (!is_numeric($key)) {
             $this->load->library($value, $key);
-        } else {
+          } else {
             $this->load->library($value);
+          }  
         }
+      }else {
+        if (!is_numeric($key)) {
+          $this->load->library($value, $key);
+        } else {
+          $this->load->library($value);
+        }
+      }
     }
 
     // Load helpers
@@ -47,16 +59,18 @@ class CoreController extends CI_Controller
         $this->load->helper($value);
     }
 
-    // Set layout configuration
-    if (file_exists(PATH_APPLICATION . "/config/layout/" . strtolower(get_class($this)) . ".php")) {
-        $this->layout->config(strtolower(get_class($this)));
-    } else {
-        $this->layout->config('default');
+    if (isset($this->layout)) {
+      // Set layout configuration
+      if (file_exists(PATH_APPLICATION . "/config/layout/" . strtolower(get_class($this)) . ".php")) {
+          $this->layout->config(strtolower(get_class($this)));
+      } else {
+          $this->layout->config('default');
+      }
+      // set default stylesheet & javascript
+      $this->initStylesheet();
+      $this->initJavascript();
     }
 
-    // set default stylesheet & javascript
-    $this->initStylesheet();
-    $this->initJavascript();
   }
 
   private function initStylesheet() {
@@ -69,19 +83,6 @@ class CoreController extends CI_Controller
     $this->layout->script('resource', resource());
     $this->layout->script('archive', archive());
     $this->layout->script('storage', storage());
-  }
-
-  public function component( $filename ) {
-    $filename = str_ireplace('.', '/', $filename);
-    $target = realpath(PATH_APPLICATION.'/views/@component/'.$filename.'.html');
-    if (file_exists($target)) {
-      $this->layout->view('/@component/'.$filename.'.html');
-    }
-  }
-
-  public function country( $alpha3 ) {
-    $this->config->load('country/'.strtolower($alpha3).'.php');
-    $this->country = $this->config->item('country');
   }
 
 }

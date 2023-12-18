@@ -398,13 +398,20 @@ class CI_Security {
 		 *
 		 * Note: Use rawurldecode() so it does not remove plus signs
 		 */
-		if (stripos($str, '%') !== false)
+		if ($str !== null && is_string($str) && stripos($str, '%') !== false)
 		{
 			do
 			{
 				$oldstr = $str;
 				$str = rawurldecode($str);
-				$str = preg_replace_callback('#%(?:\s*[0-9a-f]){2,}#i', array($this, '_urldecodespaces'), $str);
+				$str = preg_replace_callback(
+					'#%(?:\s*[0-9a-f]){2,}#i',
+					function ($matches) {
+							return $this->_urldecodespaces($matches[0]);
+					},
+					$str
+				);
+				// $str = preg_replace_callback('#%(?:\s*[0-9a-f]){2,}#i', array($this, '_urldecodespaces'), $str);
 			}
 			while ($oldstr !== $str);
 			unset($oldstr);
@@ -417,8 +424,23 @@ class CI_Security {
 		 * We only convert entities that are within tags since
 		 * these are the ones that will pose security problems.
 		 */
-		$str = preg_replace_callback("/[^a-z0-9>]+[a-z0-9]+=([\'\"]).*?\\1/si", array($this, '_convert_attribute'), $str);
-		$str = preg_replace_callback('/<\w+.*/si', array($this, '_decode_entity'), $str);
+		// $str = preg_replace_callback("/[^a-z0-9>]+[a-z0-9]+=([\'\"]).*?\\1/si", array($this, '_convert_attribute'), $str);
+		// $str = preg_replace_callback('/<\w+.*/si', array($this, '_decode_entity'), $str);
+		if ($str !== null && is_string($str)) {
+			$str = preg_replace_callback(
+					"/[^a-z0-9>]+[a-z0-9]+=([\'\"]).*?\\1/si",
+					array($this, '_convert_attribute'),
+					$str
+			);
+		}
+		if ($str !== null && is_string($str)) {
+			$str = preg_replace_callback(
+					'/<\w+.*/si',
+					array($this, '_decode_entity'),
+					$str
+			);
+		}
+
 
 		// Remove Invisible Characters Again!
 		$str = remove_invisible_characters($str);
@@ -431,7 +453,11 @@ class CI_Security {
 		 * NOTE: preg_replace was found to be amazingly slow here on
 		 * large blocks of data, so we use str_replace.
 		 */
-		$str = str_replace("\t", ' ', $str);
+		// $str = str_replace("\t", ' ', $str);
+		$tabReplacements = array("\t" => ' ');
+		if ($str !== null && is_string($str)) {
+			$str = strtr($str, $tabReplacements);
+		}	
 
 		// Capture converted string for later comparison
 		$converted_string = $str;
@@ -457,7 +483,11 @@ class CI_Security {
 		}
 		else
 		{
-			$str = str_replace(array('<?', '?'.'>'), array('&lt;?', '?&gt;'), $str);
+			// $str = str_replace(array('<?', '?'.'>'), array('&lt;?', '?&gt;'), $str);
+			if ($str !== null && is_string($str)) {
+				$str = str_replace(array('<?', '?'.'>'), array('&lt;?', '?&gt;'), $str);
+			}
+		
 		}
 
 		/*
@@ -478,7 +508,11 @@ class CI_Security {
 
 			// We only want to do this when it is followed by a non-word character
 			// That way valid stuff like "dealer to" does not become "dealerto"
-			$str = preg_replace_callback('#('.substr($word, 0, -3).')(\W)#is', array($this, '_compact_exploded_words'), $str);
+			// $str = preg_replace_callback('#('.substr($word, 0, -3).')(\W)#is', array($this, '_compact_exploded_words'), $str);
+			if ($str !== null && is_string($str)) {
+				$str = preg_replace_callback('#('.substr($word, 0, -3).')(\W)#is', array($this, '_compact_exploded_words'), $str);
+			}
+		
 		}
 
 		/*
@@ -497,19 +531,18 @@ class CI_Security {
 		{
 			$original = $str;
 
-			if (preg_match('/<a/i', $str))
-			{
-				$str = preg_replace_callback('#<a(?:rea)?[^a-z0-9>]+([^>]*?)(?:>|$)#si', array($this, '_js_link_removal'), $str);
-			}
-
-			if (preg_match('/<img/i', $str))
-			{
-				$str = preg_replace_callback('#<img[^a-z0-9]+([^>]*?)(?:\s?/?>|$)#si', array($this, '_js_img_removal'), $str);
-			}
-
-			if (preg_match('/script|xss/i', $str))
-			{
-				$str = preg_replace('#</*(?:script|xss).*?>#si', '[removed]', $str);
+			if ($str !== null && is_string($str)) {
+				if (preg_match('/<a/i', $str)) {
+						$str = preg_replace_callback('#<a(?:rea)?[^a-z0-9>]+([^>]*?)(?:>|$)#si', array($this, '_js_link_removal'), $str);
+				}
+		
+				if (preg_match('/<img/i', $str)) {
+						$str = preg_replace_callback('#<img[^a-z0-9]+([^>]*?)(?:\s?/?>|$)#si', array($this, '_js_img_removal'), $str);
+				}
+		
+				if (preg_match('/script|xss/i', $str)) {
+						$str = preg_replace('#</*(?:script|xss).*?>#si', '[removed]', $str);
+				}
 			}
 		}
 		while ($original !== $str);
@@ -543,7 +576,10 @@ class CI_Security {
 		do
 		{
 			$old_str = $str;
-			$str = preg_replace_callback($pattern, array($this, '_sanitize_naughty_html'), $str);
+			// $str = preg_replace_callback($pattern, array($this, '_sanitize_naughty_html'), $str);
+			if ($str !== null && is_string($str)) {
+				$str = preg_replace_callback($pattern, array($this, '_sanitize_naughty_html'), $str);
+			}	
 		}
 		while ($old_str !== $str);
 		unset($old_str);
@@ -560,19 +596,35 @@ class CI_Security {
 		 * For example:	eval('some code')
 		 * Becomes:	eval&#40;'some code'&#41;
 		 */
-		$str = preg_replace(
-			'#(alert|prompt|confirm|cmd|passthru|eval|exec|expression|system|fopen|fsockopen|file|file_get_contents|readfile|unlink)(\s*)\((.*?)\)#si',
-			'\\1\\2&#40;\\3&#41;',
-			$str
-		);
+		// $str = preg_replace(
+		// 	'#(alert|prompt|confirm|cmd|passthru|eval|exec|expression|system|fopen|fsockopen|file|file_get_contents|readfile|unlink)(\s*)\((.*?)\)#si',
+		// 	'\\1\\2&#40;\\3&#41;',
+		// 	$str
+		// );
 
-		// Same thing, but for "tag functions" (e.g. eval`some code`)
-		// See https://github.com/bcit-ci/CodeIgniter/issues/5420
-		$str = preg_replace(
-			'#(alert|prompt|confirm|cmd|passthru|eval|exec|expression|system|fopen|fsockopen|file|file_get_contents|readfile|unlink)(\s*)`(.*?)`#si',
-			'\\1\\2&#96;\\3&#96;',
-			$str
-		);
+		// // Same thing, but for "tag functions" (e.g. eval`some code`)
+		// // See https://github.com/bcit-ci/CodeIgniter/issues/5420
+		// $str = preg_replace(
+		// 	'#(alert|prompt|confirm|cmd|passthru|eval|exec|expression|system|fopen|fsockopen|file|file_get_contents|readfile|unlink)(\s*)`(.*?)`#si',
+		// 	'\\1\\2&#96;\\3&#96;',
+		// 	$str
+		// );
+		if ($str !== null && is_string($str)) {
+			// Replace JavaScript functions in the format func() with func&#40;)
+			$str = preg_replace(
+					'#(alert|prompt|confirm|cmd|passthru|eval|exec|expression|system|fopen|fsockopen|file|file_get_contents|readfile|unlink)(\s*)\((.*?)\)#si',
+					'\\1\\2&#40;\\3&#41;',
+					$str
+			);
+	
+			// Replace JavaScript functions in the format func`code` with func&#96;code&#96;
+			$str = preg_replace(
+					'#(alert|prompt|confirm|cmd|passthru|eval|exec|expression|system|fopen|fsockopen|file|file_get_contents|readfile|unlink)(\s*)`(.*?)`#si',
+					'\\1\\2&#96;\\3&#96;',
+					$str
+			);
+	}
+	
 
 		// Final clean up
 		// This adds a bit of extra precaution in case
@@ -1068,11 +1120,18 @@ class CI_Security {
 	 */
 	protected function _do_never_allowed($str)
 	{
-		$str = str_replace(array_keys($this->_never_allowed_str), $this->_never_allowed_str, $str);
+		// $str = str_replace(array_keys($this->_never_allowed_str), $this->_never_allowed_str, $str);
+		if ($str !== null && is_string($str)) {
+			$str = str_replace(array_keys($this->_never_allowed_str), $this->_never_allowed_str, $str);
+		}
+	
 
 		foreach ($this->_never_allowed_regex as $regex)
 		{
-			$str = preg_replace('#'.$regex.'#is', '[removed]', $str);
+			// $str = preg_replace('#'.$regex.'#is', '[removed]', $str);
+			if ($str !== null && is_string($str)) {
+				$str = preg_replace('#'.$regex.'#is', '[removed]', $str);
+			}		
 		}
 
 		return $str;

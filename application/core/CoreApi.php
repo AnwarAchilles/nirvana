@@ -55,6 +55,10 @@ class CoreApi extends RestController
   // Token variable to store JWT tokens
   public $token;
 
+  public $state = [
+    'USE_ID'=> TRUE,
+  ];
+
   // Version directory
   public $version;
 
@@ -83,9 +87,14 @@ class CoreApi extends RestController
     $this->config->api = $this->config->item('api');
 
     $this->load->driver('cache');
+
+    session_write_close();
     
+    $this->dev = [];
+    $this->development = [];
     $this->return = [];
     
+    self::_cors();
     self::_validate_jwt();
     self::_setup_models();
     self::_setup_index();
@@ -114,7 +123,7 @@ class CoreApi extends RestController
       $segments = $this->uri->segments;
       $versioning = false;
       
-      if (file_exists(PATH_APPLICATION.'/models/'.ucfirst($segments[2]).'/')) {
+      if (file_exists(PATH_APPLICATION.'/models/'.strtolower($segments[2]).'/')) {
         $versioning = true;
       }
       
@@ -180,7 +189,7 @@ class CoreApi extends RestController
       $segments = $this->uri->segments;
       $versioning = false;
       
-      if (file_exists(PATH_APPLICATION.'/models/'.ucfirst($segments[2]).'/')) {
+      if (file_exists(PATH_APPLICATION.'/models/'.strtolower($segments[2]).'/')) {
         $versioning = true;
       }
 
@@ -397,6 +406,40 @@ class CoreApi extends RestController
   }
 
   /**
+   *  An example CORS-compliant method.  It will allow any GET, POST, or OPTIONS requests from any
+   *  origin.
+   *
+   *  In a production environment, you probably want to be more restrictive, but this gives you
+   *  the general idea of what is involved.  For the nitty-gritty low-down, read:
+   *
+   *  - https://developer.mozilla.org/en/HTTP_access_control
+   *  - https://fetch.spec.whatwg.org/#http-cors-protocol
+   *
+   */
+  private function _cors() { 
+    // Allow from any origin
+    if (isset($_SERVER['HTTP_ORIGIN'])) {
+        // Decide if the origin in $_SERVER['HTTP_ORIGIN'] is one
+        // you want to allow, and if so:
+        header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+        header('Access-Control-Allow-Credentials: true');
+        header('Access-Control-Max-Age: 86400');    // cache for 1 day
+    }
+    // Access-Control headers are received during OPTIONS requests
+    if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+        
+        if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
+            // may also be using PUT, PATCH, HEAD etc
+            header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+        
+        if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
+            header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+    
+        exit(0);
+    }
+  }
+
+  /**
    * Set the development state for debugging purposes.
    *
    * This function sets the development state by gathering various information for debugging.
@@ -407,7 +450,7 @@ class CoreApi extends RestController
   {
     // Set the development state
     $this->development = [
-      '[+]-Endpoint' => $_SERVER['REDIRECT_QUERY_STRING'],
+      '[+]-Endpoint' => $_SERVER['QUERY_STRING'],
       '[+]-Request' => $_SERVER['REQUEST_METHOD'],
       '[+]-Method' => $this->method,
       '[+]-Query' => $this->query,
@@ -427,6 +470,7 @@ class CoreApi extends RestController
    */
   private function forbidden( $methodName )
   {
+    // dd($this->forbidden);
     if (in_array($methodName, $this->forbidden)) {
       $this->return(403, 'Endpoint Has Forbidden');
     }
@@ -488,6 +532,7 @@ class CoreApi extends RestController
     // Check if the 'Authorization' header exists
     if ($this->head('Authorization')) {
       $response = explode(" ", $this->head('Authorization'));
+      $token = $response[1];
       $headers = new stdClass();
 
       // Decode the JWT token using the specified secret key and algorithm (HS256)
@@ -511,16 +556,18 @@ class CoreApi extends RestController
   public function serialNumber( $serial='', $length=24, $injection='' )
   {
     $useSerial = (isset($this->models->serial)) ? $this->models->serial : $serial;
+    $usePrefix = (isset($this->models->serial_prefix)) ? $this->models->serial_prefix : '-';
     $useLength = (isset($this->models->serial_length)) ? $this->models->serial_length : $length;
 
     if (!empty($injection)) {
-      // Generate a unique serial number and inject it into the provided data
-      $injection['serial'] = strtolower($useSerial . "-" . new Visus\Cuid2\Cuid2($useLength));
+      if ($useSerial!=='') {
+        // Generate a unique serial number and inject it into the provided data
+        $injection['serial'] = strtoupper($useSerial . $usePrefix . new Visus\Cuid2\Cuid2($useLength));
+      }
       // Return the modified data with the serial number injected, or the original data
       return $injection;
     }else {
-      dd($useSerial);
-      return strtolower($useSerial . "-" . new Visus\Cuid2\Cuid2($useLength));
+      return strtoupper($useSerial . $usePrefix . new Visus\Cuid2\Cuid2($useLength));
     }
   }
 
@@ -683,7 +730,12 @@ class CoreApi extends RestController
 
     if ($this->id) {
       $this->models->builder($this->query);
-      $isUpdate = $this->models->apiUpdate($this->method, $this->id);
+
+      if ($this->state['USE_ID']) {
+        $isUpdate = $this->models->apiUpdate($this->method, $this->id);
+      }else {
+        $isUpdate = $this->models->apiUpdate($this->method);
+      }
 
       if ($isUpdate) {
         $this->models->builder($this->query);
@@ -710,10 +762,6 @@ class CoreApi extends RestController
     $this->forbidden(__FUNCTION__);
 
     if ($this->id) {
-      $this->data = $this->models
-        ->builder($this->query)
-        ->relation()
-        ->apiGet($this->id);
       $isDelete = $this->models
         ->builder($this->query)
         ->apiDelete($this->id);
@@ -776,7 +824,6 @@ class CoreApi extends RestController
       $this->return(400, "Failed");
     }
   }
-
 
 
   /* ---- ---- ---- ----

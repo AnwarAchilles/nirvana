@@ -144,6 +144,15 @@ class CoreModel extends CI_Model
     return $cached_data;
   }
 
+
+  public function cleanCache($id='') {
+    $this->cache->file->delete($this->cachePrefix('_count'));
+    $this->cache->file->delete($this->cachePrefix('_list'));
+    if (!empty($id)) {
+      $this->cache->file->delete($this->cachePrefix('_show_'.$id));
+    }
+  }
+
   public function cleanPaginate() {
     foreach ( glob(PATH_ARCHIVE.'/caches/*') as $row ) {
       if (str_contains($row, $this->cache_prefix.'_'.$this->table.'_paginate_')) {

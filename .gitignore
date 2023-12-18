@@ -11,14 +11,40 @@ application/logs/*
 composer.lock
 tests/mocks/database/ci_test.sqlite
 
-
 user_guide_src/build/*
 user_guide_src/cilexer/build/*
 user_guide_src/cilexer/dist/*
 user_guide_src/cilexer/pycilexer.egg-info/*
 /vendor/
-/archive/*
-/storage/
+/node_modules/
+
+/application/controllers/development/*
+/application/views/development/*
+
+/storage/*
+!/storage/index.html
+
+/dataset/tenant
+/archive/sessions/*
+!/archive/sessions/index.html
+/archive/security/*
+!/archive/security/index.html
+/archive/twigs/*
+!/archive/twigs/index.html
+/archive/caches/*
+!/archive/caches/index.html
+/archive/cookies/*
+!/archive/cookies/index.html
+/archive/logs/*
+!/archive/logs/index.html
+/resource/*
+!/resource/index.html
+
+/application/config/config.php
+/application/config/database.php
+
+.well-known
+.user.ini
 
 # IDE Files
 #-------------------------

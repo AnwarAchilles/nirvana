@@ -723,7 +723,11 @@ if ( ! function_exists('remove_invisible_characters'))
 
 		do
 		{
-			$str = preg_replace($non_displayables, '', $str, -1, $count);
+			$count = 0;
+			// $str = preg_replace($non_displayables, '', $str, -1, $count);
+			if ($str !== null && (is_string($str) || is_array($str))) {
+				$str = preg_replace($non_displayables, '', $str, -1, $count);
+			}
 		}
 		while ($count);
 

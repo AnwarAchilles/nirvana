@@ -78,3 +78,27 @@ if (!function_exists('storage')) {
     }
   }
 }
+
+
+/**
+ * Storage Function
+ *
+ * This function is used to generate the storage path or URL for a given source file.
+ *
+ * @param string $source The name of the source file.
+ * @param bool $asPath Set to true to get the real file path, false to get the URL.
+ *
+ * @return string The storage path or URL for the given source file.
+ */
+if (!function_exists('node_modules')) {
+  function node_modules($source='', $asPath = false)
+  {
+    if ($asPath) {
+      // Return the real path of the source
+      return realpath(PATH_ROOT . '/node_modules/' . $source);
+    } else {
+      // Return the URL for the source
+      return base_url('/node_modules/' . $source);
+    }
+  }
+}

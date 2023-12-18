@@ -239,7 +239,7 @@ class Layout {
       if ($Configure['offline']) {
         $target = $_SERVER['DOCUMENT_ROOT'].'/upup.sw.min.js';
         if (!file_exists($target)) {
-          $worker = file_get_contents(resource('javascript/upup/upup.sw.min.js'));
+          $worker = file_get_contents(resource('javascript/upup/upup.sw.min.js', true));
           file_put_contents($target, $worker);
         }
         $offline = [];
@@ -300,7 +300,7 @@ class Layout {
     
     if ($Configure['bundle']['process']) {
       foreach ($Configure['bundle'][$For] as $row) {
-        $Configure['source'][$For][] = base_url("application/views/".$row);
+        $Configure['source'][$For][] = PATH_APPLICATION.'/views/'.$row;
       }
       $dataBundling = [];
       $header = "/*\n *\n * NIRVANA:STYLESHEET BUNDLE\n *\n datetime: ".date('Y-m-d H:i:s')."\n */\n";

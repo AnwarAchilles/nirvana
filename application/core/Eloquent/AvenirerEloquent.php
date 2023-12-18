@@ -15,6 +15,8 @@ class CoreEloquent extends Avenirer_Model
 
   public $cache_prefix = 'Avenirer';
 
+  public $primary_key_order = 'ASC';
+
   /**
    * Initialize the builder with provided query conditions.
    *
@@ -71,6 +73,7 @@ class CoreEloquent extends Avenirer_Model
   }
 
   public function apiGetAll() {
+    $this->db->order_by($this->primary_key, $this->primary_key_order);
     return $this->set_cache('list')->get_all();
   }
 
@@ -85,8 +88,12 @@ class CoreEloquent extends Avenirer_Model
     return $process;
   }
   
-  public function apiUpdate( $data, $id ) {
-    $process = $this->update( $data, $id );
+  public function apiUpdate( $data, $id=null ) {
+    if ($id==null) {
+      $process = $this->update( $data );
+    }else {
+      $process = $this->update( $data, $id );
+    }
     $this->delete_cache('show_'.$id);
     $this->delete_cache('list');
     $this->cleanPaginate();
@@ -102,6 +109,7 @@ class CoreEloquent extends Avenirer_Model
   }
 
   public function apiPaginate( $slice, $current, $total ) {
+    $this->db->order_by($this->primary_key, $this->primary_key_order);
     return $this->set_cache('paginate_'.$total.'_'.$current)->paginate( $slice, $current );
   }
   public function cleanPaginate() {
@@ -119,5 +127,18 @@ class CoreEloquent extends Avenirer_Model
     $this->delete_cache('list');
     $this->cleanPaginate();
     return $process;
+  }
+
+  public function apiRecache( $id ) {
+    $this->delete_cache('show_'.$id);
+    $this->delete_cache('list');
+    $this->cleanPaginate();
+    return true;
+  }
+
+  public function apiUncache() {
+    $this->delete_cache('*');
+    $this->cleanPaginate();
+    return true;
   }
 }

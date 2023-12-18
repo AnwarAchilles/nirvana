@@ -105,7 +105,7 @@ class Minify {
 
   public function js( $input ) {
     if(trim($input) === "") return $input;
-    return preg_replace(
+    /* return preg_replace(
       array(
         // Remove comment(s)
         '#\s*("(?:[^"\\\]++|\\\.)*+"|\'(?:[^\'\\\\]++|\\\.)*+\')\s*|\s*\/\*(?!\!|@cc_on)(?>[\s\S]*?\*\/)\s*|\s*(?<![\:\=])\/\/.*(?=[\n\r]|$)|^\s*|\s*$#',
@@ -125,7 +125,46 @@ class Minify {
         '$1$3',
         '$1.$3'
       ),
-    $input);
+    $input); */
+    
+
+    // Ekspresi reguler untuk menghapus komentar, termasuk dalam string dan regex
+    $removeComments = '#\s*("(?:[^"\\\\]++|\\\\.)*+"|\'(?:[^\'\\\\]++|\\\\.)*+\')\s*|\s*\/\*(?!\!|@cc_on)(?>[\s\S]*?\*\/)\s*|\s*(?<![\:\\=])\/\/.*(?=[\n\r]|$)|^\s*|\s*$#';
+
+    // Ekspresi reguler untuk menghapus spasi putih di luar string dan regex
+    $removeWhiteSpace = '#("(?:[^"\\\\]++|\\\\.)*+"|\'(?:[^\'\\\\]++|\\\\.)*+\'|\/\*(?>.*?\*\/)|\/(?!\/)[^\n\r]*?\/(?=[\s.,;]|[gimuy]|$))|\s*([!%&*()\\-=+\\[\\]{}|;:,.<>?\/])\s*#s';
+
+    // Ekspresi reguler untuk menghapus tanda kurung kurawal terakhir
+    $removeLastSemicolon = '#;+\}#';
+
+    // Ekspresi reguler untuk meminify atribut objek kecuali atribut JSON
+    $minifyObjectAttributes = '#([\{,])([\'])(\d+|[a-z_][a-z0-9_]*)\2(?=:)#i';
+
+    // Ekspresi reguler untuk mengganti akses objek seperti foo['bar'] menjadi foo.bar
+    $replaceObjectAccess = '#([a-z0-9_)\]])\[([\'"])([a-z_][a-z0-9_]*)\2\]#i';
+
+    // Array ekspresi reguler
+    $patterns = array(
+      $removeComments,
+      $removeWhiteSpace,
+      $removeLastSemicolon,
+      $minifyObjectAttributes,
+      $replaceObjectAccess
+    );
+
+    // Array penggantian untuk setiap ekspresi reguler
+    $replacements = array(
+      '$1',
+      '$1$2',
+      '}',
+      '$1$3',
+      '$1.$3'
+    );
+
+    // Terapkan semua ekspresi reguler pada input
+    $minifiedCode = preg_replace($patterns, $replacements, $input);
+
+    return $minifiedCode;
   }
 
 

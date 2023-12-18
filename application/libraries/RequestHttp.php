@@ -4,7 +4,7 @@
 require_once PATH_APPLICATION.'/third_party/Philsturgeon_Curl.php';
 
 
-class Request {
+class RequestHttp {
 
   private $Version = "2.0";
 
