@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "name": "Anwar Achilles",
+    "access": "ADMIN",
+    "email": "hudorianwar07@gmail.com",
+    "password": "$2y$10$N/Nio9AN5G.0gbP/.zRE5.1uZXQWboQFFVKI/KQrfEVKuEWStHzRe"
+  },
+  {
+    "id": 2,
+    "name": "Jhon Doe",
+    "access": "USER",
+    "email": "jhondoe@gmail.com",
+    "password": "$2y$10$N/Nio9AN5G.0gbP/.zRE5.1uZXQWboQFFVKI/KQrfEVKuEWStHzRe"
+  }
+]
