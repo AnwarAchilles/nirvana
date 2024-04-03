@@ -5,9 +5,13 @@
  * 
  * */
 Nirvana.environment({
-  Base: {
+  configure: {
     constant: "NV",
     provider: [],
   },
-  Provider: [],
+  service: {},
+  provider: {},
 });
+
+
+LAYOUT = NirvanaLayout;

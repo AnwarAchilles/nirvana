@@ -33,7 +33,7 @@ $config['layout'] = [
     
     // List of JavaScript files
     'javascript'=> [
-      base_url('resource/javascript/nirvana-3.5.js'),
+      base_url('resource/javascript/nirvana-3.8.js'),
     ],
 
   ],
