@@ -34,8 +34,8 @@ class Base extends CoreController
   $ php nirvana blaze bundle [name]
 
 ✔ Extra for cleaning caches, cookies
-  $ php nirvana base clean all
-  $ php nirvana base clean [cache|session|cookie|log]
+  $ php nirvana clean all
+  $ php nirvana clean [cache|session|cookie|log]
 
 ✔ Custom cli runner on controller/@run
   $ php nirvana [controller] [method] [parameter]

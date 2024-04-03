@@ -62,9 +62,9 @@ class CoreController extends CI_Controller
     if (isset($this->layout)) {
       // Set layout configuration
       if (file_exists(PATH_APPLICATION . "/config/layout/" . strtolower(get_class($this)) . ".php")) {
-          $this->layout->config(strtolower(get_class($this)));
+        $this->layout->config(strtolower(get_class($this)));
       } else {
-          $this->layout->config('default');
+          $this->layout->config('general');
       }
       // set default stylesheet & javascript
       $this->initStylesheet();

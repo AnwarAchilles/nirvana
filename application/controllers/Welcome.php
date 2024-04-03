@@ -20,6 +20,9 @@ class Welcome extends CoreController {
 	 */
 	public function index()
 	{
+		// use config now
+		// $this->layout->config('general');
+
 		// Enable the 'head' layout
 		$this->layout->use('head', TRUE);
 		

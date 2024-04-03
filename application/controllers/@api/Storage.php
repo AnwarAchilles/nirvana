@@ -24,8 +24,7 @@ class Storage extends BaseApi
    * This array contains a list of forbidden actions.
    * These actions should not be accessible.
    */
-  public $forbidden = [ 
-    'list_REST',
+  public $forbidden = [
     'show_REST',
   ];
 
@@ -42,6 +41,18 @@ class Storage extends BaseApi
     $this->load->library('image_lib');
 
     // Add your initialization code here
+  }
+
+  public function list_REST() {
+    // Return a list of files in storage.
+    foreach (glob("storage/*") as $filename) {
+      $catch = [];
+      $catch['name'] = basename($filename);
+      $catch['size'] = filesize($filename);
+      $catch['extension'] = pathinfo($filename, PATHINFO_EXTENSION);
+      $this->data[] = $catch;
+    }
+    $this->return(200, 'Success');
   }
 
   /**

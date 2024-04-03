@@ -101,7 +101,7 @@ class CoreModel extends CI_Model
   }
 
   public function apiGet( $id ) {
-    $cached_data = $this->cache->file->get($this->cachePrefix('_list'));
+    $cached_data = $this->cache->file->get($this->cachePrefix('_show_'.$id));
     if (!$cached_data) {
       $cached_data = $this->db->where($this->primary_key, $id)->get($this->table)->row_array();
       $this->cache->file->save($this->cachePrefix('_show_'.$id), $cached_data, 86400);

@@ -45,7 +45,7 @@ class Aimal_Migrate extends CI_Controller
 	 *
 	 * @var string
 	 */
-	protected $_migration_table = 'migrations';
+	protected $_migration_table = 'migration';
 
 	/**
 	 * Table name to be used in the migration file
