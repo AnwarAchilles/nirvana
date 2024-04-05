@@ -12,6 +12,3 @@ Nirvana.environment({
   service: {},
   provider: {},
 });
-
-
-LAYOUT = NirvanaLayout;

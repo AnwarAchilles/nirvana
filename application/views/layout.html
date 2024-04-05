@@ -38,6 +38,8 @@
   {% if LAYOUT.offline %}
   <!-- Offline worker initialize -->
   <script>
+    LAYOUT = NirvanaLayout;
+    
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistration().then(function (registration) {
         if (registration && registration.active) {

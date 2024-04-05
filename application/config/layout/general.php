@@ -43,19 +43,25 @@ $config['layout'] = [
   'bundle'=> [
 
     // activate feature
-    'active'=> FALSE,
+    'active'=> TRUE,
 
     // process bundling while reload
     'process'=> FALSE,
 
     // filename prefix
-    'filename'=> 'panel',
+    'filename'=> 'general',
     
     // Bundle stylesheets into one file (set to source)
-    'stylehseet'=> [],
+    'stylesheet'=> [
+      'layout.css',
+      'welcome.css',
+    ],
 
     // Bundle JavaScript files into one file (set source)
-    'javascript'=> [],
+    'javascript'=> [
+      'layout.js',
+      'welcome.js'
+    ],
 
   ],
   
