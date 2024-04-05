@@ -1,5 +1,5 @@
 /* 
- * NIRVANA JS - 3.4
+ * NIRVANA JS - 3.8
  * @anwarachilles
  * 
  * 

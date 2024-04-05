@@ -1,0 +1,77 @@
+/* TOOLKIT */
+[ddebug] * {
+  outline: 1px solid red;
+}
+[debug] {
+  outline: 1px solid blue;
+}
+[hide] {
+  display: none;
+}
+
+
+
+/* LOADER */
+#loader {
+  z-index: 999999;
+}
+.loading-gif {
+  mix-blend-mode: screen;
+}
+
+
+
+
+/* CYRUZ:TOAST - RETHEME  */
+#toast-polite {
+  z-index: 999999999 !important;
+  position: relative;
+}
+
+.toast.bg-primary { background-color: hsla(262, 49%, 80%, 0.7) !important; }
+.toast.bg-secondary { background-color: hsla(210, 0%, 80%, 0.7) !important; }
+.toast.bg-success { background-color: hsla(149, 57%, 80%, 0.7) !important; }
+.toast.bg-danger { background-color: hsla(344, 72%, 80%, 0.7) !important; }
+.toast.bg-warning { background-color: hsla(39, 94%, 80%, 0.7) !important; }
+.toast.bg-info { background-color: hsla(178, 60%, 80%, 0.7) !important; }
+.toast.bg-dark { color:white; background-color: hsla(210, 9%, 10%, 0.7) !important; }
+
+.toast-header {
+  color: var(--bs-body-color);
+  background-color: rgba(255, 255, 255, 0.6);
+}
+.toast-body {
+  color: var(--bs-body-color);
+  backdrop-filter: blur(3px);
+}
+
+
+
+/* CYRUZ:FORM */
+textarea.form-control::placeholder,
+.form-control[type='text']::placeholder,
+.form-control[type='number']::placeholder,
+.form-control[type='date']::placeholder,
+.form-control[type='search']::placeholder,
+.form-control[type='datetime-locale']::placeholder {
+  color: var(--bs-gray-500);
+}
+.form-control {
+  background-color: white;
+  /* box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important; */
+}
+.input-group-text {
+  background-color: var(--jd-color-background-light-gray);
+}
+
+
+
+
+/* SELECT2 - RECONFIG */
+.select2-container--bootstrap-5 .select2-dropdown .select2-results__options .select2-results__option.select2-results__option--highlighted {
+  color: var(--bs-dark);
+}
+.select2-container--bootstrap-5 .select2-dropdown .select2-results__options .select2-results__option.select2-results__option--selected, .select2-container--bootstrap-5 .select2-dropdown .select2-results__options .select2-results__option[aria-selected=true]:not(.select2-results__option--highlighted) {
+  color: var(--bs-white);
+  background-color: var(--bs-primary);
+}

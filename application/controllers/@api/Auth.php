@@ -32,7 +32,7 @@ class Auth extends BaseApi
    *
    * @Request: POST
    */
-  public function login_private_POST()
+  public function login_POST()
   {
     // Check if a user with the provided name exists
     if ($this->models->where('name', $this->method('name'))->count_rows()) {
@@ -40,54 +40,17 @@ class Auth extends BaseApi
       if (password_verify($this->method('code'), $data->code)) {
         $token = $this->generateJwt($data, 25200); // 7 hari
         
-        $this->data['index'] = $data->id_tenant;
         $this->data['name'] = $data->name;
         $this->data['serial'] = $data->serial;
-        $this->data['country'] = $data->country;
-        $this->data['operator'] = $this->method('operator');
         $this->data['token'] = $token['token'];
         $this->data['expired'] = $token['expired'];
         $this->data['state'] = 'VERIFIED';
-
-        // $this->data['x'] =$data;
 
         $this->return(200, "Success");
       }else {
         $this->return(400, "Wrong Code");
       }
     }else {
-      $this->return(400, "Name Not Found");
-    }
-  }
-
-  public function login_central_POST()
-  {
-    // Check if a user with the provided name exists
-    $check = $this->dataset('administrator');
-    $all = $this->dataset('administrator');
-
-    $emailToFilter = $this->method('email');
-    
-    $check = array_filter($check, function ($item) use ($emailToFilter) {
-        return isset($item['email']) && $item['email'] === $emailToFilter;
-    });
-
-    if (isset($check[0])) {
-      if (password_verify($this->method('password'), $check[0]['password'])) {
-        $token = $this->generateJwt($check, 25200); // 7 hari
-        
-        $this->data['email'] = $check[0]['email'];
-        $this->data['access'] = $check[0]['access'];
-        $this->data['token'] = $token['token'];
-        $this->data['expired'] = $token['expired'];
-        $this->data['state'] = 'VERIFIED';
-
-        $this->return(200, "Success");
-      }else {
-        $this->return(400, "Wrong Password");
-      }
-    }else {
-      $this->data = $this->method('email');
       $this->return(400, "Name Not Found");
     }
   }

@@ -1,0 +1,274 @@
+<!-- Begin drawing section -->
+<!-- You can draw something here if needed -->
+
+<!-- Include the view specified in LAYOUT -->
+
+<!-- NAVIGATIONS BAR -->
+<div class="shadow-lg bg-white" id="cz__sidebar">
+  <div id="cz__sidebar_background"></div>
+
+  <!-- NAVIGATIONS HEAD -->
+  <div id="cz__sidebar_head" class="text-center">
+    <h2 class="m-0 font-700"><b>Cyruz.</b></h2>
+    <small class="text-muted d-block font-500" style="font-size:70%; margin-top:-3px;">Template Admin</small>
+  </div>
+  <!-- END NAVIGATIONS BAR -->
+
+  <!-- NAVIGATIONS BODY -->
+  <div id="cz__sidebar_body" class="scrollbar">
+    <ul class="nav flex-column">
+      <li>
+        <a href="{{ base_url('central/home') }}" class="btn active">
+          <i class="fa-duotone fa-xl fa-grid-2 : icon text-primary"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a href="#general" class="btn" data-bs-toggle="collapse">
+          <i class="fa-duotone fa-xl fa-landmark : icon text-danger"></i>
+          <span>General</span>
+        </a>
+        <div class="collapse" id="general">
+          <ul class="nav flex-column">
+            <li>
+              <a href="#" class="btn">
+                <i class="fa-solid : icon"></i>
+                <span>Overview</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ base_url('central/tenant') }}" class="btn">
+                <i class="fa-solid : icon"></i>
+                <span>Tenant</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ base_url('central/request') }}" class="btn">
+                <i class="fa-solid : icon"></i>
+                <span>Request</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <a href="#finance" class="btn" data-bs-toggle="collapse">
+          <i class="fa-duotone fa-xl fa-chart-mixed : icon text-success"></i>
+          <span>Finance</span>
+        </a>
+        <div class="collapse" id="finance">
+          <ul class="nav flex-column">
+            <li>
+              <a href="#" class="btn">
+                <i class="fa-solid : icon"></i>
+                <span>Overview</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ base_url('central/balance') }}" class="btn">
+                <i class="fa-solid : icon"></i>
+                <span>Balance</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ base_url('central/referral') }}" class="btn">
+                <i class="fa-solid : icon"></i>
+                <span>Referral</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <a href="#publish" class="btn" data-bs-toggle="collapse">
+          <i class="fa-duotone fa-xl fa-envelopes-bulk : icon text-info"></i>
+          <span>Publish</span>
+        </a>
+        <div class="collapse" id="publish">
+          <ul class="nav flex-column">
+            <li>
+              <a href="#" class="btn">
+                <i class="fa-solid : icon"></i>
+                <span>Overview</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ base_url('central/news') }}" class="btn">
+                <i class="fa-solid : icon"></i>
+                <span>News</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ base_url('central/inbox') }}" class="btn">
+                <i class="fa-solid : icon"></i>
+                <span>Inbox</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <a href="#setting" class="btn" data-bs-toggle="collapse">
+          <i class="fa-duotone fa-xl fa-cogs : icon text-warning"></i>
+          <span>Setting</span>
+        </a>
+        <div class="collapse" id="setting">
+          <ul class="nav flex-column">
+            <li>
+              <a href="#" class="btn">
+                <i class="fa-solid : icon"></i>
+                <span>Overview</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ base_url('central/dataset') }}" class="btn">
+                <i class="fa-solid : icon"></i>
+                <span>Dataset</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ base_url('central/security') }}" class="btn">
+                <i class="fa-solid : icon"></i>
+                <span>Security</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ base_url('central/storage') }}" class="btn">
+                <i class="fa-solid : icon"></i>
+                <span>Storage</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <!-- NEXT NAVIGATIONS BAR -->
+    </ul>
+    <br><br><br><br><br><br>
+  </div>
+  <!-- /NAVIGATIONS BODY -->
+
+</div>
+<!-- /NAVIGATIONS BAR -->
+
+<!-- CONTENT -->
+<div class="bg-light" id="cz__content">
+
+
+  <!-- BAR BUTTONS -->
+  <div class="cz__content_head : d-flex justify-content-between align-items-center">
+    <div class="d-flex flex-grow-1">
+      <button class="__open_sidebar : btn btn-lg">
+        <i class="fa-duotone fa-xl fa-bars"></i>
+      </button>
+    </div>
+    <div class="d-flex align-items-center">
+
+      <!-- fullscreen -->
+      <button class="cz__fullscreen : btn">
+        <i class="fa-duotone fa-expand-wide fa-xl"></i>
+      </button>
+
+      <!-- profil -->
+      <div class="cz__profil : dropdown">
+        <button class="btn link-danger border rounded px-3 bg-white shadow-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fa-duotone fa-lg fa-user : me-2"></i>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="z-index:9999">
+          <li><a class="dropdown-item" href="#"><i class="fa fa-user : me-2"></i> Profile</a></li>
+          <li><a class="dropdown-item" href="#"><i class="fa fa-gear : me-2"></i> Settings</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="{{ base_url('central/auth/logout') }}"><i class="fa fa-power-off : me-2"></i> Logout</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+  <!-- /BAR BUTTONS -->
+  
+  <!-- CONTENT BODY -->
+  <div id="cz__content_body" class="scrollbar">
+    <div class="container-fluid">
+
+      <!-- CONTENT HEADING -->
+      <div class="content-heading" hidden>
+        <h2 class="m-0">Starter</h2>
+        <small class="text-muted">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="#">Library</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Data</li>
+            </ol>
+          </nav>
+        </small>
+      </div>
+      <!-- /CONTENT HEADING -->
+
+      <!-- CONTENT PANEL -->
+      <div class="cz__content_panel : row">
+        
+        {% include LAYOUT.useView %}
+
+      </div>
+      <!-- /CONTENT PANEL -->
+      
+      
+      <!-- CONTENT FOOTER -->
+      <div class="cz__content_footer : mt-5">
+        <p>Copyright &copy; 2022,create with <i class="fa-solid fa-heart : text-danger"></i> Anwar Achilles All right reserved</p>
+      </div>
+      <!-- /CONTENT FOOTER -->
+
+
+      <!-- SETTING -->
+      <button class="cz__setting : btn btn-primary p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#settings" aria-controls="settingsLabel">
+        <i class="fa-duotone fa-gear fa-2x"></i>
+      </button>
+      
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="settings" aria-labelledby="settingsLabel">
+        <div class="offcanvas-header">
+          <h3 class="font-700">Settings</h3>
+          <button class="btn text-danger" data-bs-dismiss="offcanvas" aria-label="Close">
+            <i class="fa-solid fa-times fa-xl"></i>
+          </button>
+        </div>
+        <div class="offcanvas-body">
+          <div class="_set_sidebar : py-5">
+            <h5 class="font-700">Background</h5>
+            <div class="_set_image : mb-5">
+              <img type="button" sidebar-index="1">
+              <img type="button" sidebar-index="2">
+              <img type="button" sidebar-index="3">
+            </div>
+            <hr><h5 class="font-700">Filter</h5>
+            <div class="_set_filter : mb-5">
+              <div>
+                <label for="grayscale">Grayscale</label>
+                <input id="grayscale" name="grayscale" value="100" min="0" max="100" type="range" class="form-range">
+              </div>
+              <div>
+                <label for="opacity">Opacity</label>
+                <input id="opacity" name="opacity" value="1" min="0" max="9" type="range" class="form-range">
+              </div>
+            </div>
+            <hr><h5 class="font-700">Color</h5>
+            <div class="_set_color : mb-5">
+              <button value="white" class="btn-lg bg-white">White</button>
+              <button value="light" class="btn-lg bg-light">Light</button>
+              <button value="black" class="btn-lg bg-black text-white">Black</button>
+              <button value="dark" class="btn-lg bg-dark text-white">Dark</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- /SETTING -->
+
+    
+    </div>
+  </div>
+  <!-- /CONTENT BODY -->
+</div>
+<!-- /CONTENT -->
+
+<!-- End drawing section -->

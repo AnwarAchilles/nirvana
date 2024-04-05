@@ -21,12 +21,12 @@ class Welcome extends CoreController {
 	public function index()
 	{
 		// use config now
-		// $this->layout->config('general');
+		$this->layout->config('general');
 
 		// Enable the 'head' layout
 		$this->layout->use('head', TRUE);
 		
-		// Set the 'view' layout to 'welcome'
+		// Set the 'view' layout
 		$this->layout->use('view', 'welcome');
 
 		// insert image to use in style

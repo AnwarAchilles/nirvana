@@ -39,6 +39,7 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 !/archive/logs/index.html
 /resource/*
 !/resource/index.html
+!/resource/vendor/fontawesome-pro.zip
 
 /application/config/config.php
 /application/config/database.php
